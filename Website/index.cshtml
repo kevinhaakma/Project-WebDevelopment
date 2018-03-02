@@ -8,37 +8,37 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/stylesheet.css" media="screen,projection" />
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body>
+<body class="grey lighten-2">
     <div class="container">
         <div class="row">
-            <div class="row">
-                <div class="col s8 offset-s2">
-                    <div class="card-panel grey lighten-1">
-                        <div class="card-content ">
-                            <div class="row white-text">
-                                <form class="col s12">
-                                    <div class="input-field col s12">
-                                        <input id="username" type="text" class="validate">
-                                        <label for="username">Gebruikersnaam</label>
-                                    </div>
-                                    <div class="input-field col s12">
-                                        <input id="password" type="password" class="validate">
-                                        <label for="password">Wachtwoord</label>
-                                    </div>
-                                </form>
-                            </div>
+            <div class="col s8 offset-s2">
+                <div class="card-panel blue-grey darken-4">
+                    <div class="card-content ">
+                        <div class="row white-text">
+                            <img class="col l6 offset-l3 m8 offset-m2 s12 center" src="img/logo.png" />
+                            <form class="col s12">
+                                <div class="input-field col s12">
+                                    <input id="username" type="text" class="validate">
+                                    <label for="username">Gebruikersnaam</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input id="password" type="password" class="validate">
+                                    <label for="password">Wachtwoord</label>
+                                </div>
+                            </form>
                         </div>
+                        <button class="btn waves-effect waves-light right taximengeryellow" type="submit" name="action">login<i class="material-icons right">send</i></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
