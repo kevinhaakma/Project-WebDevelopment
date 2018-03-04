@@ -1,4 +1,20 @@
-﻿
+﻿/*GENERAL*/
+/*NAVBAR*/
+nav.nav-center ul {
+    text-align: center;
+}
+nav.nav-center ul li {
+    display: inline;
+    float: none;
+}
+nav.nav-center ul li a {
+    display: inline-block;
+}
+
+
+/*END OF GENERAL*/
+
+
 /*LOGIN PAGE*/
 /* label color */
 .input-field label {
@@ -25,17 +41,28 @@
 
 .btn:focus {
     background-color: #ff5400;
+    color: white;
 }
 
 .btn:hover {
     background-color: #ffa50a;
+    color: white;
 }
 
 .btn:active {
     background-color: #ff5400;
+    color: white;
 }
 
 .taximengeryellow {
     background-color: #FED12E;
+    color: black;
 }
 /*END OF LOGIN PAGE*/
+
+/*HOME*/
+/*LOGO SIZE*/
+.brand-logo{
+    height: 100%;
+}
+/*END OF HOME*/
