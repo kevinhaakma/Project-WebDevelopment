@@ -8,6 +8,7 @@ nav.nav-center ul li {
     float: none;
 }
 nav.nav-center ul li a {
+    font-size: 18px;
     display: inline-block;
 }
 
