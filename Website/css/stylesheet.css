@@ -12,6 +12,19 @@ nav.nav-center ul li a {
     display: inline-block;
 }
 
+.dropdown-content {
+    min-width: 155px;
+    z-index: -10;
+}
+
+.dropdown-content li a {
+    color: black !important;
+}
+
+.dropdown-content li a i {
+    margin: 0 10px 0 0;
+}
+
 /*END OF GENERAL*/
 /*SIDE NAV*/
 .side-nav {

@@ -15,21 +15,25 @@
 </head>
 
 <body class="grey lighten-2">
+    <!-- Navbar -->
     <nav class="nav-center">
         <div class="nav-wrapper grey darken-4">
 
+            <!-- logo -->
             <img class="col l1 offset-l10 m8 offset-m2 s12 brand-logo" src="~/img/logo.png" />
+
+            <!-- Mobile responsive menu -->
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
             <!-- Dropdown Trigger -->
-            <a style="margin-right: 10px" class='dropdown-button right' href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a>
+            <a style="margin-right: 10px" class='dropdown-button right' data-beloworigin="true" alignment="left" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a>
 
-            <!-- Dropdown Structure -->
-            <ul id='dropdown' style="margin-top: 55px; margin: 55px 35px 0px 55px; z-index: -10" class='dropdown-content'">
-                <li><a href="sass.html" style="font-size: 14px;">Instellingen</a></li>
-                <li><a href="~/Application/logout.cshtml" style="font-size: 14px;">Uitloggen</a></li>
+            <!-- Dropdown -->
+            <ul id='dropdown' class='dropdown-content'>
+                <li><a href="sass.html" style="font-size: 14px;">Instellingen<i class="tiny material-icons">settings</i></a></li>
+                <li><a href="~/Application/logout.cshtml" style="font-size: 14px;">Uitloggen<i class="tiny material-icons">power_settings_new</i></a></li>
             </ul>
-            
+
             <a style="margin-right: 30px; font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a>
 
             <ul class="hide-on-med-and-down">
