@@ -81,3 +81,15 @@ nav.nav-center ul li a {
     height: 100%;
 }
 /*END OF HOME*/
+
+/*SETTING PAGE*/
+.right {
+    float: right !important;
+    margin-bottom: -15px;
+    
+}
+
+
+
+
+/*END OF SETTING PAGE*/

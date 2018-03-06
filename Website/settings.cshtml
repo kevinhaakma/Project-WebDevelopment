@@ -21,7 +21,7 @@
             <img class="col l1 offset-l10 m8 offset-m2 s12 brand-logo" src="img/logo.png" />
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <a href="sass.html" style="margin-right: 10px;" class="right">Uitloggen</a>
-            <a href="settings.cshtml" style="margin-right: 25px;" class="right"><i class="material-icons">settings</i></a>
+            <a href="settings.cshtml" style="margin-right: 25px;" class="active right"><i class="material-icons">settings</i></a>
             <ul class="hide-on-med-and-down">
                 <li><a href="sass.html">Agenda</a></li>
                 <li><a href="collapsible.html">Klanten</a></li>
@@ -33,6 +33,36 @@
         </div>
     </nav>
 
+    <div class="row">
+        <div class="col s12 m3">
+            <div class="card blue-grey darken-3">
+                <div class="row white-text">
+                    <form class="col s12">
+                        <span class="white-text">
+                            <strong>Verander uw wachtwoord</strong>
+                        </span>
+                        <div class="input-field col s12">
+                            <input id="password" type="password" class="validate">
+                            <label for="password">Oud wachtwoord</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="password" type="password" class="validate">
+                            <label for="password">Nieuw wachtwoord</label>
+                         
+
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="password" type="password" class="validate">
+                            <label for="password">Nieuw wachtwoord herhaling</label>
+                        </div>
+                        <button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
