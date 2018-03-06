@@ -10,10 +10,14 @@ nav.nav-center ul li {
 nav.nav-center ul li a {
     display: inline-block;
 }
-
-
 /*END OF GENERAL*/
 
+/*SIDE NAV*/
+.side-nav {
+    padding: 0px 60px !important
+}
+
+/*END OF SIDENAV*/
 
 /*LOGIN PAGE*/
 /* label color */
