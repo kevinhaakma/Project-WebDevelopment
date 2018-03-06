@@ -20,9 +20,18 @@
 
             <img class="col l1 offset-l10 m8 offset-m2 s12 brand-logo" src="~/img/logo.png" />
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-            <a href="~/Application/logout.cshtml" style="margin-right: 10px;" class="right">Uitloggen</a>
-            <a href="sass.html" style="margin-right: 25px;" class="right"><i class="material-icons">settings</i></a>
-            <a style="margin-right: 30px; font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName</a>
+
+            <!-- Dropdown Trigger -->
+            <a style="margin-right: 10px" class='dropdown-button right' href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a>
+
+            <!-- Dropdown Structure -->
+            <ul id='dropdown' style="margin-top: 55px; margin: 55px 35px 0px 55px; z-index: -10" class='dropdown-content'">
+                <li><a href="sass.html" style="font-size: 14px;">Instellingen</a></li>
+                <li><a href="~/Application/logout.cshtml" style="font-size: 14px;">Uitloggen</a></li>
+            </ul>
+            
+            <a style="margin-right: 30px; font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a>
+
             <ul class="hide-on-med-and-down">
                 <li><a href="sass.html">Agenda</a></li>
                 <li><a href="collapsible.html">Klanten</a></li>
