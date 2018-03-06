@@ -15,10 +15,11 @@ nav.nav-center ul li a {
 
 /*SIDE NAV*/
 .side-nav {
-    padding: 0px 60px !important
+    padding: 0px 60px !important;
 }
-
 /*END OF SIDENAV*/
+
+
 
 /*LOGIN PAGE*/
 /* label color */
@@ -44,6 +45,7 @@ nav.nav-center ul li a {
     box-shadow: 0 1px 0 0 #ffa50a !important;
 }
 
+
 .btn:focus {
     background-color: #ff5400;
     color: white;
@@ -63,7 +65,15 @@ nav.nav-center ul li a {
     background-color: #FED12E;
     color: black;
 }
+
+.errorText{
+    color: red;
+    position: absolute;
+    bottom: 0px;
+    font-size: small;
+}
 /*END OF LOGIN PAGE*/
+
 
 /*HOME*/
 /*LOGO SIZE*/

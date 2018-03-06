@@ -1,10 +1,17 @@
 ﻿@{
-    string username, password;
+    string Username = "", Password = "";
 
-    /*if(username == "admin" && password == "admin")
+    if(IsPost)
     {
-        Page.redirect(home.cshtml);
-    }*/
+        Username = Request.Form["Username"];
+        Password = Request.Form["Password"];
+
+        if(Username == "admin" && Password == "admin")
+        {
+            Page.redirect("home.cshtml");
+        }
+
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -27,18 +34,18 @@
                     <div class="card-content ">
                         <div class="row white-text">
                             <img class="col l6 offset-l3 m8 offset-m2 s12 center" src="img/logo.png" />
-                            <form class="col s12">
+                            <form class="col s12" method="post" name="form">
                                 <div class="input-field col s12">
-                                    <input id="username" type="text" class="validate">
+                                    <input id="username" type="text" value="@Request.Form["Username"]">
                                     <label for="username">Gebruikersnaam</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input id="password" type="password" class="validate">
+                                    <input id="password" type="password" value="@Request.Form["Password"]">
                                     <label for="password">Wachtwoord</label>
                                 </div>
+                                <button style="position:relative; margin-bottom: -50px;" class="btn waves-effect waves-light right taximengeryellow" type="submit" name="action">login<i class="material-icons right">send</i></button>
                             </form>
                         </div>
-                        <button class="btn waves-effect waves-light right taximengeryellow" type="submit" name="action">login<i class="material-icons right">send</i></button>
                     </div>
                 </div>
             </div>
