@@ -1,16 +1,25 @@
-﻿@{
-    string Username = "", Password = "";
+﻿@using WebMatrix.WebData;
+@{
+    var Username = "";
+    var Password = "";
+    var errorMessage = "";
 
-    if(IsPost)
+    Validation.RequireField("Username", "Voer een gebruikersnaam in.");
+    Validation.RequireField("Password", "Voer een wachtwoord in.");
+
+    if (IsPost && Validation.IsValid())
     {
         Username = Request.Form["Username"];
         Password = Request.Form["Password"];
 
-        if(Username == "admin" && Password == "admin")
+        if (WebSecurity.Login(Username, Password, true))
         {
-            Page.redirect("home.cshtml");
+            Response.Redirect("~/Application/Home");
         }
-
+        else
+        {
+            errorMessage = "Gebruikersnaam en/of wachtwoord komen niet overeen.";
+        }
     }
 }
 <!DOCTYPE html>
@@ -36,12 +45,15 @@
                             <img class="col l6 offset-l3 m8 offset-m2 s12 center" src="img/logo.png" />
                             <form class="col s12" method="post" name="form">
                                 <div class="input-field col s12">
-                                    <input id="username" type="text" value="@Request.Form["Username"]">
+                                    <input type="text" name="Username" value="@Request.Form["Username"]">
                                     <label for="username">Gebruikersnaam</label>
+                                    <p class="errorText">@Html.ValidationMessage("Username")</p>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input id="password" type="password" value="@Request.Form["Password"]">
+                                    <input type="password" name="Password" value="@Request.Form["Password"]">
                                     <label for="password">Wachtwoord</label>
+                                    <p class="errorText">@Html.ValidationMessage("Password")</p>
+                                    <p class="errorText">@errorMessage</p>
                                 </div>
                                 <button style="position:relative; margin-bottom: -50px;" class="btn waves-effect waves-light right taximengeryellow" type="submit" name="action">login<i class="material-icons right">send</i></button>
                             </form>
