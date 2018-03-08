@@ -15,6 +15,7 @@
 </head>
 
 <body class="grey lighten-2">
+    <!-- Navbar -->
     <nav class="nav-center">
         <div class="nav-wrapper grey darken-4">
 
@@ -36,12 +37,12 @@
             <a style="margin-right: 30px; font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a>
 
             <ul class="hide-on-med-and-down">
-                <li><a href="sass.html">Agenda</a></li>
-                <li><a href="collapsible.html">Klanten</a></li>
+                <li><a href="~/Application/home.cshtml">Agenda</a></li>
+                <li><a href="~/Application/home.cshtml">Klanten</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="sass.html">Agenda</a></li>
-                <li><a href="collapsible.html">Klanten</a></li>
+                <li><a href="~/Application/home.cshtml">Agenda</a></li>
+                <li><a href="~/Application/home.cshtml">Klanten</a></li>
             </ul>
         </div>
     </nav>
@@ -53,7 +54,7 @@
                 <div class="card-content ">
                     <div class="row white-text">
                         <form class="col s12" method="post" name="form">
-                             <span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
+                            <span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
                             <div class="input-field col s12">
                                 <input id="password" type="password" class="validate">
                                 <label for="password">Oud wachtwoord</label>
@@ -78,7 +79,7 @@
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="~/js/materialize.min.js"></script>
     <script>
         $(".button-collapse").sideNav();
     </script>
