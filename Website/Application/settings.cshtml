@@ -14,8 +14,15 @@
 
         if (newPassword == newPassword2)
         {
-            WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
-            succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast";
+            bool gelukt;
+            gelukt = WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
+            if (gelukt == true){
+                succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast";
+            }
+            else
+            {
+                errormessage = "Het oude wachtwoord is incorrect.";
+            }
         }
 
         else
@@ -80,22 +87,26 @@
                     <div class="row white-text">
                         <form class="col s12" method="post" name="form">
                             <span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
-                            <a class="succesText">@succesmessage</a>
+                            
+
                             <div class="input-field col s12">
+                               
                                 <input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate">
                                 <label for="CurrentPassword">Oud wachtwoord</label>
                             </div>
-                            <div class="input-field col s12">
-                                <input id="newPassword" type="password" name="CurrentPassword" value="@Request.Form["newPassword"]" class="validate">
-                                <label for="newPassword">Nieuw wachtwoord</label>
 
+                            <div class="input-field col s12">
+                                <input id="newPassword" type="password" name="newPassword" value="@Request.Form["newPassword"]" class="validate">
+                                <label for="newPassword">Nieuw wachtwoord</label>
 
                             </div>
                             <div class="input-field col s12">
                                 <input id="newPassword2" type="password" name="newPassword2" value="@Request.Form["newPassword2"]" class="validate">
                                 <label for="newPassword2">Nieuw wachtwoord herhaling</label>
+                                <a name="errormessage" class="errorText">@errormessage</a>
+                                <a class="succesText">@succesmessage</a>
                             </div>
-                            <a name="errormessage" class="errorText">@errormessage</a>
+                           
                             <button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
                         </form>
                     </div>

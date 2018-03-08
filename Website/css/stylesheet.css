@@ -115,6 +115,13 @@ nav.nav-center ul {
     font-size: small;
 }
 
+.errorText {
+    color: red;
+    position: absolute;
+    bottom: 0px;
+    font-size: small;
+}
+
 
 
 
