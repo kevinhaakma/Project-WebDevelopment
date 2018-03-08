@@ -1,8 +1,8 @@
 ﻿@{
-    //Response.CacheControl = "no-cache";
+    Response.CacheControl = "no-cache";
 
-    //if (!WebSecurity.IsAuthenticated)
-    //{
-    //    Response.Redirect("~/");
-    //}
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/");
+    }
 }
