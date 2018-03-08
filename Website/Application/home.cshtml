@@ -33,15 +33,15 @@
                 <li><a href="~/Application/logout.cshtml" style="font-size: 14px; padding: 12px 26px">Uitloggen<i class="tiny material-icons">power_settings_new</i></a></li>
             </ul>
 
-            <ul class="hide-on-med-and-down">
-                <li><a href="~/Application/home.cshtml">Agenda</a></li>
-                <li><a href="~/Application/home.cshtml">Klanten</a></li>
-                <li><a class='dropdown-button right' data-beloworigin="true" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a></li>
-                <li><a style="font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a></li>
-            </ul>
+			<ul class="hide-on-med-and-down">
+				<li><a href="~/Application/home.cshtml">Agenda</a></li>
+				<li><a href="~/Application/customers.cshtml">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
+				<li><a class='dropdown-button right' data-beloworigin="true" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a></li>
+				<li><a style="font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a></li>
+			</ul>
             <ul class="side-nav" *id="mobile-demo">
                 <li><a href="~/Application/home.cshtml" style="font-size: 14px; padding: 0px 60px">Agenda</a></li>
-                <li><a href="~/Application/home.cshtml" style="font-size: 14px; padding: 0px 60px">Klanten</a></li>
+                <li><a href="~/Application/customers.cshtml" style="font-size: 14px; padding: 0px 60px">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
                 <li><div class="divider"></div></li>
                 <li><a href="~/Application/settings.cshtml" style="font-size: 14px"><i class="tiny material-icons">settings</i>Instellingen</a></li>
                 <li><a href="~/Application/logout.cshtml" style="font-size: 14px"><i class="tiny material-icons">power_settings_new</i>Uitloggen</a></li>
