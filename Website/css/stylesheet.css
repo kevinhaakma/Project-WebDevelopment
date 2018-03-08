@@ -3,27 +3,29 @@
 nav.nav-center ul {
     text-align: center;
 }
-nav.nav-center ul li {
-    display: inline;
-    float: none;
-}
-nav.nav-center ul li a {
-    font-size: 18px;
-    display: inline-block;
-}
+
+    nav.nav-center ul li {
+        display: inline;
+        float: none;
+    }
+
+        nav.nav-center ul li a {
+            font-size: 18px;
+            display: inline-block;
+        }
 
 .dropdown-content {
     min-width: 155px;
     z-index: -10;
 }
 
-.dropdown-content li a {
-    color: black !important;
-}
+    .dropdown-content li a {
+        color: black !important;
+    }
 
-.dropdown-content li a i {
-    margin: 0 10px 0 0;
-}
+        .dropdown-content li a i {
+            margin: 0 10px 0 0;
+        }
 
 /*END OF GENERAL*/
 /*SIDE NAV*/
@@ -79,7 +81,7 @@ nav.nav-center ul li a {
     color: black;
 }
 
-.errorText{
+.errorText {
     color: red;
     position: absolute;
     bottom: 0px;
@@ -90,7 +92,7 @@ nav.nav-center ul li a {
 
 /*HOME*/
 /*LOGO SIZE*/
-.brand-logo{
+.brand-logo {
     height: 100%;
 }
 /*END OF HOME*/
@@ -99,7 +101,6 @@ nav.nav-center ul li a {
 .right {
     float: right !important;
     margin-bottom: -15px;
-    
 }
 
 

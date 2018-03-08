@@ -1,0 +1,87 @@
+﻿@{
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="~/css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="~/css/stylesheet.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body class="grey lighten-2">
+    <nav class="nav-center">
+        <div class="nav-wrapper grey darken-4">
+
+            <!-- logo -->
+            <img class="col l1 offset-l10 m8 offset-m2 s12 brand-logo" src="~/img/logo.png" />
+
+            <!-- Mobile responsive menu -->
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+            <!-- Dropdown Trigger -->
+            <a style="margin-right: 10px" class='dropdown-button right' data-beloworigin="true" alignment="left" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a>
+
+            <!-- Dropdown -->
+            <ul id='dropdown' class='dropdown-content'>
+                <li><a href="~/Application/settings.cshtml" style="font-size: 14px;">Instellingen<i class="tiny material-icons">settings</i></a></li>
+                <li><a href="~/Application/logout.cshtml" style="font-size: 14px;">Uitloggen<i class="tiny material-icons">power_settings_new</i></a></li>
+            </ul>
+
+            <a style="margin-right: 30px; font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a>
+
+            <ul class="hide-on-med-and-down">
+                <li><a href="sass.html">Agenda</a></li>
+                <li><a href="collapsible.html">Klanten</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="sass.html">Agenda</a></li>
+                <li><a href="collapsible.html">Klanten</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="row">
+        <div class="col s12 m6 l3">
+            <div class="card-panel grey darken-4">
+                <div class="card-content ">
+                    <div class="row white-text">
+                        <form class="col s12" method="post" name="form">
+                             <span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
+                            <div class="input-field col s12">
+                                <input id="password" type="password" class="validate">
+                                <label for="password">Oud wachtwoord</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input id="password" type="password" class="validate">
+                                <label for="password">Nieuw wachtwoord</label>
+
+
+                            </div>
+                            <div class="input-field col s12">
+                                <input id="password" type="password" class="validate">
+                                <label for="password">Nieuw wachtwoord herhaling</label>
+                            </div>
+                            <button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script>
+        $(".button-collapse").sideNav();
+    </script>
+
+</body>
+</html>
