@@ -5,28 +5,28 @@ nav.nav-center ul {
     text-align: center;
 }
 
-    nav.nav-center ul li {
-        display: inline;
-        float: none;
-    }
+nav.nav-center ul li {
+    display: inline;
+    float: none;
+}
 
-        nav.nav-center ul li a {
-            font-size: 18px;
-            display: inline-block;
-        }
+nav.nav-center ul li a {
+    font-size: 18px;
+    display: inline-block;
+}
 
 .dropdown-content {
     min-width: 155px;
 }
 
-    .dropdown-content li a {
-        color: black !important;
-    }
+.dropdown-content li a {
+    color: black !important;
+}
 
-        .dropdown-content li a i {
-            margin: 0 10px 0 0;
-        }
-         
+.dropdown-content li a i {
+    margin: 0 10px 0 0;
+}
+     
 /*END OF GENERAL*/
 /*SIDE NAV*/
 .side-nav {
@@ -102,8 +102,17 @@ nav.nav-center ul {
     float: right !important;
     margin-bottom: -15px;
 }
-
-
-
-
 /*END OF SETTING PAGE*/
+
+/*CUSTOMER PAGE*/
+/* label focus color */
+.input-field input[type=search]:focus + label {
+	color: white !important;
+	background-color: #e0e0e0 !important;
+}
+/* label underline focus color */
+.input-field input[type=search]:focus {
+	border-bottom: 1px solid #ffa50a !important;
+	box-shadow: 0 1px 0 0 #ffa50a !important;
+	background-color: #e0e0e0 !important;
+}
