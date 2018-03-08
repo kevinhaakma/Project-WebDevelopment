@@ -25,7 +25,7 @@
             </a>
 
             <!-- Mobile responsive menu -->
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>           
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
             <!-- Dropdown -->
             <ul id='dropdown' class='dropdown-content'>
@@ -39,11 +39,12 @@
                 <li><a class='dropdown-button right' data-beloworigin="true" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a></li>
                 <li><a style="font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a></li>
             </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li><a href="~/Application/home.cshtml">Agenda</a></li>
-                <li><a href="~/Application/home.cshtml">Klanten</a></li>
-                <li><a href="~/Application/settings.cshtml">Instellingen</a></li>
-                <li><a href="~/Application/logout.cshtml">Uitloggen</a></li>
+            <ul class="side-nav" *id="mobile-demo">
+                <li><a href="~/Application/home.cshtml" style="font-size: 14px; padding: 0px 60px">Agenda</a></li>
+                <li><a href="~/Application/home.cshtml" style="font-size: 14px; padding: 0px 60px">Klanten</a></li>
+                <li><div class="divider"></div></li>
+                <li><a href="~/Application/settings.cshtml" style="font-size: 14px"><i class="tiny material-icons">settings</i>Instellingen</a></li>
+                <li><a href="~/Application/logout.cshtml" style="font-size: 14px"><i class="tiny material-icons">power_settings_new</i>Uitloggen</a></li>
             </ul>
         </div>
     </nav>

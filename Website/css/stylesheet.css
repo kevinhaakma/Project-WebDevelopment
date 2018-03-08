@@ -1,6 +1,11 @@
 ﻿/*GENERAL*/
 /*NAVBAR*/
 
+TextIcon {
+    font-size: 14px;
+    padding: 12px 20px;
+}
+
 nav.nav-center ul {
     text-align: center;
 }
@@ -31,7 +36,7 @@ nav.nav-center ul {
 /*END OF GENERAL*/
 /*SIDE NAV*/
 .side-nav {
-    padding: 0px 60px !important;
+    /*padding: 0px 60px !important;*/
 }
 /*END OF SIDENAV*/
 
