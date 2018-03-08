@@ -16,7 +16,7 @@ nav.nav-center ul {
 
 .dropdown-content {
     min-width: 155px;
-    z-index: -10;
+    z-index: 1;
 }
 
     .dropdown-content li a {
