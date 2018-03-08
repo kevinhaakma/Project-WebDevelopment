@@ -1,39 +1,4 @@
-﻿/*GENERAL*/
-/*NAVBAR*/
-nav.nav-center ul {
-    text-align: center;
-}
-nav.nav-center ul li {
-    display: inline;
-    float: none;
-}
-nav.nav-center ul li a {
-    font-size: 18px;
-    display: inline-block;
-}
-
-.dropdown-content {
-    min-width: 155px;
-    z-index: -10;
-}
-
-.dropdown-content li a {
-    color: black !important;
-}
-
-.dropdown-content li a i {
-    margin: 0 10px 0 0;
-}
-
-/*END OF GENERAL*/
-/*SIDE NAV*/
-.side-nav {
-    padding: 0px 60px !important;
-}
-/*END OF SIDENAV*/
-
-
-
+﻿
 /*LOGIN PAGE*/
 /* label color */
 .input-field label {
@@ -58,51 +23,19 @@ nav.nav-center ul li a {
     box-shadow: 0 1px 0 0 #ffa50a !important;
 }
 
-
 .btn:focus {
     background-color: #ff5400;
-    color: white;
 }
 
 .btn:hover {
     background-color: #ffa50a;
-    color: white;
 }
 
 .btn:active {
     background-color: #ff5400;
-    color: white;
 }
 
 .taximengeryellow {
     background-color: #FED12E;
-    color: black;
-}
-
-.errorText{
-    color: red;
-    position: absolute;
-    bottom: 0px;
-    font-size: small;
 }
 /*END OF LOGIN PAGE*/
-
-
-/*HOME*/
-/*LOGO SIZE*/
-.brand-logo{
-    height: 100%;
-}
-/*END OF HOME*/
-
-/*SETTING PAGE*/
-.right {
-    float: right !important;
-    margin-bottom: -15px;
-    
-}
-
-
-
-
-/*END OF SETTING PAGE*/
