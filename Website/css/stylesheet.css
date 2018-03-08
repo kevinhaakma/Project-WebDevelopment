@@ -103,6 +103,13 @@ nav.nav-center ul {
     margin-bottom: -15px;
 }
 
+.succesText {
+    color: green;
+    position: absolute;
+    bottom: 0px;
+    font-size: small;
+}
+
 
 
 
