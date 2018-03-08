@@ -17,6 +17,7 @@ nav.nav-center ul {
 
 .dropdown-content {
     min-width: 155px;
+    
 }
 
     .dropdown-content li a {
@@ -94,6 +95,10 @@ nav.nav-center ul {
 /*LOGO SIZE*/
 .brand-logo {
     height: 100%;
+}
+
+.nav ul li:hover {
+    background-color: greenyellow !important;
 }
 /*END OF HOME*/
 
