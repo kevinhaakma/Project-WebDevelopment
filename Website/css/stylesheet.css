@@ -1,5 +1,6 @@
 ﻿/*GENERAL*/
 /*NAVBAR*/
+
 nav.nav-center ul {
     text-align: center;
 }
@@ -16,7 +17,6 @@ nav.nav-center ul {
 
 .dropdown-content {
     min-width: 155px;
-    z-index: -10;
 }
 
     .dropdown-content li a {
