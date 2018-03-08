@@ -7,6 +7,8 @@
     Validation.RequireField("Username", "Voer een gebruikersnaam in.");
     Validation.RequireField("Password", "Voer een wachtwoord in.");
 
+
+
     if (IsPost && Validation.IsValid())
     {
         Username = Request.Form["Username"];
@@ -22,6 +24,7 @@
         }
     }
 }
+
 <!DOCTYPE html>
 <html>
 <head>
