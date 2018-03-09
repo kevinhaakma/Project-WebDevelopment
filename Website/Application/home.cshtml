@@ -1,5 +1,6 @@
 ﻿@{
-
+	var db = Database.Open("klantgegevens");
+	var gegevens = db.Query("SELECT * from Rittenkaart");
 }
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,9 @@
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Menger | Agenda</title>
+    <link rel="shortcut icon" href="~/img/Menger-Favicon.png" title="Favicon">
 </head>
 
 <body class="grey lighten-2">
@@ -33,14 +37,14 @@
                 <li><a href="~/Application/logout.cshtml" style="font-size: 14px; padding: 12px 26px">Uitloggen<i class="tiny material-icons">power_settings_new</i></a></li>
             </ul>
 
-			<ul class="hide-on-med-and-down">
-				<li><a href="~/Application/home.cshtml">Agenda</a></li>
-				<li><a href="~/Application/customers.cshtml">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
-				<li><a class='dropdown-button right' data-beloworigin="true" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a></li>
-				<li><a style="font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a></li>
-			</ul>
+            <ul class="hide-on-med-and-down">
+                <li><a href="~/Application/Agenda.cshtml">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
+                <li><a href="~/Application/customers.cshtml">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
+                <li><a class='dropdown-button right' data-beloworigin="true" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a></li>
+                <li><a style="font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a></li>
+            </ul>
             <ul class="side-nav" *id="mobile-demo">
-                <li><a href="~/Application/home.cshtml" style="font-size: 14px; padding: 0px 60px">Agenda</a></li>
+                <li><a href="~/Application/Agenda.cshtml" style="font-size: 14px; padding: 0px 60px">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
                 <li><a href="~/Application/customers.cshtml" style="font-size: 14px; padding: 0px 60px">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
                 <li><div class="divider"></div></li>
                 <li><a href="~/Application/settings.cshtml" style="font-size: 14px"><i class="tiny material-icons">settings</i>Instellingen</a></li>
@@ -48,6 +52,63 @@
             </ul>
         </div>
     </nav>
+
+
+    <div class="row" style="margin-bottom: 0px;">
+        <div class="col s8 m8 l8">
+            <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
+            <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">edit</i>Wijzigen</a>
+            <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">cancel</i>Annuleren</a>
+            <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">delete</i>Verwijderen</a>
+        </div>
+        <form>
+            <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 64px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
+            <div class="col s4 input-field right" style="width:300px;margin: 80px 10px 10px;">
+                <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px;">search</i></label>
+                <input id="search" type="search" style="margin-bottom: 0px;" required>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="row">
+        <div class="col s12">
+            <div class="card white">
+                <div class="card-content black-text">
+                    <span class="card-title">Klanten</span>
+                    <table class="centered highlight responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Tijd</th>
+                                <th>Ophaaladres</th>
+                                <th>Bestemmingsadres</th>
+                                <th>Klant</th>
+                                <th>#</th>
+                                <th>SW</th>
+                                <th>Kenteken</th>
+                                <th>Chauffeur</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in gegevens)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@item.Tijd</td>
+                                    <td>@item.Ophaaladres</td>
+                                    <td>@item.Bestemmingsadres</td>
+                                    <td>@item.Klant</td>
+                                    <td>@item.Personen</td>
+                                    <td>@item.SW</td>
+                                    <td>@item.Kenteken</td>
+                                    <td>@item.Chauffeur</td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
