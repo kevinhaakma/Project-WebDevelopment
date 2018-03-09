@@ -16,7 +16,14 @@
 
         if (WebSecurity.Login(Username, Password, true))
         {
-            Response.Redirect("~/Application/Home");
+            if(Username == "admin" || Username == "Admin")
+            {
+                Response.Redirect("~/Admin/registersecret");
+            }
+            else
+            {
+                Response.Redirect("~/Application/Home");
+            }
         }
         else
         {
