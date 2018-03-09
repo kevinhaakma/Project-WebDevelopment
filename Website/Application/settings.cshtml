@@ -1,4 +1,5 @@
 ﻿@{
+
     var userName = WebSecurity.CurrentUserName;
     var CurrentPassword = "";
     var newPassword = "";
@@ -44,6 +45,9 @@
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Menger | Instellingen</title>
+    <link rel="shortcut icon" href="~/img/Menger-Favicon.png" title="Favicon">
 </head>
 
 <body class="grey lighten-2">
@@ -92,7 +96,7 @@
                             <div class="input-field col s12">
                                
                                 <input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate">
-                                <label for="CurrentPassword">Oud wachtwoord</label>
+                                <label for="CurrentPassword">Huidig wachtwoord</label>
                             </div>
 
                             <div class="input-field col s12">
@@ -102,7 +106,7 @@
                             </div>
                             <div class="input-field col s12">
                                 <input id="newPassword2" type="password" name="newPassword2" value="@Request.Form["newPassword2"]" class="validate">
-                                <label for="newPassword2">Nieuw wachtwoord herhaling</label>
+                                <label for="newPassword2">Bevestig wachtwoord</label>
                                 <a name="errormessage" class="errorText">@errormessage</a>
                                 <a class="succesText">@succesmessage</a>
                             </div>
