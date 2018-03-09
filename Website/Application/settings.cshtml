@@ -17,7 +17,7 @@
             bool gelukt;
             gelukt = WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
             if (gelukt == true){
-                succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast";
+                succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast.";
             }
             else
             {
@@ -27,7 +27,7 @@
 
         else
         {
-            errormessage = "De wachtwoorden komen niet overeen";
+            errormessage = "De wachtwoorden komen niet overeen.";
         }
     }
 
