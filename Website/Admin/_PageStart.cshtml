@@ -1,0 +1,12 @@
+﻿@{
+    Response.CacheControl = "no-cache";
+
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/");
+    }
+    else if(WebSecurity.IsAuthenticated && !(WebSecurity.CurrentUserName == "admin"))
+    {
+        Response.Redirect("~/Application/Home");
+    }
+}
