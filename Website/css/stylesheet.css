@@ -29,6 +29,10 @@ nav.nav-center ul li a {
     color: black !important;
 }
 
+    .dropdown-content li > span {
+        color: black !important;
+    }
+
 .dropdown-content li a i {
     margin: 0 10px 0 0;
 }
