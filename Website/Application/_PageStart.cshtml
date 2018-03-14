@@ -5,4 +5,8 @@
     {
         Response.Redirect("~/");
     }
+    else if (WebSecurity.IsAuthenticated && WebSecurity.CurrentUserName == "admin")
+    {
+        Response.Redirect("~/Admin/registersecret");
+    }
 }
