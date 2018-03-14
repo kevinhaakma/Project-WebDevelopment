@@ -38,13 +38,13 @@
             </ul>
 
             <ul class="hide-on-med-and-down">
-                <li><a href="~/Application/home.cshtml">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
+                <li><a href="~/Application/Agenda.cshtml">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
                 <li><a href="~/Application/customers.cshtml">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
                 <li><a class='dropdown-button right' data-beloworigin="true" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a></li>
                 <li><a style="font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a></li>
             </ul>
             <ul class="side-nav" *id="mobile-demo">
-                <li><a href="~/Application/home.cshtml" style="font-size: 14px; padding: 0px 60px">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
+                <li><a href="~/Application/Agenda.cshtml" style="font-size: 14px; padding: 0px 60px">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
                 <li><a href="~/Application/customers.cshtml" style="font-size: 14px; padding: 0px 60px">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
                 <li><div class="divider"></div></li>
                 <li><a href="~/Application/settings.cshtml" style="font-size: 14px"><i class="tiny material-icons">settings</i>Instellingen</a></li>
@@ -101,7 +101,6 @@
                                     <td>@item.SW</td>
                                     <td>@item.Kenteken</td>
                                     <td>@item.Chauffeur</td>
-									<td>@item.date</td>
                                 </tr>
                             </tbody>
                         }
