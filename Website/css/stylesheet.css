@@ -109,6 +109,14 @@ nav.nav-center ul li a {
 .nav ul li:hover {
     background-color: greenyellow !important;
 }
+
+.Pointer {
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 /*END OF HOME*/
 
 /*SETTING PAGE*/

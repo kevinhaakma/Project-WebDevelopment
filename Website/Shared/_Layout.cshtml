@@ -15,6 +15,9 @@
 
     <title>Menger | Agenda</title>
     <link rel="shortcut icon" href="~/img/Menger-Favicon.png" title="Favicon">
+   
+    <!--Script for Table sorting headings-->
+    <script type="text/javascript" src="~/js/SortTable.js"></script>
 </head>
 
 <body class="grey lighten-2">
@@ -50,14 +53,15 @@
                 <li><a href="~/Application/logout" style="font-size: 14px"><i class="tiny material-icons">power_settings_new</i>Uitloggen</a></li>
             </ul>
         </div>
-    </nav> 
+    </nav>
 
     @RenderBody()
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="~/js/materialize.min.js"></script>
-    <script>
+
+    <script>        
         $(".button-collapse").sideNav();
     </script>
 
