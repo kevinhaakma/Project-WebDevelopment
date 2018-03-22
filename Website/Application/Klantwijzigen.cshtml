@@ -1,0 +1,112 @@
+﻿@{
+	Layout = "~/Shared/_Layout.cshtml";
+	var db = Database.Open("Klantgegevens");
+	var ID = Request.QueryString["id"];
+
+	var KlantID = db.QueryValue("SELECT KlantID FROM klantgegevens WHERE KlantID = @0", ID);
+	var Voornaam = db.QueryValue("SELECT Voornaam FROM klantgegevens WHERE KlantID = @0", ID);
+	var Achternaam = db.QueryValue("SELECT Achternaam FROM klantgegevens WHERE KlantID = @0", ID);
+	var Adres = db.QueryValue("SELECT Adres FROM klantgegevens WHERE KlantID = @0", ID);
+	var Postcode = db.QueryValue("SELECT Postcode FROM klantgegevens WHERE KlantID = @0", ID);
+	var Huisnummer = db.QueryValue("SELECT Huisnummer FROM klantgegevens WHERE KlantID = @0", ID);
+	var Woonplaats = db.QueryValue("SELECT Woonplaats FROM klantgegevens WHERE KlantID = @0", ID);
+	var Telefoonnummer = db.QueryValue("SELECT Telefoonnummer FROM klantgegevens WHERE KlantID = @0", ID);
+	var Emailadres = db.QueryValue("SELECT Emailadres FROM klantgegevens WHERE KlantID = @0", ID);
+	var Bijzonderheden = db.QueryValue("SELECT Bijzonderheden FROM klantgegevens WHERE KlantID = @0", ID);
+
+	if(IsPost)
+	{
+		var first_name = Request.Form["first_name"];
+		var last_name = Request.Form["last_name"];
+		string adres = Request.Form["adres"];
+		string huisnummer = Request.Form["huisnummer"];
+		var postcode = Request.Form["postcode"];
+		var woonplaats = Request.Form["woonplaats"];
+		var telefoonnummer = Request.Form["telefoonnummer"];
+		var emailadres = Request.Form["emailadres"];
+		var textarea = Request.Form["textarea"];
+
+		var query = "UPDATE klantgegevens SET Voornaam = @0,Achternaam = @1,Adres = @2,Huisnummer = @3,Postcode = @4,Woonplaats = @5,Telefoonnummer = @6,Emailadres = @7,Bijzonderheden = @8 WHERE KlantID = @9";
+		db.Execute(query, first_name, last_name, adres, huisnummer, postcode, woonplaats, telefoonnummer, emailadres, textarea, ID);
+
+		Response.Redirect("~/Application/Customers.cshtml");
+	}
+}
+
+
+<div class="row">
+	<div class="col s12 m6 l3">
+		<div class="card-panel grey darken-4">
+
+			<div class="card-content ">
+				<div class="row white-text">
+					<span style="font-size: 16px;" class="card-title">Klant toevoegen</span>
+					<form class="col s12" method="post">
+						<div class="row">
+							<div class="white-text input-field col s2">
+								<input name="id" type=text value="@KlantID" disabled>
+								<label for="Klant ID">#</label>
+							</div>
+							<div class="input-field col s5">
+								<input name="first_name" type="text" value="@Voornaam"  required>
+								<label for="first_name">Voornaam</label>
+							</div>
+							<div class="input-field col s5">
+								<input name="last_name" type="text" value="@Achternaam" required>
+								<label for="last_name">Achternaam</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s12">
+								<input name="adres" type="text" value="@Adres" required>
+								<label for="adres">Adres</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s8">
+								<input name="postcode" type="text" value="@Postcode" required>
+								<label for="postcode">Postcode</label>
+							</div>
+							<div class="input-field col s4">
+								<input name="huisnummer" type="text" value="@Huisnummer" required>
+								<label for="huisnummer">Huisnummer</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s12">
+								<input name="woonplaats" type="text" value="@Woonplaats" required>
+								<label for="woonplaats">Woonplaats</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s12">
+								<input name="telefoonnummer" type="tel" value="@Telefoonnummer" required>
+								<label for="telefoonnummer">Telefoonnummer</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s12">
+								<input name="emailadres" type="text" value="@Emailadres">
+								<label for="emailadres">Email adres</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="input-field col s12">
+								<textarea name="textarea" class="materialize-textarea" data-length="120">@Bijzonderheden</textarea>
+								<label for="bijzonderheden">Bijzonderheden</label>
+							</div>
+						</div>
+						<button class="btn right taximengeryellow" runat="server" type="submit" name="action" id="form">Bevestig</button>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

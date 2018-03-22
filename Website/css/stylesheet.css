@@ -70,10 +70,39 @@ nav.nav-center ul li a {
     box-shadow: 0 1px 0 0 #ffa50a !important;
 }
 
+/* label focus color */
+.input-field input[type=tel]:focus + label {
+	color: white !important;
+}
+/* label underline focus color */
+.input-field input[type=tel]:focus {
+	border-bottom: 1px solid #ffa50a !important;
+	box-shadow: 0 1px 0 0 #ffa50a !important;
+}
+
+textarea.materialize-textarea:focus + label {
+	color: white !important;
+}
+
+textarea.materialize-textarea:focus {
+	border-bottom: 1px solid #ffa50a !important;
+	box-shadow: 0 1px 0 0 #ffa50a !important;
+}
+
+.input-field input[type=text]:disabled + label {
+	color: white !important;
+}
+
+.input-field input[type="text"]:disabled {
+	color: white !important;
+	border-bottom: 1px solid #989795 !important;
+	box-shadow: 0 1px 0 0 #989795 !important;
+}
+
 
 .btn:focus {
-    background-color: #ff5400;
-    color: white;
+	background-color: #ff5400;
+	color: white;
 }
 
 .btn:hover {
@@ -144,6 +173,7 @@ nav.nav-center ul li a {
 
 
 /*END OF SETTING PAGE*/
+
 /*CUSTOMER PAGE*/
 /* label focus color */
 .input-field input[type=search]:focus + label {
@@ -155,5 +185,9 @@ nav.nav-center ul li a {
 	border-bottom: 1px solid #ffa50a !important;
 	box-shadow: 0 1px 0 0 #ffa50a !important;
 	background-color: #e0e0e0 !important;
+}
+
+.disabled {
+	color: white !important;
 }
 
