@@ -38,12 +38,6 @@ nav.nav-center ul li a {
 }
      
 /*END OF GENERAL*/
-/*SIDE NAV*/
-.side-nav {
-    /*padding: 0px 60px !important;*/
-}
-/*END OF SIDENAV*/
-
 
 
 /*LOGIN PAGE*/
@@ -189,5 +183,14 @@ textarea.materialize-textarea:focus {
 
 .disabled {
 	color: white !important;
+}
+
+
+/*TABLE*/
+.ellipsis {
+    max-width: 40px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
