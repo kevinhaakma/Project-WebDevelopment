@@ -1,0 +1,162 @@
+﻿@{
+    Layout = "~/Shared/_Layout.cshtml";
+    var db = Database.Open("Klantgegevens");
+
+    var KlantID = "";
+
+    var first_name = "";
+    var last_name = "";
+    var adres = "";
+    var postcode = "";
+    var huisnummer = "";
+    var woonplaats = "";
+    var telefoonnummer = "";
+    var emailadres = "";
+    var textarea = "";
+
+    var errorText = "";
+
+    if (!IsPost && !Request.QueryString["id"].IsEmpty())
+    {
+        var ID = Request.QueryString["id"];
+
+        KlantID = Convert.ToString(db.QueryValue("SELECT KlantID FROM klantgegevens WHERE KlantID = @0", ID));
+        first_name = db.QueryValue("SELECT Voornaam FROM klantgegevens WHERE KlantID = @0", ID);
+        last_name = db.QueryValue("SELECT Achternaam FROM klantgegevens WHERE KlantID = @0", ID);
+        adres = db.QueryValue("SELECT Adres FROM klantgegevens WHERE KlantID = @0", ID);
+        postcode = db.QueryValue("SELECT Postcode FROM klantgegevens WHERE KlantID = @0", ID);
+        huisnummer = Convert.ToString(db.QueryValue("SELECT Huisnummer FROM klantgegevens WHERE KlantID = @0", ID));
+        woonplaats = db.QueryValue("SELECT Woonplaats FROM klantgegevens WHERE KlantID = @0", ID);
+        telefoonnummer = db.QueryValue("SELECT Telefoonnummer FROM klantgegevens WHERE KlantID = @0", ID);
+        try
+        {
+            emailadres = db.QueryValue("SELECT Emailadres FROM klantgegevens WHERE KlantID = @0", ID);
+            textarea = db.QueryValue("SELECT Bijzonderheden FROM klantgegevens WHERE KlantID = @0", ID);
+        }
+
+        catch
+        {
+            emailadres = "";
+            textarea = "";
+        }
+
+    }
+
+    else if (!IsPost && Request.QueryString["ID"].IsEmpty())
+    {
+        KlantID = Convert.ToString(db.QueryValue("SELECT Max(KlantID) from klantgegevens") + 1);
+    }
+
+
+    if (IsPost && Request.QueryString["id"].IsEmpty())
+    {
+        first_name = Request.Form["first_name"];
+        last_name = Request.Form["last_name"];
+        adres = Request.Form["adres"];
+        huisnummer = Request.Form["huisnummer"];
+        postcode = Request.Form["postcode"];
+        woonplaats = Request.Form["woonplaats"];
+        telefoonnummer = Request.Form["telefoonnummer"];
+        emailadres = Request.Form["emailadres"];
+        textarea = Request.Form["textarea"];
+
+        var query = "INSERT INTO klantgegevens (Voornaam,Achternaam,Adres,Huisnummer,Postcode,Woonplaats,Telefoonnummer,Emailadres,Bijzonderheden) VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8)";
+        db.Execute(query, first_name, last_name, adres, huisnummer, postcode, woonplaats, telefoonnummer, emailadres, textarea);
+
+        Response.Redirect("~/Application/Customers.cshtml");
+    }
+
+    if (IsPost && !Request.QueryString["id"].IsEmpty())
+    {
+        KlantID = Request.QueryString["id"];
+        first_name = Request.Form["first_name"];
+        last_name = Request.Form["last_name"];
+        adres = Request.Form["adres"];
+        huisnummer = Request.Form["huisnummer"];
+        postcode = Request.Form["postcode"];
+        woonplaats = Request.Form["woonplaats"];
+        telefoonnummer = Request.Form["telefoonnummer"];
+        emailadres = Request.Form["emailadres"];
+        textarea = Request.Form["textarea"];
+
+        var query = "UPDATE klantgegevens SET Voornaam = @0,Achternaam = @1,Adres = @2,Huisnummer = @3,Postcode = @4,Woonplaats = @5,Telefoonnummer = @6,Emailadres = @7,Bijzonderheden = @8 WHERE KlantID = @9";
+        db.Execute(query, first_name, last_name, adres, huisnummer, postcode, woonplaats, telefoonnummer, emailadres, textarea, KlantID);
+
+        Response.Redirect("~/Application/Customers.cshtml");
+    }
+}
+
+
+<div class="row">
+	<div class="col s12 m6 l3">
+		<div class="card-panel grey darken-4">
+
+			<div class="card-content ">
+				<div class="row white-text">
+					<span style="font-size: 16px;" class="card-title">Klant toevoegen</span>
+                    <form class="col s12" method="post">
+                        <div class="row">
+                            <div class="white-text input-field col s2">
+                                <input name="id" type=text value="@KlantID" disabled>
+                                <label for="Klant ID"></label>
+                            </div>
+                            <div class="input-field col s5">
+                                <input name="first_name" type="text" value="@first_name" required>
+                                <label for="first_name">Voornaam</label>
+                            </div>
+                            <div class="input-field col s5">
+                                <input name="last_name" type="text" value="@last_name" required>
+                                <label for="last_name">Achternaam</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s8">
+                                <input name="adres" type="text" value="@adres" required>
+                                <label for="adres">Straat</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <input name="huisnummer" type="text" value="@huisnummer" required>
+                                <label for="huisnummer">Huisnummer</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s8">
+                                <input name="woonplaats" type="text" value="@woonplaats" required>
+                                <label for="woonplaats">Woonplaats</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <input name="postcode" type="text" value="@postcode" required>
+                                <label for="postcode">Postcode</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input name="telefoonnummer" type="tel" value="@telefoonnummer" required>
+                                <label for="telefoonnummer">Telefoonnummer</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input name="emailadres" type="text" value="@emailadres">
+                                <label for="emailadres">Email adres</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea name="textarea" type="text" value="@textarea" class="materialize-textarea" data-length="120">@textarea</textarea>
+                                <label for="bijzonderheden">Bijzonderheden</label>
+                            </div>
+                        </div>
+                        <button class="btn right taximengeryellow" runat="server" type="submit" name="action" id="form">Bevestig</button>
+
+                    </form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

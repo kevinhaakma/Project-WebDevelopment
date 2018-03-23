@@ -6,7 +6,7 @@
 
 <div class="row" method="post" style="margin-bottom: 0px;">
 	<div class="col s8 m8 l8">
-		<a href="~/Application/Klanttoevoegen.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
+		<a href="~/Application/customeredit.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
 		<a class="waves-effect waves-light btn taximengeryellow "  style="margin: 80px 0px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
 	</div>
 	<form>
@@ -42,7 +42,7 @@
                          {
                 <tbody style='table-layout:fixed'>
 					<tr>
-						<td><a href="~/Application/Klantwijzigen?id=@item.KlantID" class="material-icons center" style="color:black">edit</a></td>
+						<td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center" style="color:black">edit</a></td>
 						<td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center" style="color:black">delete</a></td>
 						<td>@item.Voornaam</td>
 						<td>@item.Achternaam</td>
