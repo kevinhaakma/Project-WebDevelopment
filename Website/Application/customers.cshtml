@@ -1,146 +1,190 @@
 ﻿@{
-	Layout = "~/Shared/_Layout.cshtml";
-	var db = Database.Open("Klantgegevens");
-	var gegevens = db.Query("SELECT * from klantgegevens");
+    Layout = "~/Shared/_Layout.cshtml";
+    var db = Database.Open("Klantgegevens");
+    var gegevens = db.Query("SELECT * from klantgegevens");
 }
 
 <div class="row" method="post" style="margin-bottom: 0px;">
-	<div class="col s8 m8 l8">
-		<a href="~/Application/customeredit.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
-		<a class="waves-effect waves-light btn taximengeryellow "  style="margin: 80px 0px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
-	</div>
-	<form>
-		<div class="col s4 input-field right" style="width:300px;margin: 80px 10px 10px;">
-			<label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
-			<input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
-		</div>
-	</form>
+    <div class="col s8 m8 l8">
+        <a href="~/Application/customeredit.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
+        <a class="waves-effect waves-light btn taximengeryellow " style="margin: 80px 0px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
+    </div>
+    <form>
+        <div class="col s4 input-field right" style="width:300px;margin: 80px 10px 10px;">
+            <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
+            <input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
+        </div>
+    </form>
 </div>
 
-    <div class="row">
-        <div class="col s12">
-            <div class="card white">
-                <div class="card-content black-text">
-                    <span class="card-title">Klanten</span>
-                    <table class="centered highlight" id="Table">
-                        <thead>
-							<tr>
-								<th></th>
-								<th></th>
-								<th class="Pointer" onclick="sortTable(0)">Voornaam</th>
-								<th class="Pointer" onclick="sortTable(1)">Achternaam</th>
-								<th class="Pointer" onclick="sortTable(2)">Adres</th>
-								<th class="Pointer" onclick="sortTable(3)">Huisnummer</th>
-								<th class="Pointer" onclick="sortTable(4)">Postcode</th>
-								<th class="Pointer" onclick="sortTable(5)">Woonplaats</th>
-								<th class="Pointer" onclick="sortTable(6)">Telefoonnummer</th>
-								<th class="Pointer" onclick="sortTable(7)">Emailadres</th>
-								<th class="Pointer" onclick="sortTable(8)">Bijzonderheden</th>
-							</tr>
-                        </thead>
-                        @foreach (var item in gegevens)
-                         {
-                <tbody style='table-layout:fixed'>
-					<tr>
-						<td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center" style="color:black">edit</a></td>
-						<td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center" style="color:black">delete</a></td>
-						<td>@item.Voornaam</td>
-						<td>@item.Achternaam</td>
-						<td>@item.Adres</td>
-						<td>@item.Huisnummer</td>
-						<td>@item.Postcode</td>
-						<td>@item.Woonplaats</td>
-						<td>@item.Telefoonnummer</td>
-						<td>@item.Emailadres</td>
-						<td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
-					</tr>
-                </tbody>
+<div class="row">
+    <div class="col s12">
+        <div class="card white">
+            <div class="card-content black-text">
+                <span class="card-title">Klanten</span>
+                <table class="centered highlight" id="Table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th class="Pointer" onclick="sortTable(0)">Voornaam</th>
+                            <th class="Pointer" onclick="sortTable(1)">Achternaam</th>
+                            <th class="Pointer" onclick="sortTable(2)">Adres</th>
+                            <th class="Pointer" onclick="sortTable(3)">Huisnummer</th>
+                            <th class="Pointer" onclick="sortTable(4)">Postcode</th>
+                            <th class="Pointer" onclick="sortTable(5)">Woonplaats</th>
+                            <th class="Pointer" onclick="sortTable(6)">Telefoonnummer</th>
+                            <th class="Pointer" onclick="sortTable(7)">Emailadres</th>
+                            <th class="Pointer" onclick="sortTable(8)">Bijzonderheden</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in gegevens)
+        {
+            <tbody style='table-layout:fixed'>
+                <tr>
+                    <td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center" style="color:black">edit</a></td>
+                    <td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center" style="color:black">delete</a></td>
+                    <td>@item.Voornaam</td>
+                    <td>@item.Achternaam</td>
+                    <td>@item.Adres</td>
+                    <td>@item.Huisnummer</td>
+                    <td>@item.Postcode</td>
+                    <td>@item.Woonplaats</td>
+                    <td>@item.Telefoonnummer</td>
+                    <td>@item.Emailadres</td>
+                    <td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
+                </tr>
+            </tbody>
 }
-                    </table>
-                    <!--Script for Table sorting headings-->
+                </table>
 
-                    <script>
-                        function sortTable(n) {
-                            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-                            table = document.getElementById("Table");
-                            switching = true;
-                            //Set the sorting direction to ascending:
-                            dir = "asc";
-                            /*Make a loop that will continue until
-                            no switching has been done:*/
-                            while (switching) {
-                                //start by saying: no switching is done:
-                                switching = false;
-                                rows = table.getElementsByTagName("TR");
-                                /*Loop through all table rows (except the
-                                first, which contains table headers):*/
-                                for (i = 1; i < (rows.length - 1); i++) {
-                                    //start by saying there should be no switching:
-                                    shouldSwitch = false;
-                                    /*Get the two elements you want to compare,
-                                    one from current row and one from the next:*/
-                                    x = rows[i].getElementsByTagName("TD")[n];
-                                    y = rows[i + 1].getElementsByTagName("TD")[n];
-                                    /*check if the two rows should switch place,
-                                    based on the direction, asc or desc:*/
-                                    if (dir == "asc") {
-                                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                                            //if so, mark as a switch and break the loop:
-                                            shouldSwitch = true;
-                                            break;
-                                        }
-                                    } else if (dir == "desc") {
-                                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                                            //if so, mark as a switch and break the loop:
-                                            shouldSwitch = true;
-                                            break;
-                                        }
+                <ul class="pagination">
+                    <li id="page0" class="waves-effect"><a onclick="pages(0)">1</a></li>
+                    <li id="page1" class="waves-effect"><a onclick="pages(1)">2</a></li>
+                    <li id="page2" class="waves-effect"><a onclick="pages(2)">3</a></li>
+                </ul>
+
+
+                <!--Script for Table sorting headings-->
+
+                <script>
+                    function sortTable(n) {
+                        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                        table = document.getElementById("Table");
+                        switching = true;
+                        //Set the sorting direction to ascending:
+                        dir = "asc";
+                        /*Make a loop that will continue until
+                        no switching has been done:*/
+                        while (switching) {
+                            //start by saying: no switching is done:
+                            switching = false;
+                            rows = table.getElementsByTagName("TR");
+                            /*Loop through all table rows (except the
+                            first, which contains table headers):*/
+                            for (i = 1; i < (rows.length - 1); i++) {
+                                //start by saying there should be no switching:
+                                shouldSwitch = false;
+                                /*Get the two elements you want to compare,
+                                one from current row and one from the next:*/
+                                x = rows[i].getElementsByTagName("TD")[n];
+                                y = rows[i + 1].getElementsByTagName("TD")[n];
+                                /*check if the two rows should switch place,
+                                based on the direction, asc or desc:*/
+                                if (dir == "asc") {
+                                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                        //if so, mark as a switch and break the loop:
+                                        shouldSwitch = true;
+                                        break;
+                                    }
+                                } else if (dir == "desc") {
+                                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                        //if so, mark as a switch and break the loop:
+                                        shouldSwitch = true;
+                                        break;
                                     }
                                 }
-                                if (shouldSwitch) {
-                                    /*If a switch has been marked, make the switch
-                                    and mark that a switch has been done:*/
-                                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                            }
+                            if (shouldSwitch) {
+                                /*If a switch has been marked, make the switch
+                                and mark that a switch has been done:*/
+                                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                                switching = true;
+                                //Each time a switch is done, increase this count by 1:
+                                switchcount++;
+                            } else {
+                                /*If no switching has been done AND the direction is "asc",
+                                set the direction to "desc" and run the while loop again.*/
+                                if (switchcount == 0 && dir == "asc") {
+                                    dir = "desc";
                                     switching = true;
-                                    //Each time a switch is done, increase this count by 1:
-                                    switchcount++;
-                                } else {
-                                    /*If no switching has been done AND the direction is "asc",
-                                    set the direction to "desc" and run the while loop again.*/
-                                    if (switchcount == 0 && dir == "asc") {
-                                        dir = "desc";
-                                        switching = true;
-                                    }
                                 }
                             }
                         }
-                    </script>
+                    }
+                </script>
 
-                    <script>
-                        function searchTable() {
-                            var input, filter, found, table, tr, td, i, j;
-                            input = document.getElementById("search");
-                            filter = input.value.toUpperCase();
-                            table = document.getElementById("Table");
-                            tr = table.getElementsByTagName("tr");
-                            for (i = 1; i < tr.length; i++) {
-                                td = tr[i].getElementsByTagName("td");
-                                for (j = 0; j < td.length; j++) {
-                                    if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                                        found = true;
-                                    }
-                                }
-                                if (found) {
-                                    tr[i].style.display = "";
-                                    found = false;
-                                } else {
-                                    tr[i].style.display = "none";
+                <script>
+                    function searchTable() {
+                        var input, filter, found, table, tr, td, i, j;
+                        input = document.getElementById("search");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("Table");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 1; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td");
+                            for (j = 0; j < td.length; j++) {
+                                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                    found = true;
                                 }
                             }
+                            if (found) {
+                                tr[i].style.display = "";
+                                found = false;
+                            } else {
+                                tr[i].style.display = "none";
+                            }
                         }
-                    </script>
+                    }
+                </script>
 
-                </div>
+                <script>
+                    function pages(page) {
+                        var table, tr, i, j, per = 5;
+                        table = document.getElementById("Table");
+                        tr = table.getElementsByTagName("tr");
+
+                        for (i = 1; i < tr.length; i++) {
+
+                            if (i >= (page * per + 1) && i <= (page * per + 5)) {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+
+                        for (j = 0; j < 3; j++) {
+                            document.getElementById('page' + j).setAttribute("class", "waves-effect");
+                        }
+
+                        document.getElementById('page' + page).setAttribute("class", "active");
+                    }
+                </script>
+
+                <script>
+                    function count() {
+                        var table, tr, i, per = 5;
+                        table = document.getElementById("Table");
+                        tr = table.getElementsByTagName("tr");
+
+                        return tr.length / per;
+                    }
+                </script>
+
+                <script type="text/javascript">
+                    pages(0);
+                </script>
             </div>
         </div>
     </div>
+</div>
