@@ -2,6 +2,13 @@
     Layout = "~/Shared/_Layout.cshtml";
     var db = Database.Open("klantgegevens");
     var gegevens = db.Query("SELECT * from Rittenkaart");
+
+    var today = DateTime.Now.ToString("D");
+
+    if (IsPost)
+    {
+        Response.Redirect("~/");
+    }
 }
 
 <div class="row" style="margin-bottom: 0px;">
@@ -25,37 +32,46 @@
     <div class="col s12">
         <div class="card white">
             <div class="card-content black-text">
-                <span class="card-title">Klanten</span>
-                <table class="centered highlight responsive-table" id="myTable">
-                    <thead>
-                        <tr>
-                            <th class="Pointer" onclick="sortTable(0)">Tijd</th>
-                            <th class="Pointer" onclick="sortTable(1)">Ophaaladres</th>
-                            <th class="Pointer" onclick="sortTable(2)">Bestemmingsadres</th>
-                            <th class="Pointer" onclick="sortTable(3)">Klant</th>
-                            <th class="Pointer" onclick="sortTable(4)">Personen</th>
-                            <th class="Pointer" onclick="sortTable(5)">Soort Wagen</th>
-                            <th class="Pointer" onclick="sortTable(6)">Kenteken</th>
-                            <th class="Pointer" onclick="sortTable(7)">Chauffeur</th>
-                        </tr>
-                    </thead>
-                    @foreach (var item in gegevens)
-        {
-            <tbody>
-                <tr>
-                    <td>@item.Tijd</td>
-                    <td>@item.Ophaaladres</td>
-                    <td>@item.Bestemmingsadres</td>
-                    <td>@item.Klant</td>
-                    <td>@item.Personen</td>
-                    <td>@item.SW</td>
-                    <td>@item.Kenteken</td>
-                    <td>@item.Chauffeur</td>
-                </tr>
-            </tbody>
-}
-                </table>
-                <!--Script for Table sorting headings-->
+
+                <div class="row">
+                    <div class="col s12">
+                        <span class="card-title col s1 inline">Klanten</span>
+                        <span style="position:absolute; right: 200px; top: 25px;">Datum:</span>
+                        <div class="topcorner input-field inline">
+                            <input name="date" type="text" class="Pointer datepicker" method="post" data-value="@today">
+                        </div>
+                    </div>
+                    <table class="centered highlight responsive-table" id="myTable">
+                        <thead>
+                            <tr>
+                                <th class="Pointer" onclick="sortTable(0)">Tijd</th>
+                                <th class="Pointer" onclick="sortTable(1)">Ophaaladres</th>
+                                <th class="Pointer" onclick="sortTable(2)">Bestemmingsadres</th>
+                                <th class="Pointer" onclick="sortTable(3)">Klant</th>
+                                <th class="Pointer" onclick="sortTable(4)">Personen</th>
+                                <th class="Pointer" onclick="sortTable(5)">Soort Wagen</th>
+                                <th class="Pointer" onclick="sortTable(6)">Kenteken</th>
+                                <th class="Pointer" onclick="sortTable(7)">Chauffeur</th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in gegevens)
+                        {
+
+                            <tbody>
+                                <tr>
+                                    <td>@item.Tijd</td>
+                                    <td>@item.Ophaaladres</td>
+                                    <td>@item.Bestemmingsadres</td>
+                                    <td>@item.Klant</td>
+                                    <td>@item.Personen</td>
+                                    <td>@item.SW</td>
+                                    <td>@item.Kenteken</td>
+                                    <td>@item.Chauffeur</td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
     </div>

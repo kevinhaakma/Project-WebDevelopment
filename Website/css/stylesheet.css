@@ -140,6 +140,13 @@ textarea.materialize-textarea:focus {
     user-select: none;
 }
 
+
+.topcorner {
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+
 /*END OF HOME*/
 
 /*SETTING PAGE*/
