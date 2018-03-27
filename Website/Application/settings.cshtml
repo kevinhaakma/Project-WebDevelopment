@@ -1,71 +1,150 @@
-﻿@{
-    Layout = "~/Shared/_Layout.cshtml";
-    var userName = WebSecurity.CurrentUserName;
-    var CurrentPassword = "";
-    var newPassword = "";
-    var newPassword2 = "";
-    var errormessage = "";
-    var succesmessage = "";
-
-    if (IsPost && Validation.IsValid())
-    {
-        CurrentPassword = Request.Form["CurrentPassword"];
-        newPassword = Request.Form["newPassword"];
-        newPassword2 = Request.Form["newPassword2"];
-
-        if (newPassword == newPassword2)
-        {
-            bool gelukt;
-            gelukt = WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
-            if (gelukt == true){
-                succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast.";
-            }
-            else
-            {
-                errormessage = "Het oude wachtwoord is incorrect.";
-            }
-        }
-
-        else
-        {
-            errormessage = "De wachtwoorden komen niet overeen.";
-        }
-    }
+﻿
 
 
-}
 
-    <div class="row">
-        <div class="col s12 m6 l3">
-            <div class="card-panel grey darken-4">
-                <div class="card-content ">
-                    <div class="row white-text">
-                        <form class="col s12" method="post" name="form">
-                            <span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
+<div class="row">
+
+		<div class="col s3">
+		<!-- Gebruiker aanmaken / verwijderen -->
+			<p>test</p>
+		</div>
 
 
-                            <div class="input-field col s12">
+		<div class="col s3">
+			<!-- Wachtwoord aanpassen -->
 
-                                <input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate">
-                                <label for="CurrentPassword">Huidig wachtwoord</label>
-                            </div>
+			@{
+			Layout = "~/Shared/_Layout.cshtml";
+			var userName = WebSecurity.CurrentUserName;
+			var CurrentPassword = "";
+			var newPassword = "";
+			var newPassword2 = "";
+			var errormessage = "";
+			var succesmessage = "";
 
-                            <div class="input-field col s12">
-                                <input id="newPassword" type="password" name="newPassword" value="@Request.Form["newPassword"]" class="validate">
-                                <label for="newPassword">Nieuw wachtwoord</label>
+			if (IsPost && Validation.IsValid())
+			{
+				CurrentPassword = Request.Form["CurrentPassword"];
+				newPassword = Request.Form["newPassword"];
+				newPassword2 = Request.Form["newPassword2"];
 
-                            </div>
-                            <div class="input-field col s12">
-                                <input id="newPassword2" type="password" name="newPassword2" value="@Request.Form["newPassword2"]" class="validate">
-                                <label for="newPassword2">Bevestig wachtwoord</label>
-                                <a name="errormessage" class="errorText">@errormessage</a>
-                                <a class="succesText">@succesmessage</a>
-                            </div>
+				if (newPassword == newPassword2)
+				{
+					bool gelukt;
+					gelukt = WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
+					if (gelukt == true)
+					{
+						succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast.";
+					}
+					else
+					{
+						errormessage = "Het oude wachtwoord is incorrect.";
+					}
+				}
 
-                            <button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+				else
+				{
+					errormessage = "De wachtwoorden komen niet overeen.";
+				}
+			}
+			}
+
+		<div class="row">
+			<div class="col s12">
+				<div class="card-panel grey darken-4">
+					<div class="card-content ">
+						<div class="row white-text">
+							<form class="col s12" method="post" name="form">
+								<span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
+
+
+									<div class="input-field col s12">
+
+										<input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate" required>
+										<label for="CurrentPassword">Huidig wachtwoord</label>
+									</div>
+
+									<div class="input-field col s12">
+										<input id="newPassword" type="password" name="newPassword" value="@Request.Form["newPassword"]" class="validate" required>
+										<label for="newPassword">Nieuw wachtwoord</label>
+
+									</div>
+									<div class="input-field col s12">
+										<input id="newPassword2" type="password" name="newPassword2" value="@Request.Form["newPassword2"]" class="validate" required>
+										<label for="newPassword2">Bevestig wachtwoord</label>
+										<a name="errormessage" class="errorText">@errormessage</a>
+										<a class="succesText">@succesmessage</a>
+									</div>
+
+									<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col s3">
+			<!-- Chauffeur aanmaken / verwijderen -->
+		
+			@{
+				var db = Database.Open("Klantgegevens");
+		
+				var Chauffeur = "";
+				var Telefoonnummer = "";
+		
+				if (IsPost)
+				{
+					var id = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur") + 1);
+		
+					Chauffeur = Request.Form["Chauffeur"];
+					Telefoonnummer = Request.Form["Telefoonnummer"];
+		
+					var query = "INSERT INTO Chauffeur (id,Chauffeur,Telefoonnummer) VALUES (@0,@1,@2)";
+					db.Execute(query, id, Chauffeur, Telefoonnummer);
+		
+					Response.Redirect("~/Application/settings.cshtml");
+		
+				}
+			}
+
+		<div class="row">
+			<div class="col s12">
+				<div class="card-panel grey darken-4">
+
+					<div class="card-content ">
+						<div class="row white-text">
+							<span style="font-size: 16px;" class="card-title">Chauffeur toevoegen</span>
+							<form class="col s12" method="post">
+
+								<div class="row">
+									<div class="input-field col s12">
+										<input name="chauffeur" type="text" value="@Chauffeur" required>
+										<label for="chauffeur">Naam chauffeur</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<input name="telefoonnummer" type="text" value="@Telefoonnummer" required>
+										<label for="telefoonnummer">Telefoon nummer</label>
+									</div>
+								</div>
+
+									<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="col s3">
+			<!-- Wagen aanmaken / verwijderen -->
+			<p>test</p>
+		</div>
+
+</div>
