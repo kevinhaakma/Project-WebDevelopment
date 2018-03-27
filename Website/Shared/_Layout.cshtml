@@ -1,6 +1,15 @@
 ﻿@{
+    if (!IsPost)
+    {
+        Response.Write("hoi");
+    }
 
+    if (IsPost)
+    {
+        Response.Write("doei");
+    }
 }
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +24,7 @@
 
     <title>Menger | Agenda</title>
     <link rel="shortcut icon" href="~/img/Menger-Favicon.png" title="Favicon">
-   
+
     <!--Script for Table sorting headings-->
     <script type="text/javascript" src="~/js/SortTable.js"></script>
 </head>
@@ -61,7 +70,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="~/js/materialize.min.js"></script>
 
-    <script>        
+    <script>
         $(".button-collapse").sideNav();
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
@@ -70,6 +79,10 @@
             clear: 'Clear',
             close: 'Ok',
             closeOnSelect: false // Close upon selecting a date,
+        });
+        $(".datepicker").on("change", function () {
+            var selected = $(this).val();
+            xhttp.open("POST", "home.cshtml", true);
         });
     </script>
 
