@@ -1,14 +1,26 @@
 ﻿@{
     Layout = "~/Shared/_Layout.cshtml";
     var db = Database.Open("klantgegevens");
-    var gegevens = db.Query("SELECT * from Rittenkaart");
 
-    var today = DateTime.Now.ToString("D");
+    var date = "";
+
+    if (date.IsEmpty())
+    {
+        date = DateTime.Now.ToString("dd-mm-yyyy");
+    }
+
+    else if (!(date.IsEmpty()))
+    {
+        date = Request.Form["date"];
+    }
 
     if (IsPost)
     {
-        Response.Redirect("~/");
+        date = Request.Form["date"];
     }
+
+   var query = "SELECT * from Rittenkaart WHERE Datum = @0";
+   var gegevens = db.Query(query, date);
 }
 
 <div class="row" style="margin-bottom: 0px;">
@@ -36,47 +48,51 @@
                 <div class="row">
                     <div class="col s12">
                         <span class="card-title col s1 inline">Klanten</span>
-                        <span style="position:absolute; right: 200px; top: 25px;">Datum:</span>
-                        <div class="topcorner input-field inline">
-                            <input name="date" type="text" class="Pointer datepicker" method="post" data-value="@today">
+                        <div style="position:absolute; right: 100px; top: 0px;" class="input-field inline">
+                            <span style="position:absolute; right: 170px; top: 12px; font-size: 18px;">Datum:</span>
+                            <form method="post">
+                                <input name="date" type="text" class="Pointer datepicker" data-value="@date">
+                                <button class="btn right taximengeryellow" style="position:absolute; right: -50px; top: 5px; padding: 0px 10px" runat="server" type="submit" name="action" id="form">  <i class="material-icons">done</i></button>
+                            </form>
                         </div>
                     </div>
                     <table class="centered highlight responsive-table" id="myTable">
                         <thead>
                             <tr>
-                                <th class="Pointer" onclick="sortTable(0)">Tijd</th>
-                                <th class="Pointer" onclick="sortTable(1)">Ophaaladres</th>
-                                <th class="Pointer" onclick="sortTable(2)">Bestemmingsadres</th>
-                                <th class="Pointer" onclick="sortTable(3)">Klant</th>
-                                <th class="Pointer" onclick="sortTable(4)">Personen</th>
-                                <th class="Pointer" onclick="sortTable(5)">Soort Wagen</th>
-                                <th class="Pointer" onclick="sortTable(6)">Kenteken</th>
-                                <th class="Pointer" onclick="sortTable(7)">Chauffeur</th>
+                                <th class="Pointer" onclick="sortTable(0)">Datum</th>
+                                <th class="Pointer" onclick="sortTable(1)">Tijd</th>
+                                <th class="Pointer" onclick="sortTable(2)">Ophaaladres</th>
+                                <th class="Pointer" onclick="sortTable(3)">Bestemmingsadres</th>
+                                <th class="Pointer" onclick="sortTable(4)">Klant</th>
+                                <th class="Pointer" onclick="sortTable(5)">Personen</th>
+                                <th class="Pointer" onclick="sortTable(6)">Soort Wagen</th>
+                                <th class="Pointer" onclick="sortTable(7)">Kenteken</th>
+                                <th class="Pointer" onclick="sortTable(8)">Chauffeur</th>
                             </tr>
                         </thead>
                         @foreach (var item in gegevens)
-                        {
+    {
 
-                            <tbody>
-                                <tr>
-                                    <td>@item.Tijd</td>
-                                    <td>@item.Ophaaladres</td>
-                                    <td>@item.Bestemmingsadres</td>
-                                    <td>@item.Klant</td>
-                                    <td>@item.Personen</td>
-                                    <td>@item.SW</td>
-                                    <td>@item.Kenteken</td>
-                                    <td>@item.Chauffeur</td>
-                                </tr>
-                            </tbody>
-                        }
+                    <tbody>
+                        <tr>
+                            <td>@item.Datum</td>
+                            <td>@item.Tijd</td>
+                            <td>@item.Ophaaladres</td>
+                            <td>@item.Bestemmingsadres</td>
+                            <td>@item.Klant</td>
+                            <td>@item.Personen</td>
+                            <td>@item.SW</td>
+                            <td>@item.Kenteken</td>
+                            <td>@item.Chauffeur</td>
+                        </tr>
+                    </tbody>
+}
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <script>
     function sortTable(n) {
@@ -158,3 +174,4 @@
         }
     }
 </script>
+
