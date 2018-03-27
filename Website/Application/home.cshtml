@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "~/Shared/_Layout.cshtml";
     var db = Database.Open("klantgegevens");
-    var gegevens = db.Query("SELECT * from Rittenkaart");
     double count = 0;
     int per = 5;
 
