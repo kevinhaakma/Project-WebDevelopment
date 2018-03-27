@@ -1,6 +1,9 @@
 ﻿@{
     Layout = "~/Shared/_Layout.cshtml";
     var db = Database.Open("klantgegevens");
+    var gegevens = db.Query("SELECT * from Rittenkaart");
+    double count = 0;
+    int per = 5;
 
     var date = "";
 
@@ -44,7 +47,6 @@
     <div class="col s12">
         <div class="card white">
             <div class="card-content black-text">
-
                 <div class="row">
                     <div class="col s12">
                         <span class="card-title col s1 inline">Klanten</span>
@@ -56,7 +58,7 @@
                             </form>
                         </div>
                     </div>
-                    <table class="centered highlight responsive-table" id="myTable">
+                    <table class="centered highlight responsive-table" id="Table">
                         <thead>
                             <tr>
                                 <th class="Pointer" onclick="sortTable(0)">Datum</th>
@@ -71,7 +73,7 @@
                             </tr>
                         </thead>
                         @foreach (var item in gegevens)
-    {
+                        {
 
                     <tbody>
                         <tr>
@@ -88,16 +90,24 @@
                     </tbody>
 }
                     </table>
+                    <ul class="pagination">
+                        @for (int i = 0; i < (count / per); i++)
+                        {
+                            <li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <script>
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("myTable");
+        clean();
+        table = document.getElementById("Table");
         switching = true;
         //Set the sorting direction to ascending:
         dir = "asc";
@@ -148,6 +158,7 @@
                 }
             }
         }
+        pages(0);
     }
 </script>
 
@@ -156,7 +167,7 @@
         var input, filter, found, table, tr, td, i, j;
         input = document.getElementById("search");
         filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
+        table = document.getElementById("Table");
         tr = table.getElementsByTagName("tr");
         for (i = 1; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td");
@@ -172,6 +183,47 @@
                 tr[i].style.display = "none";
             }
         }
+        if (filter == "") {
+            pages(0);
+        }
     }
 </script>
 
+<script>
+    function pages(page) {
+        var table, tr, i, j, per = 5;
+        table = document.getElementById("Table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 1; i < tr.length; i++) {
+
+            if (i >= (page * per + 1) && i <= (page * per + 5)) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+
+        for (j = 0; j < (tr.length / 5 - 1); j++) {
+            document.getElementById('page' + j).setAttribute("class", "waves-effect");
+        }
+
+        document.getElementById('page' + page).setAttribute("class", "active");
+    }
+</script>
+
+<script>
+    function clean() {
+        var table, tr, i, j;
+        table = document.getElementById("Table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 1; i < tr.length; i++) {
+            tr[i].style.display = "";
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    pages(0);
+</script>
