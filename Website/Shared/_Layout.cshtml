@@ -65,7 +65,10 @@
 	<script>
 		$(".button-collapse").sideNav();
 		$('select').material_select();
-		$('.datepicker').pickadate({
+        $('.datepicker').pickadate({
+            onClose: function () {
+                document.getElementById("Datepicker").submit(); 
+            },
 			selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year,
             format: 'd-mm-yyyy',
@@ -73,10 +76,6 @@
 			clear: 'Clear',
 			close: 'Ok',
 			closeOnSelect: false // Close upon selecting a date,
-		});
-		$(".datepicker").on("change", function () {
-			var selected = $(this).val();
-			xhttp.open("POST", "home.cshtml", true);
 		});
 	</script>
 	<!--Voor de dropdown functie op settings pagina.-->
