@@ -19,46 +19,45 @@
     </form>
 </div>
 
-<div class="row">
-    <div class="col s12">
-        <div class="card white">
-            <div class="card-content black-text">
-                <span class="card-title">Klanten</span>
-                <table class="centered highlight" id="Table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th class="Pointer" onclick="sortTable(2)">Voornaam</th>
-                            <th class="Pointer" onclick="sortTable(3)">Achternaam</th>
-                            <th class="Pointer" onclick="sortTable(4)">Adres</th>
-                            <th class="Pointer" onclick="sortTable(5)">Huisnummer</th>
-                            <th class="Pointer" onclick="sortTable(6)">Postcode</th>
-                            <th class="Pointer" onclick="sortTable(7)">Woonplaats</th>
-                            <th class="Pointer" onclick="sortTable(8)">Telefoonnummer</th>
-                            <th class="Pointer" onclick="sortTable(9)">Emailadres</th>
-                            <th class="Pointer" onclick="sortTable(10)">Bijzonderheden</th>
-                        </tr>
-                    </thead>
-                    @foreach (var item in gegevens)
-                    {
-                        <tbody style='table-layout:fixed'>
-                            <tr>
-                                <td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center" style="color:black">edit</a></td>
-                                <td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center" style="color:black">delete</a></td>
-                                <td>@item.Voornaam</td>
-                                <td>@item.Achternaam</td>
-                                <td>@item.Adres</td>
-                                <td>@item.Huisnummer</td>
-                                <td>@item.Postcode</td>
-                                <td>@item.Woonplaats</td>
-                                <td>@item.Telefoonnummer</td>
-                                <td>@item.Emailadres</td>
-                                <td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
-                            </tr>
-                        </tbody>
-                        count++;
-                    }
+    <div class="row">
+        <div class="col s12">
+            <div class="card white">
+                <div class="card-content black-text">
+                    <span class="card-title">Klanten</span>
+                    <table class="centered highlight" id="Table">
+                        <thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th class="Pointer" onclick="sortTable(0)">Voornaam</th>
+								<th class="Pointer" onclick="sortTable(1)">Achternaam</th>
+								<th class="Pointer" onclick="sortTable(2)">Straatnaam</th>
+								<th class="Pointer" onclick="sortTable(3)">Huisnummer</th>
+								<th class="Pointer" onclick="sortTable(4)">Postcode</th>
+								<th class="Pointer" onclick="sortTable(5)">Woonplaats</th>
+								<th class="Pointer" onclick="sortTable(6)">Telefoonnummer</th>
+								<th class="Pointer" onclick="sortTable(7)">Emailadres</th>
+								<th class="Pointer" onclick="sortTable(8)">Bijzonderheden</th>
+							</tr>
+                        </thead>
+                        @foreach (var item in gegevens)
+                         {
+                <tbody style='table-layout:fixed'>
+					<tr>
+						<td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center" style="color:black">edit</a></td>
+						<td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center" style="color:black">delete</a></td>
+						<td>@item.Voornaam</td>
+						<td>@item.Achternaam</td>
+						<td>@item.Adres</td>
+						<td>@item.Huisnummer</td>
+						<td>@item.Postcode</td>
+						<td>@item.Woonplaats</td>
+						<td>@item.Telefoonnummer</td>
+						<td>@item.Emailadres</td>
+						<td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
+					</tr>
+                </tbody>
+}
                 </table>
 
                 <ul class="pagination">

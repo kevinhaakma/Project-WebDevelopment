@@ -1,19 +1,27 @@
 ﻿
-
-
-
 <div class="row">
 
-		<div class="col s3">
+	<div class="col s3">
 		<!-- Gebruiker aanmaken / verwijderen -->
-			<p>test</p>
+		<div class="row">
+			<div class="col s12">
+				<div class="card-panel grey darken-4">
+					<div class="card-content ">
+						<div class="row white-text">
+							<form class="col s12" method="post" name="form1">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
 
 
-		<div class="col s3">
-			<!-- Wachtwoord aanpassen -->
+	<div class="col s3">
+		<!-- Wachtwoord aanpassen -->
 
-			@{
+		@{
 			Layout = "~/Shared/_Layout.cshtml";
 			var userName = WebSecurity.CurrentUserName;
 			var CurrentPassword = "";
@@ -47,67 +55,67 @@
 					errormessage = "De wachtwoorden komen niet overeen.";
 				}
 			}
-			}
+		}
 
 		<div class="row">
 			<div class="col s12">
 				<div class="card-panel grey darken-4">
 					<div class="card-content ">
 						<div class="row white-text">
-							<form class="col s12" method="post" name="form">
+							<form class="col s12" method="post" name="form2">
 								<span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
 
 
-									<div class="input-field col s12">
+								<div class="input-field col s12">
 
-										<input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate" required>
-										<label for="CurrentPassword">Huidig wachtwoord</label>
-									</div>
+									<input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate" required>
+									<label for="CurrentPassword">Huidig wachtwoord</label>
+								</div>
 
-									<div class="input-field col s12">
-										<input id="newPassword" type="password" name="newPassword" value="@Request.Form["newPassword"]" class="validate" required>
-										<label for="newPassword">Nieuw wachtwoord</label>
+								<div class="input-field col s12">
+									<input id="newPassword" type="password" name="newPassword" value="@Request.Form["newPassword"]" class="validate" required>
+									<label for="newPassword">Nieuw wachtwoord</label>
 
-									</div>
-									<div class="input-field col s12">
-										<input id="newPassword2" type="password" name="newPassword2" value="@Request.Form["newPassword2"]" class="validate" required>
-										<label for="newPassword2">Bevestig wachtwoord</label>
-										<a name="errormessage" class="errorText">@errormessage</a>
-										<a class="succesText">@succesmessage</a>
-									</div>
+								</div>
+								<div class="input-field col s12">
+									<input id="newPassword2" type="password" name="newPassword2" value="@Request.Form["newPassword2"]" class="validate" required>
+									<label for="newPassword2">Bevestig wachtwoord</label>
+									<a name="errormessage" class="errorText">@errormessage</a>
+									<a class="succesText">@succesmessage</a>
+								</div>
 
-									<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
-								</form>
-							</div>
+								<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="col s3">
-			<!-- Chauffeur aanmaken / verwijderen -->
-		
-			@{
-				var db = Database.Open("Klantgegevens");
-		
-				var Chauffeur = "";
-				var Telefoonnummer = "";
-		
-				if (IsPost)
-				{
-					var id = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur") + 1);
-		
-					Chauffeur = Request.Form["Chauffeur"];
-					Telefoonnummer = Request.Form["Telefoonnummer"];
-		
-					var query = "INSERT INTO Chauffeur (id,Chauffeur,Telefoonnummer) VALUES (@0,@1,@2)";
-					db.Execute(query, id, Chauffeur, Telefoonnummer);
-		
-					Response.Redirect("~/Application/settings.cshtml");
-		
-				}
+	<div class="col s3">
+		<!-- Chauffeur aanmaken / verwijderen -->
+
+		@{
+			var db = Database.Open("Klantgegevens");
+
+			var Chauffeur = "";
+			var Telefoonnummer = "";
+
+			if (IsPost)
+			{
+				var id = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur") + 1);
+
+				Chauffeur = Request.Form["Chauffeur"];
+				Telefoonnummer = Request.Form["Telefoonnummer"];
+
+				var query = "INSERT INTO Chauffeur (id,Chauffeur,Telefoonnummer) VALUES (@0,@1,@2)";
+				db.Execute(query, id, Chauffeur, Telefoonnummer);
+
+				Response.Redirect("~/Application/settings.cshtml");
+
 			}
+		}
 
 		<div class="row">
 			<div class="col s12">
@@ -115,8 +123,8 @@
 
 					<div class="card-content ">
 						<div class="row white-text">
-							<span style="font-size: 16px;" class="card-title">Chauffeur toevoegen</span>
-							<form class="col s12" method="post">
+							<span style="font-size: 16px;" class="card-title">Chauffeur toevoegen/verwijderen</span>
+							<form class="col s12" method="post" name="form3">
 
 								<div class="row">
 									<div class="input-field col s12">
@@ -130,21 +138,62 @@
 										<label for="telefoonnummer">Telefoon nummer</label>
 									</div>
 								</div>
+								<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+							</form>
 
-									<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
-								</form>
-							</div>
+							<form class="col s12" method="post">
+
+						@{
+							var Chauffeur3 = "";
+							Chauffeur3 = Request.Form["Chauffeur"];
+
+							var id1 = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur"));
+							var query1 = "SELECT * FROM Chauffeur (Chauffeur) VALUES (@0)";
+							db.Execute (query1, Chauffeur);
+
+							foreach (var item in Chauffeur3)
+							{
+									@item.Chauffeur3
+							}	
+						}
+
+
+								<div class="input-field col s12">
+									<select>
+										<option value=""disabled selected>Selecteer Chauffeur</option>
+										<option value="@Chauffeur3"></option>
+									</select>
+									<label>Chauffeur Verwijderen</label>
+								</div>
+
+								<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
 
 
-		<div class="col s3">
-			<!-- Wagen aanmaken / verwijderen -->
-			<p>test</p>
+
+
+	<div class="col s3">
+		<!-- Wagen aanmaken / verwijderen -->
+		<div class="row">
+			<div class="col s12">
+				<div class="card-panel grey darken-4">
+					<div class="card-content ">
+						<div class="row white-text">
+							<form class="col s12" method="post" name="form4">
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
 
 </div>
