@@ -57,13 +57,11 @@
 	<!--Chauffeur aanmaken form-->
     if (IsPost && Request.Form["form3"] == "true")
     {
-        var id = Convert.ToString(db.QueryValue("SELECT Max(ChauffeurID) from Chauffeur") + 1);
-
         Chauffeur = Request.Form["Chauffeur"];
         Telefoonnummer = Request.Form["Telefoonnummer"];
 
-        var query1 = "INSERT INTO Chauffeur (ChauffeurID,Chauffeur,Telefoonnummer) VALUES (@0,@1,@2)";
-        db.Execute(query1, id, Chauffeur, Telefoonnummer);
+        var query1 = "INSERT INTO Chauffeur (Chauffeur,Telefoonnummer) VALUES (@0,@1)";
+        db.Execute(query1, Chauffeur, Telefoonnummer);
 
         Response.Redirect("~/Application/settings.cshtml");
 
