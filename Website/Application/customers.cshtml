@@ -9,7 +9,7 @@
 <div class="row" method="post" style="margin-bottom: 0px;">
     <div class="col s8 m8 l8">
         <a href="~/Application/customeredit.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
-        <a class="waves-effect waves-light btn taximengeryellow " style="margin: 80px 0px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
+        <a class="waves-effect waves-light btn taximengeryellow " style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
     </div>
     <form>
         <div class="col s4 input-field right" style="width:300px;margin: 80px 10px 10px;">
@@ -23,7 +23,7 @@
         <div class="col s12">
             <div class="card white">
                 <div class="card-content black-text">
-                    <span class="card-title">Klanten</span>
+                    <span class="card-title col s1 inline">Klanten</span>
                     <table class="centered highlight" id="Table">
                         <thead>
 							<tr>
@@ -44,8 +44,8 @@
                          {
                 <tbody style='table-layout:fixed'>
 					<tr>
-						<td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center" style="color:black">edit</a></td>
-						<td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center" style="color:black">delete</a></td>
+						<td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
+						<td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
 						<td>@item.Voornaam</td>
 						<td>@item.Achternaam</td>
 						<td>@item.Adres</td>
@@ -70,7 +70,7 @@
                 </table>
 
                 <ul class="pagination">
-                    @for (int i = 0; i < (count / per); i++)
+                    @for (double i = 0; i < (count / per); i++)
                     {
                         <li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
                     }
