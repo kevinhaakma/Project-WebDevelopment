@@ -1,5 +1,4 @@
-﻿
-<div class="row">
+﻿<div class="row">
 
 	<div class="col s3">
 		<!-- Gebruiker aanmaken / verwijderen -->
@@ -62,7 +61,7 @@
 				<div class="card-panel grey darken-4">
 					<div class="card-content ">
 						<div class="row white-text">
-							<form class="col s12" method="post" name="form2">
+							<form class="col s12" method="post">
 								<span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
 
 
@@ -84,7 +83,7 @@
 									<a class="succesText">@succesmessage</a>
 								</div>
 
-								<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+								<button class="btn right taximengeryellow" type="submit" name="form2" value="true">Bevestig</button>
 							</form>
 						</div>
 					</div>
@@ -143,25 +142,12 @@
 
 							<form class="col s12" method="post">
 
-						@{
-							var Chauffeur3 = "";
-							Chauffeur3 = Request.Form["Chauffeur"];
-
-							var id1 = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur"));
-							var query1 = "SELECT * FROM Chauffeur (Chauffeur) VALUES (@0)";
-							db.Execute (query1, Chauffeur);
-
-							foreach (var item in Chauffeur3)
-							{
-									@item.Chauffeur3
-							}	
-						}
 
 
 								<div class="input-field col s12">
 									<select>
 										<option value=""disabled selected>Selecteer Chauffeur</option>
-										<option value="@Chauffeur3"></option>
+										<option value=""></option>
 									</select>
 									<label>Chauffeur Verwijderen</label>
 								</div>
