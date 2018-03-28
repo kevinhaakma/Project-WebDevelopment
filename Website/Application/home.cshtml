@@ -8,7 +8,7 @@
 
     if (date.IsEmpty())
     {
-        date = DateTime.Now.ToString("dd-mm-yyyy");
+        date = DateTime.Now.ToString("dd-MM-yyyy");
     }
 
     else if (!(date.IsEmpty()))
@@ -21,8 +21,8 @@
         date = Request.Form["date"];
     }
 
-   var query = "SELECT * from Rittenkaart WHERE Datum = @0";
-   var gegevens = db.Query(query, date);
+    var query = "SELECT * from Rittenkaart WHERE Datum = @0";
+    var gegevens = db.Query(query, date);
 }
 
 <div class="row" style="margin-bottom: 0px;">
