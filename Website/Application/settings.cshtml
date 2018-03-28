@@ -1,6 +1,95 @@
-﻿
-<div class="row">
+﻿@{ 
+	Database db = Database.Open("Klantgegevens");
+	Layout = "~/Shared/_Layout.cshtml";
 
+
+	<!--Wachtwoord wijzigen-->
+	var userName = WebSecurity.CurrentUserName;
+	var CurrentPassword = "";
+	var newPassword = "";
+	var newPassword2 = "";
+	var errormessage = "";
+	var succesmessage = "";
+
+
+	<!-- Chauffeur Aanmaken -->
+	var Chauffeur = "";
+	var Telefoonnummer = "";
+
+	<!-- Chauffeur Verwijderen-->
+	var chauffeurID = "";
+	var Chauffeurs = db.Query("SELECT ChauffeurID,Chauffeur FROM Chauffeur");
+
+	if (IsPost && Request.Form["form1"] == "true")
+	{
+
+	}
+
+	<!--Wachtwoord wijzigen form-->
+	if (IsPost && Request.Form["form2"] == "true")
+	{
+		if (IsPost && Validation.IsValid())
+		{
+			CurrentPassword = Request.Form["CurrentPassword"];
+			newPassword = Request.Form["newPassword"];
+			newPassword2 = Request.Form["newPassword2"];
+
+			if (newPassword == newPassword2)
+			{
+				bool gelukt;
+				gelukt = WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
+				if (gelukt == true)
+				{
+					succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast.";
+				}
+				else
+				{
+					errormessage = "Het oude wachtwoord is incorrect.";
+				}
+			}
+			else
+			{
+				errormessage = "De wachtwoorden komen niet overeen.";
+			}
+		}
+	}
+
+	<!--Chauffeur aanmaken form-->
+	if (IsPost && Request.Form["form3"] == "true")
+	{
+		var id = Convert.ToString(db.QueryValue("SELECT Max(ChauffeurID) from Chauffeur") + 1);
+
+		Chauffeur = Request.Form["Chauffeur"];
+		Telefoonnummer = Request.Form["Telefoonnummer"];
+
+		var query1 = "INSERT INTO Chauffeur (ChauffeurID,Chauffeur,Telefoonnummer) VALUES (@0,@1,@2)";
+		db.Execute(query1, id, Chauffeur, Telefoonnummer);
+
+		Response.Redirect("~/Application/settings.cshtml");
+
+	}
+
+	<!--Chauffeur verwijderen form-->
+	if (IsPost && Request.Form["form4"] == "true")
+	{
+		{
+			chauffeurID = Request.Form["chauffeurID"];
+
+			var query = "DELETE FROM Chauffeur WHERE ChauffeurID = @0";
+			db.Execute(query, chauffeurID);
+
+			Response.Redirect("~/Application/settings.cshtml");
+		}
+	}
+
+	if (IsPost && Request.Form["form5"] == "true")
+	{
+
+	}
+}
+
+
+<div class="row">
 	<div class="col s3">
 		<!-- Gebruiker aanmaken / verwijderen -->
 		<div class="row">
@@ -9,6 +98,7 @@
 					<div class="card-content ">
 						<div class="row white-text">
 							<form class="col s12" method="post" name="form1">
+								<button class="btn right taximengeryellow" type="submit" name="form1" value="true">Bevestig</button>
 							</form>
 						</div>
 					</div>
@@ -20,43 +110,6 @@
 
 	<div class="col s3">
 		<!-- Wachtwoord aanpassen -->
-
-		@{
-			Layout = "~/Shared/_Layout.cshtml";
-			var userName = WebSecurity.CurrentUserName;
-			var CurrentPassword = "";
-			var newPassword = "";
-			var newPassword2 = "";
-			var errormessage = "";
-			var succesmessage = "";
-
-			if (IsPost && Validation.IsValid())
-			{
-				CurrentPassword = Request.Form["CurrentPassword"];
-				newPassword = Request.Form["newPassword"];
-				newPassword2 = Request.Form["newPassword2"];
-
-				if (newPassword == newPassword2)
-				{
-					bool gelukt;
-					gelukt = WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
-					if (gelukt == true)
-					{
-						succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast.";
-					}
-					else
-					{
-						errormessage = "Het oude wachtwoord is incorrect.";
-					}
-				}
-
-				else
-				{
-					errormessage = "De wachtwoorden komen niet overeen.";
-				}
-			}
-		}
-
 		<div class="row">
 			<div class="col s12">
 				<div class="card-panel grey darken-4">
@@ -67,7 +120,6 @@
 
 
 								<div class="input-field col s12">
-
 									<input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate" required>
 									<label for="CurrentPassword">Huidig wachtwoord</label>
 								</div>
@@ -84,7 +136,7 @@
 									<a class="succesText">@succesmessage</a>
 								</div>
 
-								<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+								<button class="btn right taximengeryellow" type="submit" name="form2" value="true">Bevestig</button>
 							</form>
 						</div>
 					</div>
@@ -94,32 +146,10 @@
 	</div>
 
 	<div class="col s3">
-		<!-- Chauffeur aanmaken / verwijderen -->
-
-		@{
-			var db = Database.Open("Klantgegevens");
-
-			var Chauffeur = "";
-			var Telefoonnummer = "";
-
-			if (IsPost)
-			{
-				var id = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur") + 1);
-
-				Chauffeur = Request.Form["Chauffeur"];
-				Telefoonnummer = Request.Form["Telefoonnummer"];
-
-				var query = "INSERT INTO Chauffeur (id,Chauffeur,Telefoonnummer) VALUES (@0,@1,@2)";
-				db.Execute(query, id, Chauffeur, Telefoonnummer);
-
-				Response.Redirect("~/Application/settings.cshtml");
-
-			}
-		}
-
-		<div class="row">
-			<div class="col s12">
-				<div class="card-panel grey darken-4">
+		<!-- Chauffeur aanmaken -->
+					<div class="row">
+						<div class="col s12">
+							<div class="card-panel grey darken-4">
 
 					<div class="card-content ">
 						<div class="row white-text">
@@ -138,62 +168,48 @@
 										<label for="telefoonnummer">Telefoon nummer</label>
 									</div>
 								</div>
-								<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+								<button class="btn right taximengeryellow" type="submit" name="form3" value="true">Bevestig</button>
 							</form>
 
-							<form class="col s12" method="post">
 
-						@{
-							var Chauffeur3 = "";
-							Chauffeur3 = Request.Form["Chauffeur"];
-
-							var id1 = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur"));
-							var query1 = "SELECT * FROM Chauffeur (Chauffeur) VALUES (@0)";
-							db.Execute (query1, Chauffeur);
-
-							foreach (var item in Chauffeur3)
-							{
-									@item.Chauffeur3
-							}	
-						}
-
-
+							<!-- Chauffeur Verwijderen -->
+							<form class="col s12" method="post" name="form4">
 								<div class="input-field col s12">
-									<select>
-										<option value=""disabled selected>Selecteer Chauffeur</option>
-										<option value="@Chauffeur3"></option>
+
+									<select name="chauffeurID">
+										<option type="" disabled selected>Selecteer een chauffeur</option>
+										@foreach (var item in Chauffeurs)
+										{
+											<option type="text" name="chauffeurID" class="black-text" value="@item.chauffeurID">@item.Chauffeur</option>
+										}
 									</select>
 									<label>Chauffeur Verwijderen</label>
+									<button class="btn right taximengeryellow" type="submit" name="form4" value="true">Delete</button>
+
 								</div>
-
-								<button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
 							</form>
+						</div>
+					   </div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+			<div class="col s3">
+				<!-- Wagen aanmaken / verwijderen -->
+				<div class="row">
+					<div class="col s12">
+						<div class="card-panel grey darken-4">
+							<div class="card-content ">
+								<div class="row white-text">
+									<form class="col s12" method="post" name="form5">
+										<button class="btn right taximengeryellow" type="submit" name="form5" value="true">Bevestig</button>
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-
-
-
-
-	<div class="col s3">
-		<!-- Wagen aanmaken / verwijderen -->
-		<div class="row">
-			<div class="col s12">
-				<div class="card-panel grey darken-4">
-					<div class="card-content ">
-						<div class="row white-text">
-							<form class="col s12" method="post" name="form4">
-
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-</div>
