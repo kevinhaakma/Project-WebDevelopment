@@ -67,7 +67,8 @@
 		$('select').material_select();
 		$('.datepicker').pickadate({
 			selectMonths: true, // Creates a dropdown to control month
-			selectYears: 15, // Creates a dropdown of 15 years to control year,
+            selectYears: 15, // Creates a dropdown of 15 years to control year,
+            format: 'd-mm-yyyy',
 			today: 'Today',
 			clear: 'Clear',
 			close: 'Ok',
@@ -79,6 +80,23 @@
 		});
 	</script>
 	<!--Voor de dropdown functie op settings pagina.-->
+
+    <script>
+        $(document).ready(function () {
+            $('input.autocomplete').autocomplete({
+                data: {
+                    "Apple": null,
+                    "Microsoft": null,
+                    "Google": 'https://placehold.it/250x250'
+                },
+            });
+        });
+    </script>
+    <script>
+    $(document).ready(function () {
+    $('select').material_select();
+    });
+    </script>
 
 </body>
 </html>
