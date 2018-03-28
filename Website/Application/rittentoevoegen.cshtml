@@ -102,13 +102,10 @@
         $(document).ready(function () {
             $('input.autocomplete').autocomplete({
                 data: {
-
+                    @System.Uri.EscapeDataString(HttpUtility.JavaScriptStringEncode(" \" bappie \" "));
                     @foreach (var item in rows)
                     {
-                        var quote = @Html.Raw(HttpUtility.JavaScriptStringEncode("\""));
 
-                        string name = quote + item.Voornaam + quote;
-                        @Html.Raw(HttpUtility.JavaScriptStringEncode(quote + item.Voornaam + item.Achternaam + quote));
                     }
                 },
             });
