@@ -14,39 +14,39 @@
 			<!-- Wachtwoord aanpassen -->
 
 			@{
-			Layout = "~/Shared/_Layout.cshtml";
-			var userName = WebSecurity.CurrentUserName;
-			var CurrentPassword = "";
-			var newPassword = "";
-			var newPassword2 = "";
-			var errormessage = "";
-			var succesmessage = "";
+                Layout = "~/Shared/_Layout.cshtml";
+                var userName = WebSecurity.CurrentUserName;
+                var CurrentPassword = "";
+                var newPassword = "";
+                var newPassword2 = "";
+                var errormessage = "";
+                var succesmessage = "";
 
-			if (IsPost && Validation.IsValid())
-			{
-				CurrentPassword = Request.Form["CurrentPassword"];
-				newPassword = Request.Form["newPassword"];
-				newPassword2 = Request.Form["newPassword2"];
+                if (IsPost && Validation.IsValid())
+                {
+                    CurrentPassword = Request.Form["CurrentPassword"];
+                    newPassword = Request.Form["newPassword"];
+                    newPassword2 = Request.Form["newPassword2"];
 
-				if (newPassword == newPassword2)
-				{
-					bool gelukt;
-					gelukt = WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
-					if (gelukt == true)
-					{
-						succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast.";
-					}
-					else
-					{
-						errormessage = "Het oude wachtwoord is incorrect.";
-					}
-				}
+                    if (newPassword == newPassword2)
+                    {
+                        bool gelukt;
+                        gelukt = WebSecurity.ChangePassword(userName, CurrentPassword, newPassword);
+                        if (gelukt == true)
+                        {
+                            succesmessage = "Het wachtwoord voor " + WebSecurity.CurrentUserName + " is aangepast.";
+                        }
+                        else
+                        {
+                            errormessage = "Het oude wachtwoord is incorrect.";
+                        }
+                    }
 
-				else
-				{
-					errormessage = "De wachtwoorden komen niet overeen.";
-				}
-			}
+                    else
+                    {
+                        errormessage = "De wachtwoorden komen niet overeen.";
+                    }
+                }
 			}
 
 		<div class="row">
@@ -89,24 +89,24 @@
 			<!-- Chauffeur aanmaken / verwijderen -->
 		
 			@{
-				var db = Database.Open("Klantgegevens");
-		
-				var Chauffeur = "";
-				var Telefoonnummer = "";
-		
-				if (IsPost)
-				{
-					var id = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur") + 1);
-		
-					Chauffeur = Request.Form["Chauffeur"];
-					Telefoonnummer = Request.Form["Telefoonnummer"];
-		
-					var query = "INSERT INTO Chauffeur (id,Chauffeur,Telefoonnummer) VALUES (@0,@1,@2)";
-					db.Execute(query, id, Chauffeur, Telefoonnummer);
-		
-					Response.Redirect("~/Application/settings.cshtml");
-		
-				}
+                var db = Database.Open("Klantgegevens");
+
+                var Chauffeur = "";
+                var Telefoonnummer = "";
+
+                /*if (IsPost)
+                {
+                    var id = Convert.ToString(db.QueryValue("SELECT Max(ID) from Chauffeur") + 1);
+
+                    Chauffeur = Request.Form["Chauffeur"];
+                    Telefoonnummer = Request.Form["Telefoonnummer"];
+
+                    var query = "INSERT INTO Chauffeur (id,Chauffeur,Telefoonnummer) VALUES (@0,@1,@2)";
+                    db.Execute(query, id, Chauffeur, Telefoonnummer);
+
+                    Response.Redirect("~/Application/settings.cshtml");
+
+                }*/
 			}
 
 		<div class="row">
@@ -142,9 +142,91 @@
 
 
 
-		<div class="col s3">
-			<!-- Wagen aanmaken / verwijderen -->
-			<p>test</p>
-		</div>
+        <div class="col s3">
+            <!-- Wagen aanmaken / verwijderen -->
 
+            @{ 
+
+                var kenteken = "";
+                var SW = "";
+                var zitplaatsen = "";
+                var wagenID = "";
+                var wagens = db.Query("SELECT WagenID,Kenteken FROM wagen");
+
+                if (IsPost && Request.Form["form1"] == "true")
+                {
+                    kenteken = Request.Form["Kenteken"];
+                    SW = Request.Form["SW"];
+                    zitplaatsen = Request.Form["Zitplaatsen"];
+
+                    var query = "INSERT INTO Wagen (Kenteken,SW,Zitplaatsen) VALUES (@0,@1,@2)";
+                    db.Execute(query, kenteken, SW, zitplaatsen);
+
+                    Response.Redirect("~/Application/settings.cshtml");
+
+
+                }
+
+                if (IsPost && Request.Form["form2"] == "true")
+                {
+                    wagenID = Request.Form["wagenID"];
+
+                    var query = "DELETE FROM Wagen WHERE WagenID = @0";
+                    db.Execute(query, wagenID);
+
+                    Response.Redirect("~/Application/settings.cshtml");
+                }
+            }
+
+            <div class="col s12">
+                <div class="card-panel grey darken-4">
+                    <div class="card-content ">
+                        <div class="row white-text">
+                            <form class="col s12" method="post" name="form">
+                                <span style="font-size: 16px;" class="card-title">Wagen toevoegen</span>
+
+                                <div class="input-field col s12">
+                                    <input name="Kenteken" type="text" value="@kenteken" class="validate">
+                                    <label for="Kenteken">Kenteken:</label>
+                                </div>
+                                <!--Radiobuttons-->
+                                <div class="input-field col s12">
+                                    <select name="SW" value="@SW">
+                                        <option value="@SW" class="disabled" selected>Soort wagen</option>
+                                        <option type="text" name="SW" class="black-text" value="Personenwagen">Personenwagen</option>
+                                        <option type="text" name="SW" class="black-text" value="Personenbus">Personenbus</option>
+                                        <option type="text" name="SW" class="black-text" value="Rolstoelbus">Rolstoelbus</option>
+                                    </select>
+                                    <label for="SW">Soort wagen</label>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <input name="Zitplaatsen" type="text" value="@zitplaatsen" class="validate">
+                                    <label for="zitplaatsen">Aantal zitplaatsen:</label>
+                                </div>
+
+
+                                <button class="btn right taximengeryellow" type="submit" name="form1" value="true">Bevestig</button>
+
+                                <div class="input-field col s12">
+                                    <select name="wagenID">
+                                        <option value="" disabled selected>Selecteer kenteken</option>
+                                        @foreach (var wagen in wagens)
+                                         {
+                                        <option type="text" name="wagenID" class="black-text" value ="@wagen.WagenID">@wagen.Kenteken</option>
+                                         }
+                                    </select>
+                                    <label>Wagen verwijderen</label>
+                                </div>
+
+                                <button class="btn right taximengeryellow" type="submit" name="form2" value="true">Bevestig</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+   
+</div>
 </div>
