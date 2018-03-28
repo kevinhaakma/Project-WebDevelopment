@@ -8,7 +8,7 @@
 
     if (date.IsEmpty())
     {
-        date = DateTime.Now.ToString("dd-mm-Y");
+        date = DateTime.Now.ToString("D-mm-yyyy");
     }
 
     else if (!(date.IsEmpty()))
@@ -28,12 +28,9 @@
 <div class="row" style="margin-bottom: 0px;">
     <div class="col s8 m8 l8">
         <a href="~/Application/rittentoevoegen.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
-        <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">edit</i>Wijzigen</a>
-        <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">cancel</i>Annuleren</a>
-        <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">delete</i>Verwijderen</a>
+        <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
     </div>
-    <form>
-        <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 64px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
+    <form>      
         <div class="col s4 input-field right" style="width:300px;margin: 80px 10px 10px;">
             <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
             <input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
@@ -60,15 +57,18 @@
                     <table class="centered highlight responsive-table" id="Table">
                         <thead>
                             <tr>
-                                <th class="Pointer" onclick="sortTable(0)">Datum</th>
-                                <th class="Pointer" onclick="sortTable(1)">Tijd</th>
-                                <th class="Pointer" onclick="sortTable(2)">Ophaaladres</th>
-                                <th class="Pointer" onclick="sortTable(3)">Bestemmingsadres</th>
-                                <th class="Pointer" onclick="sortTable(4)">Klant</th>
-                                <th class="Pointer" onclick="sortTable(5)">Personen</th>
-                                <th class="Pointer" onclick="sortTable(6)">Soort Wagen</th>
-                                <th class="Pointer" onclick="sortTable(7)">Kenteken</th>
-                                <th class="Pointer" onclick="sortTable(8)">Chauffeur</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="Pointer" onclick="sortTable(3)">Datum</th>
+                                <th class="Pointer" onclick="sortTable(4)">Tijd</th>
+                                <th class="Pointer" onclick="sortTable(5)">Ophaaladres</th>
+                                <th class="Pointer" onclick="sortTable(6)">Bestemmingsadres</th>
+                                <th class="Pointer" onclick="sortTable(7)">Klant</th>
+                                <th class="Pointer" onclick="sortTable(8)">Personen</th>
+                                <th class="Pointer" onclick="sortTable(9)">Soort Wagen</th>
+                                <th class="Pointer" onclick="sortTable(10)">Kenteken</th>
+                                <th class="Pointer" onclick="sortTable(11)">Chauffeur</th>
                             </tr>
                         </thead>
                         @foreach (var item in gegevens)
@@ -76,6 +76,9 @@
 
                     <tbody>
                         <tr>
+                            <td><a href="~/Application/rittentoevoegen.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
+                            <td><a href="~/Application/rittenverwijderen.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
+                            <td><a href="~/Application/rittencancle.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
                             <td>@item.Datum</td>
                             <td>@item.Tijd</td>
                             <td>@item.Ophaaladres</td>
@@ -87,7 +90,8 @@
                             <td>@item.Chauffeur</td>
                         </tr>
                     </tbody>
-}
+                            count++;
+                        }
                     </table>
                     <ul class="pagination">
                         @for (int i = 0; i < (count / per); i++)
