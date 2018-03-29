@@ -2,11 +2,20 @@
     var db = Database.Open("Klantgegevens");
 
     var ID = Request.QueryString["id"];
+    var ID2 = Request.QueryString["anul"];
+    var query = "";
 
     if (!IsPost)
     {
-        //var query = "DELETE FROM Rittenkaart WHERE RitID = @0";
-        //db.Execute(query, ID);
+        if(ID2 == "true")
+        {
+            query = "UPDATE Rittenkaart SET Geannuleerd = 0 WHERE RitID = @0";
+        }
+        else
+        {
+            query = "UPDATE Rittenkaart SET Geannuleerd = 1 WHERE RitID = @0";
+        }
+        db.Execute(query, ID);
         Response.Redirect("~/Application/home");
     }
 }
