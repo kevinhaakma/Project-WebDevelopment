@@ -1,0 +1,45 @@
+﻿<add name="conString" connectionString="Data Source=.\SQLEXPRESS;
+
+                    database=Klantgegevens;Integrated Security=true" />
+@{ 
+	using (System.Data);
+	using (System.Data.SqlClient);
+	using (System.Text);
+	using (System.IO);
+	using (iTextSharp.text);
+	using (iTextSharp.text.pdf);
+	using (iTextSharp.text.html);
+	using (iTextSharp.text.html.simpleparser);
+
+	private DataTable GetData(SqlCommand cmd)
+
+	{
+		DataTable dt = new DataTable();
+		String strConnString = System.Configuration.ConfigurationManager.
+			 ConnectionStrings["conString"].ConnectionString;
+		SqlConnection con = new SqlConnection(strConnString);
+		SqlDataAdapter sda = new SqlDataAdapter();
+		cmd.CommandType = CommandType.Text;
+		cmd.Connection = con;
+		try
+		{
+			con.Open();
+			sda.SelectCommand = cmd;
+			sda.Fill(dt);
+			return dt;
+		}
+
+		catch (Exception ex)
+		{
+			throw ex;
+		}
+
+		finally
+		{
+			con.Close();
+			sda.Dispose();
+			con.Dispose();
+		}
+
+	}
+}
