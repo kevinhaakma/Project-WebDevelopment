@@ -3,6 +3,7 @@
     var db = Database.Open("klantgegevens");
     double count = 0;
     int per = 5;
+    string color = "";
 
     var date = "";
 
@@ -73,10 +74,22 @@
                         {
 
                     <tbody>
-                        <tr>
+                        @if (item.Geannuleerd == true)
+                        {
+                            color = "red lighten-4";
+                        }
+
+                       <tr class="@color">                       
                             <td><a href="~/Application/rittentoevoegen.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
-                            <td><a href="~/Application/rittenverwijderen.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
-                            <td><a href="~/Application/rittencancle.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
+                            <td><a href="~/Application/ritdel.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
+                            @if(item.Geannuleerd == false)
+                            {
+                            <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=false" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
+                            }
+                            else
+                            {
+                            <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=true" class="material-icons center tooltipped" style="color:black" data-tooltip="Deannuleren">check</a></td>
+                            }
                             <td>@item.Datum</td>
                             <td>@item.Tijd</td>
                             <td>@item.Ophaaladres</td>

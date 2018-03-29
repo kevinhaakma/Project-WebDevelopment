@@ -17,7 +17,7 @@
 
         if (WebSecurity.Login(Username, Password, true))
         {
-            if(Username == "admin" || Username == "Admin")
+            if(Roles.IsUserInRole("administrator"))
             {
                 Response.Redirect("~/Admin/registersecret");
             }
