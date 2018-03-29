@@ -15,15 +15,18 @@
         var Ophaaladres = Request.Form["Ophaaladres"];
         var BestemmingsAdres = Request.Form["BestemmingsAdres"];
         var klant = Request.Form["klant"];
-        var aantal = Request.Form["aantal"];
+        var personen = Request.Form["aantal"];
+        var sw = "test";
         var kenteken = Request.Form["kenteken"];
         var chauffeur = Request.Form["chauffeur"];
         var datum = Request.Form["datum"];
         var bijzonderheden = Request.Form["bijzonderheden"];
-        
-        var query = "INSERT INTO Rittenkaart VALUES (@0, @1, @2, @3, @3, @4,@5,@6,@7,@8)";
+        var geannuleerd = false;
 
-        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,aantal,kenteken,chauffeur,datum);
+
+        var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10)";
+
+        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,geannuleerd);
         Response.Redirect("~/Application/Home");
     }
 
