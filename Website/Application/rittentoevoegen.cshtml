@@ -6,6 +6,7 @@
     var date = DateTime.Now.ToString("d-MM-yyyy");
 
     var query1 = "";
+    var rows1 = db.Query("");
 
     var RitID = db.QueryValue("Select Max(RitID) from Rittenkaart")+1;
 
@@ -198,9 +199,9 @@
                     }
                 },
                 onAutocomplete: function () {
-                    @(query = "SELECT Adres,Huisnummer,Woonplaats,Telefoonnummer,Bijzonderheden FROM klantgegevens WHERE Voornaam = @0, WHere Achternaam = @1";)
-                    @db.Query(query,Request.Form[""]);
-                    @foreach (var item in query) { }
+                    @(query1 = "SELECT Adres,Huisnummer,Woonplaats,Telefoonnummer,Bijzonderheden FROM klantgegevens WHERE Voornaam = @0, WHere Achternaam = @1";)
+                    @rows1 = db.Query(query1,Request.Form[""]);
+                    @foreach (var item in rows1) { }
                     document.getElementsByName("").values =
                 }
                   });
