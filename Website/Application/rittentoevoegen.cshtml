@@ -5,6 +5,7 @@
 
     var date = DateTime.Now.ToString("d-MM-yyyy");
 
+    var query = "";
 
     var RitID = db.QueryValue("Select Max(RitID) from Rittenkaart")+1;
 
@@ -19,13 +20,16 @@
         var chauffeur = Request.Form["chauffeur"];
         var datum = Request.Form["datum"];
         var bijzonderheden = Request.Form["bijzonderheden"];
-
-
+        
         var query = "INSERT INTO Rittenkaart VALUES (@0, @1, @2, @3, @3, @4,@5,@6,@7,@8)";
 
         db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,aantal,kenteken,chauffeur,datum);
         Response.Redirect("~/Application/Home");
     }
+
+    var Chauffeurs = db.Query("SELECT Chauffeur From Chauffeur");
+
+    var Wagens = db.Query("SELECT Kenteken FROM wagen");
 
 }
 
@@ -92,8 +96,6 @@
                     <div class="row white-text">
                         <span style="font-size: 16px;" class="card-title">Rit Toevoegen</span>
                         <form class="col s12" method="post">
-
-
                             <div class="row">
                                 <div class="input-field col s8">
                                     <input name="klant" type="text" id="autocomplete-input" class="autocomplete">
@@ -107,7 +109,6 @@
                                     <input name="Ophaaladres" type="text">
                                     <label for="Ophaaladres">Ophaaladres</label>
                                 </div>
-
                                 <div class="input-field col s12">
                                     <input name="BestemmingsAdres" type="text">
                                     <label for="BestemmingsAdres">Bestemmingsadres</label>
@@ -124,20 +125,21 @@
 
                                 <div class="input-field col s6">
                                     <select name="kenteken">
-                                        <option value="" disabled selected>Selecteer een kenteken</option>
-                                        <option value="1">Wagen</option>
-                                        <option value="2">Wagen 2</option>
-                                        <option value="3">Wagen 3</option>
+                                        <option value="" disabled selected>Selecteer een chauffeur</option>
+                                        @foreach (var item in Chauffeurs)
+            {
+                            <option value="@item.Chauffeur">@item.Chauffeur</option>
+}
                                     </select>
                                     <label>Kenteken</label>
                                 </div>
-
                                 <div class="input-field col s6">
                                     <select name="chauffeur">
-                                        <option value="" disabled selected>Selecteer een chauffeur</option>
-                                        <option value="1">Wagen</option>
-                                        <option value="2">Wagen 2</option>
-                                        <option value="3">Wagen 3</option>
+                                        <option value="" disabled selected>Selecteer een kenteken</option>
+                                        @foreach (var item in Wagens)
+            {
+                            <option value="@item.Kenteken">@item.Kenteken</option>
+}
                                     </select>
                                     <label>chauffeur</label>
                                 </div>
@@ -193,7 +195,10 @@
                     }
                 },
                 onAutocomplete: function () {
-                    alert("")
+                    @(query = "SELECT Adres,Huisnummer,Woonplaats,Telefoonnummer,Bijzonderheden FROM klantgegevens WHERE Voornaam = @0, WHere Achternaam = @1";)
+                    @db.Query(query,Request.Form[""]);
+                    @foreach (var item in query) { }
+                    document.getElementsByName("").values =
                 }
                   });
         });
@@ -201,8 +206,8 @@
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year,
             format: 'd-mm-yyyy',
-            today: 'Today',
-            clear: 'Clear',
+            today: '',
+            clear: '',
             close: 'Ok',
             closeOnSelect: false // Close upon selecting a date,
         });
