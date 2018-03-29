@@ -105,9 +105,9 @@
                         }
                     </table>
                     <ul class="pagination">
-                        @for (int i = 0; i < (count / per); i++)
+                        @for (double i = 0; i < (count / per); i++)
                         {
-                            <li id="page@(i)" class="waves-effect"><a  onclick="pages(@i)">@(i + 1)</a></li>
+                            <li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
                         }
                     </ul>
                 </div>
@@ -218,7 +218,7 @@
             }
         }
 
-        for (j = 0; j < (tr.length / 5 - 1); j++) {
+        for (j = 0; j < (tr.length / 5); j++) {
             document.getElementById('page' + j).setAttribute("class", "waves-effect");
         }
 
