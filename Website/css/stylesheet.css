@@ -195,3 +195,26 @@ textarea.materialize-textarea:focus {
     white-space: nowrap;
 }
 
+/* DATE PICKER*/
+.picker__date-display{
+    background-color: #424242;
+}
+
+.picker__close {
+    color: #424242;
+}
+
+.picker__day--today {
+    color: black !important;
+    font-weight: bold;
+}
+
+.picker__close:focus {
+    background-color: #ffecaa !important;
+}
+
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+    background-color: #FED12E;
+    color: black !important;
+    font-weight: bold;
+}
