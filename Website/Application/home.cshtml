@@ -27,7 +27,16 @@
 
 <div class="row" style="margin-bottom: 0px;">
     <div class="col s8 m8 l8">
-        <a href="~/Application/rittentoevoegen.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
+
+        <!-- Dropdown Trigger -->
+        <a style="margin: 80px 10px 0px;" class='dropdown-button taximengeryellow btn dropdown-button left' href='#' data-activates='dropdown1'><i class="material-icons right">control_point</i>Toevoegen</a>
+
+        <!-- Dropdown Structure -->
+        <ul style="margin: 80px 10px 0px;" id='dropdown1' class='dropdown-content'>
+            <li><a href="~/Application/rittentoevoegen.cshtml">Eenmalig</a></li>
+            <li><a href="~/Application/rittentoevoegen.cshtml">Vaste klant</a></li>
+        </ul>
+
         <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
     </div>
 </div>

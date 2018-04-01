@@ -22,63 +22,63 @@
 </head>
 
 <body class="grey lighten-2">
-	<!-- Navbar -->
-	<nav class="nav-center">
-		<div class="nav-wrapper grey darken-4">
+    <!-- Navbar -->
+    <nav class="nav-center">
+        <div class="nav-wrapper grey darken-4">
 
-			<!-- logo -->
-			<a href="~/Application/home">
-				<img class="col l1 offset-l10 m8 offset-m2 s12 brand-logo" src="~/img/logo.png" />
-			</a>
+            <!-- logo -->
+            <a href="~/Application/home">
+                <img class="col l1 offset-l10 m8 offset-m2 s12 brand-logo" src="~/img/logo.png" />
+            </a>
 
-			<!-- Mobile responsive menu -->
-			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <!-- Mobile responsive menu -->
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
-			<!-- Dropdown -->
-			<ul id='dropdown' class='dropdown-content'>
-				<li><a href="~/Application/settings" style="font-size: 14px; padding: 12px 20px">Instellingen<i class="tiny material-icons">settings</i></a></li>
-				<li><a href="~/Application/logout" style="font-size: 14px; padding: 12px 26px">Uitloggen<i class="tiny material-icons">power_settings_new</i></a></li>
-			</ul>
+            <!-- Dropdown -->
+            <ul id='dropdown' class='dropdown-content'>
+                <li><a href="~/Application/settings" style="font-size: 14px; padding: 12px 20px">Instellingen<i class="tiny material-icons">settings</i></a></li>
+                <li><a href="~/Application/logout" style="font-size: 14px; padding: 12px 26px">Uitloggen<i class="tiny material-icons">power_settings_new</i></a></li>
+            </ul>
 
-			<ul class="hide-on-med-and-down">
-				<li><a href="~/Application/Home">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
-				<li><a href="~/Application/customers">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
-				<li><a class='dropdown-button right' data-beloworigin="true" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a></li>
-				<li><a style="font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a></li>
-			</ul>
-			<ul class="side-nav" *id="mobile-demo">
-				<li><a href="~/Application/home" style="font-size: 14px; padding: 0px 60px">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
-				<li><a href="~/Application/customers" style="font-size: 14px; padding: 0px 60px">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
-				<li><div class="divider"></div></li>
-				<li><a href="~/Application/settings" style="font-size: 14px"><i class="tiny material-icons">settings</i>Instellingen</a></li>
-				<li><a href="~/Application/logout" style="font-size: 14px"><i class="tiny material-icons">power_settings_new</i>Uitloggen</a></li>
-			</ul>
-		</div>
-	</nav>
+            <ul class="hide-on-med-and-down">
+                <li><a href="~/Application/Home">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
+                <li><a href="~/Application/customers">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
+                <li><a class='dropdown-button right' data-beloworigin="true" href='#' data-activates='dropdown'><i class="material-icons">more_vert</i></a></li>
+                <li><a style="font-size: small;" class="right">Hallo, @WebSecurity.CurrentUserName !</a></li>
+            </ul>
+            <ul class="side-nav" *id="mobile-demo">
+                <li><a href="~/Application/home" style="font-size: 14px; padding: 0px 60px">Agenda</a></li> <!-- Verwijzing naar agenda pagina-->
+                <li><a href="~/Application/customers" style="font-size: 14px; padding: 0px 60px">Klanten</a></li> <!-- Verwijzing naar klantenpagina-->
+                <li><div class="divider"></div></li>
+                <li><a href="~/Application/settings" style="font-size: 14px"><i class="tiny material-icons">settings</i>Instellingen</a></li>
+                <li><a href="~/Application/logout" style="font-size: 14px"><i class="tiny material-icons">power_settings_new</i>Uitloggen</a></li>
+            </ul>
+        </div>
+    </nav>
 
-	@RenderBody()
+    @RenderBody()
 
-	<!--Import jQuery before materialize.js-->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="~/js/materialize.min.js"></script>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="~/js/materialize.min.js"></script>
 
-	<script>
-		$(".button-collapse").sideNav();
-		$('select').material_select();
+    <script>
+        $(".button-collapse").sideNav();
+        $('select').material_select();
         $('.datepicker').pickadate({
             onClose: function () {
-                document.getElementById("Datepicker").submit(); 
+                document.getElementById("Datepicker").submit();
             },
-			selectMonths: true, // Creates a dropdown to control month
+            selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year,
             format: 'd-mm-yyyy',
-			today: '',
-			clear: '',
-			close: 'Ok',
-			closeOnSelect: false // Close upon selecting a date,
-		});
-	</script>
-	<!--Voor de dropdown functie op settings pagina.-->
+            today: '',
+            clear: '',
+            close: 'Ok',
+            closeOnSelect: false // Close upon selecting a date,
+        });
+    </script>
+    <!--Voor de dropdown functie op settings pagina.-->
 
     <script>
         $(document).ready(function () {
@@ -92,9 +92,13 @@
         });
     </script>
     <script>
-    $(document).ready(function () {
-    $('select').material_select();
-    });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+            $('.dropdown-trigger').dropdown();
+        });
     </script>
 
 </body>

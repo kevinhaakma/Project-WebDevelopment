@@ -7,12 +7,45 @@
 
     var RitID = db.QueryValue("Select Max(RitID) from Rittenkaart")+1;
 
-    if (IsPost)
+    var Klanten = db.Query("SELECT Voornaam,Achternaam FROM klantgegevens");
+
+    var klant = "";
+    var Adres = "";
+    var Postcode = "";
+    var Woonplaats = "";
+    var Telefoonnummer = "";
+    var Emailadres = "";
+    var Bijzonderheden = "";
+    var Huisnummer = "";
+
+
+    if(IsPost && Request.Form["form"] != "true")
     {
+        string tmp = Request.Form["Klant"].Substring(0, Request.Form["Klant"].IndexOf(" "));
+
+        var querytmp = "SELECT * FROM klantgegevens where Voornaam = @0";
+        rows = db.Query(querytmp, tmp);
+
+        foreach(var row in rows)
+        {
+            
+            klant = row.Voornaam + " " + row.Achternaam;
+            Adres = row.Adres;
+            Postcode = row.Postcode;
+            Woonplaats = row.Woonplaats;
+            Telefoonnummer = row.Telefoonnummer;
+            Emailadres = row.Emailadres;
+            Bijzonderheden = row.Bijzonderheden;
+            Huisnummer = row.Huisnummer;
+        }
+    }
+
+    if (IsPost && Request.Form["form"] == "true")
+    {
+        klant = Request.Form["Klant"];
         var tijd = Request.Form["tijd"];
         var Ophaaladres = Request.Form["Ophaaladres"];
         var BestemmingsAdres = Request.Form["BestemmingsAdres"];
-        var klant = Request.Form["klant"];
         var personen = Request.Form["aantal"];
         var sw = "test";
         var kenteken = Request.Form["kenteken"];
@@ -96,22 +129,32 @@
                 <div class="card-content ">
                     <div class="row white-text">
                         <span style="font-size: 16px;" class="card-title">Rit Toevoegen</span>
-                        <form class="col s12" method="post">
-                            <div class="row">
+                        <div class="row col s12">
+                        <form id="form1" method="post" >
                                 <div class="input-field col s8">
-                                    <input name="klant" type="text" id="autocomplete-input" class="autocomplete">
-                                    <label for="autocomplete-input">Klant</label>
+                                    <select id="klantSelect" name="Klant" >
+                                        <option name="Klant" disabled selected>Selecteer een Klant</option>
+                                        @foreach (var item in Klanten)
+                                           {
+                                        <option value="@(item.Voornaam + " " + item.Achternaam)">@(item.Voornaam + " " + item.Achternaam)</option>
+                                            }
+                                    </select>
+                                    <label>Klant</label>
                                 </div>
+                        </form>
+
+                        <form name="form" method="post">
+
                                 <div class="input-field col s4">
                                     <input name="aantal" type="text">
                                     <label for="aantal">Aantal Personen</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="Ophaaladres" type="text">
+                                    <input name="Ophaaladres" value="@(Adres + " " + Huisnummer + ", " + Woonplaats)" type="text">
                                     <label for="Ophaaladres">Ophaaladres</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="BestemmingsAdres" type="text">
+                                    <input name="BestemmingsAdres" value="BestemmingsAdres" type="text">
                                     <label for="BestemmingsAdres">Bestemmingsadres</label>
                                 </div>
 
@@ -149,13 +192,13 @@
                             <div class="row">
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <textarea name="bijzonderheden" class="materialize-textarea"></textarea>
+                                        <textarea name="bijzonderheden" class="materialize-textarea">@Bijzonderheden</textarea>
                                         <label for="bijzonderheden">Bijzonderheden</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <button class="btn right taximengeryellow" type="submit" name="action">Bevestig</button>
+                            <button class="btn right taximengeryellow" type="submit" name="form" value="true">Bevestig</button>
                         </form>
                     </div>
                 </div>
@@ -170,6 +213,13 @@
     <script>
         $(".button-collapse").sideNav();
         $('select').material_select();
+        $(document).ready(function () {
+
+        });
+
+        $('#klantSelect').on('change', function (e) {
+            document.getElementById("form1").submit();
+        });
     </script>
 
     <script>
