@@ -1,0 +1,12 @@
+﻿@{
+	var db = Database.Open("Klantgegevens");
+
+	var ID = Request.QueryString["id"];
+
+	if (!IsPost)
+	{
+		var query = "DELETE FROM Rittenkaart WHERE RitID = @0";
+		db.Execute(query, ID);
+		Response.Redirect("~/Application/home");
+	}
+}
