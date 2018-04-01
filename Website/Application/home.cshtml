@@ -27,9 +27,13 @@
 }
 
 <div class="row" style="margin-bottom: 0px;">
-    <div class="col s8 m8 l8">
+    <div class="col s12 m12 l12">
         <a href="~/Application/rittentoevoegen.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
         <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
+        <form id="Datepicker" class="btn taximengeryellow input-field col s2 l1 right" style="margin-top: 80px; right: 5px;" method="post">
+            <i class="right material-icons">date_range</i>
+            <input style="border: hidden; position:absolute; left:0; top:-3px; font-size: 14px; font-weight: 400;" name="date" class="center Pointer datepicker" data-value="@date">
+        </form>
     </div>
 </div>
 
@@ -39,13 +43,7 @@
         <div class="card white">
             <div class="card-content black-text">
                 <div class="row">
-                    <div class="col s2">
-                        <span class="col s3" style="font-size:16px">Datum:</span>
-                        <form id="Datepicker" class="col s9" style="margin-top: -10px;" method="post">
-                            <input name="date" type="text" class="center Pointer datepicker col s5" data-value="@date">
-                        </form>
-                    </div>
-                    <div class="col offset-s8 s2">
+                    <div class="col offset-s10 s2">
                         <form>
                             <div class="col s4 input-field right" style="width:300px;margin: -10px 10px 10px;">
                                 <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
@@ -53,7 +51,7 @@
                             </div>
                         </form>
                     </div>
-                    <table class="centered highlight responsive-table" id="Table">
+                    <table class="centered highlight" id="Table">
                         <thead>
                             <tr>
                                 <th></th>
@@ -71,44 +69,44 @@
                             </tr>
                         </thead>
                         @foreach (var item in gegevens)
-                        {
+        {
 
-                    <tbody>
-                        @if (item.Geannuleerd == true)
-                        {
-                            color = "red lighten-4";
-                        }
+                <tbody>
+                    @if (item.Geannuleerd == true)
+    {
+        color = "red lighten-4";
+    }
 
-                       <tr class="@color">                       
-                            <td><a href="~/Application/rittentoevoegen.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
-                            <td><a href="~/Application/ritdel.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
-                            @if(item.Geannuleerd == false)
-                            {
-                            <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=false" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
-                            }
-                            else
-                            {
-                            <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=true" class="material-icons center tooltipped" style="color:black" data-tooltip="Deannuleren">check</a></td>
-                            }
-                            <td>@item.Datum</td>
-                            <td>@item.Tijd</td>
-                            <td>@item.Ophaaladres</td>
-                            <td>@item.Bestemmingsadres</td>
-                            <td>@item.Klant</td>
-                            <td>@item.Personen</td>
-                            <td>@item.SW</td>
-                            <td>@item.Kenteken</td>
-                            <td>@item.Chauffeur</td>
-                        </tr>
-                    </tbody>
-                            count++;
-                        }
+                    <tr class="@color">
+                        <td><a href="~/Application/rittentoevoegen.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
+                        <td><a href="~/Application/ritdel.cshtml?id=@item.RitID" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
+                        @if (item.Geannuleerd == false)
+        {
+                <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=false" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
+}
+else
+{
+                <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=true" class="material-icons center tooltipped" style="color:black" data-tooltip="Deannuleren">check</a></td>
+}
+                        <td>@item.Datum</td>
+                        <td>@item.Tijd</td>
+                        <td>@item.Ophaaladres</td>
+                        <td>@item.Bestemmingsadres</td>
+                        <td>@item.Klant</td>
+                        <td>@item.Personen</td>
+                        <td>@item.SW</td>
+                        <td>@item.Kenteken</td>
+                        <td>@item.Chauffeur</td>
+                    </tr>
+                </tbody>
+count++;
+}
                     </table>
                     <ul class="pagination">
                         @for (double i = 0; i < (count / per); i++)
-                        {
-                            <li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
-                        }
+        {
+                <li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
+}
                     </ul>
                 </div>
             </div>
