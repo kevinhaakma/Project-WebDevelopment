@@ -7,8 +7,6 @@
 
     var RitID = db.QueryValue("Select Max(RitID) from Rittenkaart")+1;
 
-    var Klanten = db.Query("SELECT Voornaam,Achternaam FROM klantgegevens");
-
     var klant = "";
     var Adres = "";
     var Postcode = "";
@@ -21,15 +19,15 @@
 
     if(IsPost && Request.Form["form"] != "true")
     {
-        string tmp = Request.Form["Klant"].Substring(0, Request.Form["Klant"].IndexOf(" "));
+        string tmp = Request.Form["Klant"];
+        string[] split = tmp.Split(' ');
 
-        var querytmp = "SELECT * FROM klantgegevens where Voornaam = @0";
-        rows = db.Query(querytmp, tmp);
+        var querytmp = "SELECT * FROM klantgegevens where KlantID = @0";
+        var tmprow = db.Query(querytmp, split[0]);
 
-        foreach(var row in rows)
+        foreach(var row in tmprow)
         {
-
-            klant = row.Voornaam + " " + row.Achternaam;
+            klant = row.KlantID.ToString() + " " + row.Voornaam + " " + row.Achternaam;
             Adres = row.Adres;
             Postcode = row.Postcode;
             Woonplaats = row.Woonplaats;
@@ -130,31 +128,25 @@
                     <div class="row white-text">
                         <span style="font-size: 16px;" class="card-title">Rit Toevoegen</span>
                         <div class="row col s12">
-                        <form id="form1" method="post" >
+                            <form id="form1" method="post">
                                 <div class="input-field col s8">
-                                    <select id="klantSelect" name="Klant" >
-                                        <option name="Klant" disabled selected>Selecteer een Klant</option>
-                                        @foreach (var item in Klanten)
-                                           {
-                                        <option value="@(item.Voornaam + " " + item.Achternaam)">@(item.Voornaam + " " + item.Achternaam)</option>
-                                            }
-                                    </select>
-                                    <label>Klant</label>
+                                    <input name="klant" type="text" value="@klant" id="Klant" class="autocomplete">
+                                    <label for="Klant">Klant</label>
                                 </div>
-                        </form>
+                            </form>
 
-                        <form name="form" method="post">
+                            <form name="form" method="post">
 
                                 <div class="input-field col s4">
                                     <input name="aantal" type="text">
                                     <label for="aantal">Aantal Personen</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="Ophaaladres" value="@(Adres + " " + Huisnummer + ", " + Woonplaats)" type="text">
+                                    <input name="Ophaaladres" value="@(Woonplaats +", " + Adres+ " " + Huisnummer)" type="text">
                                     <label for="Ophaaladres">Ophaaladres</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="BestemmingsAdres" value="BestemmingsAdres" type="text">
+                                    <input name="BestemmingsAdres" type="text">
                                     <label for="BestemmingsAdres">Bestemmingsadres</label>
                                 </div>
 
@@ -171,8 +163,8 @@
                                     <select name="chauffeur">
                                         <option value="" disabled selected>Selecteer een chauffeur</option>
                                         @foreach (var item in Chauffeurs)
-            {
-                            <option value="@item.Chauffeur">@item.Chauffeur</option>
+                    {
+                        <option value="@item.Chauffeur">@item.Chauffeur</option>
 }
                                     </select>
                                     <label>Kenteken</label>
@@ -181,24 +173,49 @@
                                     <select name="kenteken">
                                         <option value="" disabled selected>Selecteer een kenteken</option>
                                         @foreach (var item in Wagens)
-            {
-                            <option value="@item.Kenteken">@item.Kenteken</option>
+                    {
+                        <option value="@item.Kenteken">@item.Kenteken</option>
 }
                                     </select>
                                     <label>chauffeur</label>
                                 </div>
-                            </div>
 
-                            <div class="row">
+
                                 <div class="row">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <textarea name="bijzonderheden" class="materialize-textarea">@Bijzonderheden</textarea>
+                                            <label for="bijzonderheden">Bijzonderheden</label>
+                                        </div>
+                                    </div>
+                                    <span style="font-size: 16px;" class="card-title">Tarieven</span>
                                     <div class="input-field col s12">
-                                        <textarea name="bijzonderheden" class="materialize-textarea">@Bijzonderheden</textarea>
-                                        <label for="bijzonderheden">Bijzonderheden</label>
+                                        <select name="betaalwijze">
+                                            <option value="" disabled selected>Selecteer een betaalwijze</option>
+                                            <option value="Pin">Pin</option>
+                                            <option value="Contant">Contant</option>
+                                            <option value="Rekening">Rekening</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-field col s4">
+                                        <input id="exclusief" name="exclusief" onkeyup="calcBtw();" type="text">
+                                        <label for="exclusief">Exclusief BTW</label>
+                                    </div>
+
+                                    <div class="input-field col s4">
+                                        <input id="percentage" name="percentage" onkeyup="calcBtw();" type="text">
+                                        <label for="percentage">Percentage</label>
+                                    </div>
+
+                                    <div class="input-field col s4">
+                                        <input id="inclusief" name="inclusief" type="text">
+                                        <label id="inclusieflabel" for="inclusief">Inclusief BTW</label>
                                     </div>
                                 </div>
-                            </div>
 
-                            <button class="btn right taximengeryellow" type="submit" name="form" value="true">Bevestig</button>
+
+                        <button class="btn right taximengeryellow" type="submit" name="form" value="true">Bevestig</button>
                         </form>
                     </div>
                 </div>
@@ -241,14 +258,14 @@
                 data: {
                     @foreach (var item in rows)
                     {
-                       @Html.Raw("\"" + item.Voornaam + " " + item.Achternaam + "\" " + ": " + "null" + "," + Environment.NewLine)
+                       @Html.Raw("\"" + item.KlantID + " " + item.Voornaam + " " + item.Achternaam + "\" " + ": " + "null" + "," + Environment.NewLine)
 
                     }
                 },
                 onAutocomplete: function () {
-  
+                    document.getElementById("form1").submit();
                 }
-                  });
+           });
         });
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
@@ -259,6 +276,14 @@
             close: 'Ok',
             closeOnSelect: false // Close upon selecting a date,
         });
+        function calcBtw() {
+            var a = document.getElementById("exclusief").value;
+            var b = document.getElementById("percentage").value;
+            if (a != "" && b != "") {
+                document.getElementById("inclusief").value = (a * (b / 100 + 1));
+                document.getElementById("inclusieflabel").className = "active";
+            }
+        }
         $(document).ready(function () {
             $('.tooltipped').tooltip();
         });

@@ -34,8 +34,8 @@
 
         <!-- Dropdown Structure -->
         <ul style="margin: 80px 10px 0px;" id='dropdown1' class='dropdown-content'>
-            <li><a href="~/Application/rittentoevoegen.cshtml">Eenmalig</a></li>
-            <li><a href="~/Application/rittentoevoegen.cshtml">Vaste klant</a></li>
+            <li><a href="~/Application/eenmalig.cshtml">Eenmalig</a></li>
+            <li><a href="~/Application/vasteklant.cshtml">Vaste klant</a></li>
         </ul>
 
         <a class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
@@ -75,6 +75,9 @@
                                 <th class="Pointer" onclick="sortTable(9)">Soort Wagen</th>
                                 <th class="Pointer" onclick="sortTable(10)">Kenteken</th>
                                 <th class="Pointer" onclick="sortTable(11)">Chauffeur</th>
+                                <th class="Pointer" onclick="sortTable(12)">Betaalwijze</th>
+                                <th class="Pointer" onclick="sortTable(13)">Bedrag (+BTW)</th>
+                                <th class="Pointer" onclick="sortTable(14)">Bijzonderheden</th>
                             </tr>
                         </thead>
                         @foreach (var item in gegevens)
@@ -94,12 +97,12 @@
                         <td><a href="~/Application/rittentoevoegen.cshtml?id=@item.RitID&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
                         <td><a href="~/Application/ritdel.cshtml?id=@item.RitID&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
                         @if (item.Geannuleerd == false)
-        {
-                <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=false&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
+    {
+                    <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=false&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
 }
 else
 {
-                <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=true&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Deannuleren">check</a></td>
+                    <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=true&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Deannuleren">check</a></td>
 }
                         <td>@item.Datum</td>
                         <td>@item.Tijd</td>
@@ -110,6 +113,16 @@ else
                         <td>@item.SW</td>
                         <td>@item.Kenteken</td>
                         <td>@item.Chauffeur</td>
+                        <td>@item.betaalwijze</td>
+                        <td>@item.inclusief</td>
+                        @if (item.Bijzonderheden != "" && item.Bijzonderheden != null)
+    {
+                    <td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
+}
+else
+{
+                    <td>@item.Bijzonderheden</td>
+}
                     </tr>
                 </tbody>
 count++;
