@@ -52,13 +52,18 @@
         <div class="card white">
             <div class="card-content black-text">
                 <div class="row">
-                    <div class="col offset-s10 s2">
-                        <form>
-                            <div class="col s4 input-field right" style="width:300px;margin: -10px 10px 10px;">
-                                <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
-                                <input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
-                            </div>
-                        </form>
+                    <div class="col s12">
+                        <div class="col s2" style="">
+                            <input type="checkbox" id="checkboxid"><label for="checkboxid">Geannuleerden</label>
+                        </div>
+                        <div class="col offset-s8 s2">
+                            <form>
+                                <div class="col s4 input-field right" style="width:300px;margin: -10px 10px 10px;">
+                                    <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
+                                    <input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <table class="centered highlight" id="Table">
                         <thead>
@@ -85,13 +90,13 @@
 
                 <tbody>
                     @if (item.Geannuleerd == true)
-                    {
-                        color = "red lighten-4";
-                    }
-                    else
-                    {
-                        color = "";
-                    }
+    {
+        color = "red lighten-4";
+    }
+    else
+    {
+        color = "";
+    }
 
                     <tr class="@color">
                         <td><a href="~/Application/rittentoevoegen.cshtml?id=@item.RitID&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
