@@ -3,6 +3,7 @@
 
     var ID = Request.QueryString["id"];
     var ID2 = Request.QueryString["anul"];
+    string date = Request.QueryString["date"];
     var query = "";
 
     if (!IsPost)
@@ -16,6 +17,6 @@
             query = "UPDATE Rittenkaart SET Geannuleerd = 1 WHERE RitID = @0";
         }
         db.Execute(query, ID);
-        Response.Redirect("~/Application/home");
+        Response.Redirect("~/Application/home.cshtml?date=" + date);
     }
 }
