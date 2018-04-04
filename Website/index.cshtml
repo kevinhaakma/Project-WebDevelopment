@@ -8,7 +8,17 @@
     Validation.RequireField("Username", "Voer een gebruikersnaam in.");
     Validation.RequireField("Password", "Voer een wachtwoord in.");
 
-
+    if(WebSecurity.IsAuthenticated)
+    {
+        if (Roles.IsUserInRole("administrator"))
+        {
+            Response.Redirect("~/Admin/registersecret");
+        }
+        else
+        {
+            Response.Redirect("~/Application/Home");
+        }
+    }
 
     if (IsPost && Validation.IsValid())
     {
