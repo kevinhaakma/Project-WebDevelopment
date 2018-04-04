@@ -17,9 +17,9 @@
     var bijzonderheden = "";
     var geannuleerd = false;
     var betaalwijze = "";
-    double exclusief = 0;
-    double percentage = 0;
-    double inclusief = 0;
+    var exclusief = "";
+    var percentage = "";
+    var inclusief = "";
 
     foreach (var item in rows)
     {
@@ -35,9 +35,9 @@
         bijzonderheden = item.bijzonderheden;
         geannuleerd = item.geannuleerd;
         betaalwijze = item.betaalwijze;
-        exclusief = item.exclusief;
-        percentage = item.percentage;
-        inclusief = item.inclusief;
+        exclusief = item.exclusief.ToString();
+        percentage = item.percentage.ToString();
+        inclusief = item.inclusief.ToString();
     }
 
 
@@ -54,10 +54,10 @@
         chauffeur = Request.Form["chauffeur"];
         datum = Request.Form["datum"];
         bijzonderheden = Request.Form["bijzonderheden"];
-        betaalwijze = Request.Form["betaalwijze"];
-        exclusief = Convert.ToDouble(Request.Form["exclusief"]);
-        percentage = Convert.ToDouble(Request.Form["percentage"]);
-        inclusief = Convert.ToDouble(Request.Form["inclusief"]);
+        betaalwijze = Request.Form["betaalwijze"].Replace(",", ".");
+        exclusief = Request.Form["exclusief"].Replace(",", ".");
+        percentage = Request.Form["percentage"].Replace(",", ".");
+        inclusief = Request.Form["inclusief"].Replace(",", ".");
 
 
         var query = "UPDATE Rittenkaart SET Tijd = @0, Ophaaladres = @1, Bestemmingsadres = @2, Klant = @3, Personen = @4, SW = @5, Kenteken = @6, Chauffeur = @7, Datum = @8, betaalwijze = @9, exclusief = @10, percentage = @11, inclusief = @12, bijzonderheden = @13 WHERE RitID = @14";
