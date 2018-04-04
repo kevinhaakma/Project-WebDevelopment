@@ -8,14 +8,14 @@
 
 	var date = "";
 
-	if (Request.QueryString["date"] != null)
-	{
-		date = Request.QueryString["date"];
-	}
-	else if (date.IsEmpty())
-	{
-		date = DateTime.Now.ToString("dd-MM-yyyy");
-	}
+    if (Request.QueryString["date"] != null)
+    {
+        date = Request.QueryString["date"];
+    }
+    else if (date.IsEmpty())
+    {
+        date = DateTime.Now.ToString("d-MM-yyyy");
+    }
 
 	if (IsPost)
 	{
