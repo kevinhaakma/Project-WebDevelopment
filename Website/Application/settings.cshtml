@@ -20,10 +20,6 @@
     var chauffeurID = "";
     var Chauffeurs = db.Query("SELECT ChauffeurID,Chauffeur FROM Chauffeur");
 
-    if (IsPost && Request.Form["form1"] == "true")
-    {
-
-    }
 
 	<!--Wachtwoord wijzigen form-->
     if (IsPost && Request.Form["form2"] == "true")
@@ -211,52 +207,49 @@
             <div class="col s12">
                 <div class="card-panel grey darken-4">
                     <div class="card-content ">
-                        <div class="row white-text">
-                            <form class="col s12" method="post" name="form">
-                                <span style="font-size: 16px;" class="card-title">Wagen toevoegen</span>
+						<div class="row white-text">
+							<form class="col s12" method="post" name="form5">
+								<span style="font-size: 16px;" class="card-title">Wagen toevoegen</span>
 
-                                <div class="input-field col s12">
-                                    <input name="Kenteken" type="text" value="@kenteken" class="validate">
-                                    <label for="Kenteken">Kenteken:</label>
-                                </div>
-                                <!--Radiobuttons-->
-                                <div class="input-field col s12">
-                                    <select name="SW" value="@SW">
-                                        <option value="@SW" class="disabled" selected>Soort wagen</option>
-                                        <option type="text" name="SW" class="black-text" value="Personenwagen">Personenwagen</option>
-                                        <option type="text" name="SW" class="black-text" value="Personenbus">Personenbus</option>
-                                        <option type="text" name="SW" class="black-text" value="Rolstoelbus">Rolstoelbus</option>
-                                    </select>
-                                    <label for="SW">Soort wagen</label>
-                                </div>
+								<div class="input-field col s12">
+									<input name="Kenteken" type="text" value="@kenteken" class="validate" required>
+									<label for="Kenteken">Kenteken:</label>
+								</div>
+								<!--Radiobuttons-->
+								<div class="input-field col s12">
+									<select name="SW" value="@SW">
+										<option value="@SW" class="disabled" selected>Soort wagen</option>
+										<option type="text" name="SW" class="black-text" value="Personenwagen">Personenwagen</option>
+										<option type="text" name="SW" class="black-text" value="Personenbus">Personenbus</option>
+										<option type="text" name="SW" class="black-text" value="Rolstoelbus">Rolstoelbus</option>
+									</select>
+									<label for="SW">Soort wagen</label>
+								</div>
 
-                                <div class="input-field col s12">
-                                    <input name="Zitplaatsen" type="text" value="@zitplaatsen" class="validate">
-                                    <label for="zitplaatsen">Aantal zitplaatsen:</label>
-                                </div>
+								<div class="input-field col s12">
+									<input name="Zitplaatsen" type="text" value="@zitplaatsen" class="validate" required>
+									<label for="zitplaatsen">Aantal zitplaatsen:</label>
+								</div>
+							<button class="btn right taximengeryellow" type="submit" name="form6" value="true">Bevestig</button>
+							</form>
 
+							<form class="col s12" method="post" name="form6">
+								<div class="input-field col s12">
+									<select name="wagenID">
+										<option value="" disabled selected>Selecteer kenteken</option>
+										@foreach (var wagen in wagens)
+										{
+										<option type="text" name="wagenID" class="black-text" value="@wagen.WagenID">@wagen.Kenteken</option>
+										}
+									</select>
+									<label>Wagen verwijderen</label>
+								</div>
+								<button class="btn right taximengeryellow" type="submit" name="form6" value="true">Bevestig</button>
+							</form>
 
-                                <button class="btn right taximengeryellow" type="submit" name="form5" value="true">Bevestig</button>
-
-                                <div class="input-field col s12">
-                                    <select name="wagenID">
-                                        <option value="" disabled selected>Selecteer kenteken</option>
-                                        @foreach (var wagen in wagens)
-                                         {
-                                        <option type="text" name="wagenID" class="black-text" value ="@wagen.WagenID">@wagen.Kenteken</option>
-                                         }
-                                    </select>
-                                    <label>Wagen verwijderen</label>
-                                </div>
-
-                                <button class="btn right taximengeryellow" type="submit" name="form6" value="true">Bevestig</button>
-
-                            </form>
-                        </div>
+						</div>
                     </div>
                 </div>
-
             </div>
-   
-</div>
-</div>
+		</div>
+	</div>

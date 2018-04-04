@@ -1,12 +1,12 @@
 ﻿@{
-    Layout = "~/Shared/_Layout.cshtml";
-    var db = Database.Open("klantgegevens");
-    double count = 0;
-    int per = 5;
-    string color = "";
+	Layout = "~/Shared/_Layout.cshtml";
+	var db = Database.Open("klantgegevens");
+	double count = 0;
+	int per = 5;
+	string color = "";
 
 
-    var date = "";
+	var date = "";
 
     if (Request.QueryString["date"] != null)
     {
@@ -17,261 +17,263 @@
         date = DateTime.Now.ToString("d-MM-yyyy");
     }
 
-    if (IsPost)
-    {
-        date = Request.Form["date"];
-    }
+	if (IsPost)
+	{
+		date = Request.Form["date"];
+	}
 
-    var query = "SELECT * from Rittenkaart WHERE Datum = @0";
-    var gegevens = db.Query(query, date);
+	var query = "SELECT * from Rittenkaart WHERE Datum = @0";
+	var gegevens = db.Query(query, date);
+
+
 }
 
 <div class="row" style="margin-bottom: 0px;">
-    <div class="col s12 m12 l12">
+	<div class="col s12 m12 l12">
 
-        <!-- Dropdown Trigger -->
-        <a style="margin: 80px 10px 0px;" class='dropdown-button taximengeryellow btn dropdown-button left' href='#' data-activates='dropdown1'><i class="material-icons right">control_point</i>Toevoegen</a>
+		<!-- Dropdown Trigger -->
+		<a style="margin: 80px 10px 0px;" class='dropdown-button taximengeryellow btn dropdown-button left' href='#' data-activates='dropdown1'><i class="material-icons right">control_point</i>Toevoegen</a>
 
-        <!-- Dropdown Structure -->
-        <ul style="margin: 80px 10px 0px;" id='dropdown1' class='dropdown-content'>
-            <li><a href="~/Application/eenmalig.cshtml">Eenmalig</a></li>
-            <li><a href="~/Application/vasteklant.cshtml">Vaste klant</a></li>
-        </ul>
+		<!-- Dropdown Structure -->
+		<ul style="margin: 80px 10px 0px;" id='dropdown1' class='dropdown-content'>
+			<li><a href="~/Application/eenmalig.cshtml">Eenmalig</a></li>
+			<li><a href="~/Application/vasteklant.cshtml">Vaste klant</a></li>
+		</ul>
 		<!--Verwijzing naar Export-->
 		<a href="" onclick="fnExcelReport()" class="waves-effect waves-light btn taximengeryellow " style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
 
-        <form id="Datepicker" class="btn taximengeryellow input-field col s2 l1 right" style="margin-top: 80px; right: 5px;" method="post">
-            <i class="right material-icons">date_range</i>
-            <input style="border: hidden; position:absolute; left:0; top:-3px; font-size: 14px; font-weight: 400;" name="date" class="center Pointer datepicker" data-value="@date">
-        </form>
-    </div>
+		<form id="Datepicker" class="btn taximengeryellow input-field col s2 l1 right" style="margin-top: 80px; right: 5px;" method="post">
+			<i class="right material-icons">date_range</i>
+			<input style="border: hidden; position:absolute; left:0; top:-3px; font-size: 14px; font-weight: 400;" name="date" class="center Pointer datepicker" data-value="@date">
+		</form>
+	</div>
 </div>
 
 
 <div class="row">
-    <div class="col s12">
-        <div class="card white">
-            <div class="card-content black-text">
-                <div class="row">
-                    <div class="col s12">
-                        <div class="col s2" style="">
-                            <input type="checkbox" id="cancelcheck"><label for="cancelcheck">Geannuleerden</label>
-                        </div>
-                        <div class="col offset-s8 s2">
-                            <form>
-                                <div class="col s4 input-field right" style="width:300px;margin: -10px 10px 10px;">
-                                    <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
-                                    <input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <table class="centered highlight" id="Table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th class="Pointer" onclick="sortTable(3)">Datum</th>
-                                <th class="Pointer" onclick="sortTable(4)">Tijd</th>
-                                <th class="Pointer" onclick="sortTable(5)">Ophaaladres</th>
-                                <th class="Pointer" onclick="sortTable(6)">Bestemmingsadres</th>
-                                <th class="Pointer" onclick="sortTable(7)">Klant</th>
-                                <th class="Pointer" onclick="sortTable(8)">Personen</th>
-                                <th class="Pointer" onclick="sortTable(9)">Soort Wagen</th>
-                                <th class="Pointer" onclick="sortTable(10)">Kenteken</th>
-                                <th class="Pointer" onclick="sortTable(11)">Chauffeur</th>
-                                <th class="Pointer" onclick="sortTable(12)">Betaalwijze</th>
-                                <th class="Pointer" onclick="sortTable(13)">Bedrag (+BTW)</th>
-                                <th class="Pointer" onclick="sortTable(14)">Bijzonderheden</th>
-                            </tr>
-                        </thead>
-                        @foreach (var item in gegevens)
-        {
+	<div class="col s12">
+		<div class="card white">
+			<div class="card-content black-text">
+				<div class="row">
+					<div class="col s12">
+						<div class="col s2" style="">
+							<input type="checkbox" id="cancelcheck"><label for="cancelcheck">Geannuleerden</label>
+						</div>
+						<div class="col offset-s8 s2">
+							<form>
+								<div class="col s4 input-field right" style="width:300px;margin: -10px 10px 10px;">
+									<label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
+									<input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
+								</div>
+							</form>
+						</div>
+					</div>
+					<table class="centered highlight" id="Table">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th class="Pointer" onclick="sortTable(3)">Datum</th>
+								<th class="Pointer" onclick="sortTable(4)">Tijd</th>
+								<th class="Pointer" onclick="sortTable(5)">Ophaaladres</th>
+								<th class="Pointer" onclick="sortTable(6)">Bestemmingsadres</th>
+								<th class="Pointer" onclick="sortTable(7)">Klant</th>
+								<th class="Pointer" onclick="sortTable(8)">Personen</th>
+								<th class="Pointer" onclick="sortTable(9)">Soort Wagen</th>
+								<th class="Pointer" onclick="sortTable(10)">Kenteken</th>
+								<th class="Pointer" onclick="sortTable(11)">Chauffeur</th>
+								<th class="Pointer" onclick="sortTable(12)">Betaalwijze</th>
+								<th class="Pointer" onclick="sortTable(13)">Bedrag (+BTW)</th>
+								<th class="Pointer" onclick="sortTable(14)">Bijzonderheden</th>
+							</tr>
+						</thead>
+						@foreach (var item in gegevens)
+						{
 
-                <tbody>
-                    @if (item.Geannuleerd == true)
-    {
-        color = "red lighten-4";
-    }
-    else
-    {
-        color = "";
-    }
+							<tbody>
+								@if (item.Geannuleerd == true)
+								{
+									color = "red lighten-4";
+								}
+								else
+								{
+									color = "";
+								}
 
-                    <tr class="@color">
-                        <td><a href="~/Application/rittentoevoegen.cshtml?id=@item.RitID&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
-                        <td><a href="~/Application/ritdel.cshtml?id=@item.RitID&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
-                        @if (item.Geannuleerd == false)
-    {
-                    <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=false&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
-}
-else
-{
-                    <td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=true&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Deannuleren">check</a></td>
-}
-                        <td>@item.Datum</td>
-                        <td>@item.Tijd</td>
-                        <td>@item.Ophaaladres</td>
-                        <td>@item.Bestemmingsadres</td>
-                        <td>@item.Klant</td>
-                        <td>@item.Personen</td>
-                        <td>@item.SW</td>
-                        <td>@item.Kenteken</td>
-                        <td>@item.Chauffeur</td>
-                        <td>@item.betaalwijze</td>
-                        <td>@item.inclusief</td>
-                        @if (item.Bijzonderheden != "" && item.Bijzonderheden != null)
-    {
-                    <td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
-}
-else
-{
-                    <td>@item.Bijzonderheden</td>
-}
-                    </tr>
-                </tbody>
-count++;
-}
-                    </table>
-                    <ul class="pagination">
-                        @for (double i = 0; i < (count / per); i++)
-{
-                <li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
-}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+								<tr class="@color">
+									<td><a href="~/Application/rittentoevoegen.cshtml?id=@item.RitID&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
+									<td><a href="~/Application/ritdel.cshtml?id=@item.RitID&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
+									@if (item.Geannuleerd == false)
+									{
+										<td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=false&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Annuleren">block</a></td>
+									}
+									else
+									{
+										<td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=true&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Deannuleren">check</a></td>
+									}
+									<td>@item.Datum</td>
+									<td>@item.Tijd</td>
+									<td>@item.Ophaaladres</td>
+									<td>@item.Bestemmingsadres</td>
+									<td>@item.Klant</td>
+									<td>@item.Personen</td>
+									<td>@item.SW</td>
+									<td>@item.Kenteken</td>
+									<td>@item.Chauffeur</td>
+									<td>@item.betaalwijze</td>
+									<td>@item.inclusief</td>
+									@if (item.Bijzonderheden != "" && item.Bijzonderheden != null)
+									{
+										<td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
+									}
+									else
+									{
+										<td>@item.Bijzonderheden</td>
+									}
+								</tr>
+							</tbody>
+							count++;
+						}
+					</table>
+					<ul class="pagination">
+						@for (double i = 0; i < (count / per); i++)
+						{
+							<li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
+						}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
 <script>
-    function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        clean();
-        table = document.getElementById("Table");
-        switching = true;
-        //Set the sorting direction to ascending:
-        dir = "asc";
-        /*Make a loop that will continue until
-        no switching has been done:*/
-        while (switching) {
-            //start by saying: no switching is done:
-            switching = false;
-            rows = table.getElementsByTagName("TR");
-            /*Loop through all table rows (except the
-            first, which contains table headers):*/
-            for (i = 1; i < (rows.length - 1); i++) {
-                //start by saying there should be no switching:
-                shouldSwitch = false;
-                /*Get the two elements you want to compare,
-                one from current row and one from the next:*/
-                x = rows[i].getElementsByTagName("TD")[n];
-                y = rows[i + 1].getElementsByTagName("TD")[n];
-                /*check if the two rows should switch place,
-                based on the direction, asc or desc:*/
-                if (dir == "asc") {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        //if so, mark as a switch and break the loop:
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (dir == "desc") {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                        //if so, mark as a switch and break the loop:
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-                /*If a switch has been marked, make the switch
-                and mark that a switch has been done:*/
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                //Each time a switch is done, increase this count by 1:
-                switchcount++;
-            } else {
-                /*If no switching has been done AND the direction is "asc",
-                set the direction to "desc" and run the while loop again.*/
-                if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
-                    switching = true;
-                }
-            }
-        }
-        pages(0);
-    }
+	function sortTable(n) {
+		var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+		clean();
+		table = document.getElementById("Table");
+		switching = true;
+		//Set the sorting direction to ascending:
+		dir = "asc";
+		/*Make a loop that will continue until
+		no switching has been done:*/
+		while (switching) {
+			//start by saying: no switching is done:
+			switching = false;
+			rows = table.getElementsByTagName("TR");
+			/*Loop through all table rows (except the
+			first, which contains table headers):*/
+			for (i = 1; i < (rows.length - 1); i++) {
+				//start by saying there should be no switching:
+				shouldSwitch = false;
+				/*Get the two elements you want to compare,
+				one from current row and one from the next:*/
+				x = rows[i].getElementsByTagName("TD")[n];
+				y = rows[i + 1].getElementsByTagName("TD")[n];
+				/*check if the two rows should switch place,
+				based on the direction, asc or desc:*/
+				if (dir == "asc") {
+					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+						//if so, mark as a switch and break the loop:
+						shouldSwitch = true;
+						break;
+					}
+				} else if (dir == "desc") {
+					if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+						//if so, mark as a switch and break the loop:
+						shouldSwitch = true;
+						break;
+					}
+				}
+			}
+			if (shouldSwitch) {
+				/*If a switch has been marked, make the switch
+				and mark that a switch has been done:*/
+				rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+				switching = true;
+				//Each time a switch is done, increase this count by 1:
+				switchcount++;
+			} else {
+				/*If no switching has been done AND the direction is "asc",
+				set the direction to "desc" and run the while loop again.*/
+				if (switchcount == 0 && dir == "asc") {
+					dir = "desc";
+					switching = true;
+				}
+			}
+		}
+		pages(0);
+	}
 </script>
 
 <script>
-    function searchTable() {
-        var input, filter, found, table, tr, td, i, j;
-        input = document.getElementById("search");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("Table");
-        tr = table.getElementsByTagName("tr");
-        for (i = 1; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td");
-            for (j = 0; j < td.length; j++) {
-                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    found = true;
-                }
-            }
-            if (found) {
-                tr[i].style.display = "";
-                found = false;
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-        if (filter == "") {
-            pages(0);
-        }
-    }
+	function searchTable() {
+		var input, filter, found, table, tr, td, i, j;
+		input = document.getElementById("search");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("Table");
+		tr = table.getElementsByTagName("tr");
+		for (i = 1; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td");
+			for (j = 0; j < td.length; j++) {
+				if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+					found = true;
+				}
+			}
+			if (found) {
+				tr[i].style.display = "";
+				found = false;
+			} else {
+				tr[i].style.display = "none";
+			}
+		}
+		if (filter == "") {
+			pages(0);
+		}
+	}
 </script>
 
 <script>
-    function pages(page) {
-        var table, tr, td, i, j, per = 5;
-        table = document.getElementById("Table");
-        tr = table.getElementsByTagName("tr");
-        //cancel = document.getElementById('cancelcheck').checked;
+	function pages(page) {
+		var table, tr, td, i, j, per = 5;
+		table = document.getElementById("Table");
+		tr = table.getElementsByTagName("tr");
+		//cancel = document.getElementById('cancelcheck').checked;
 
-        for (i = 1; i < tr.length; i++) {
-            //td = tr[i].getElementsByTagName("td");
+		for (i = 1; i < tr.length; i++) {
+			//td = tr[i].getElementsByTagName("td");
 
-            if (i >= (page * per + 1) && i <= (page * per + 5)) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
+			if (i >= (page * per + 1) && i <= (page * per + 5)) {
+				tr[i].style.display = "";
+			} else {
+				tr[i].style.display = "none";
+			}
+		}
 
-        for (j = 0; j < (tr.length / 5); j++) {
-            document.getElementById('page' + j).setAttribute("class", "waves-effect");
-        }
+		for (j = 0; j < (tr.length / 5); j++) {
+			document.getElementById('page' + j).setAttribute("class", "waves-effect");
+		}
 
-        document.getElementById('page' + page).setAttribute("class", "active");
-    }
+		document.getElementById('page' + page).setAttribute("class", "active");
+	}
 </script>
 
 <script>
-    function clean() {
-        var table, tr, i, j;
-        table = document.getElementById("Table");
-        tr = table.getElementsByTagName("tr");
+	function clean() {
+		var table, tr, i, j;
+		table = document.getElementById("Table");
+		tr = table.getElementsByTagName("tr");
 
-        for (i = 1; i < tr.length; i++) {
-            tr[i].style.display = "";
-        }
-    }
+		for (i = 1; i < tr.length; i++) {
+			tr[i].style.display = "";
+		}
+	}
 </script>
 
 <script type="text/javascript">
-    pages(0);
+	pages(0);
 </script>
 
 <script>
@@ -288,7 +290,7 @@ count++;
 		tab_text = tab_text + "</table>";
 		tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
 		tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
-		tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+		tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // removes input params
 
 		var ua = window.navigator.userAgent;
 		var msie = ua.indexOf("MSIE ");
@@ -299,7 +301,7 @@ count++;
 			txtArea1.document.write(tab_text);
 			txtArea1.document.close();
 			txtArea1.focus();
-			sa = txtArea1.document.execCommand("SaveAs", true, "Say Thanks to Sumit.xls");
+			sa = txtArea1.document.execCommand("SaveAs", true, "Taxi Menger" + Date);
 		}
 		else                 //other browser not tested on IE 11
 			sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));

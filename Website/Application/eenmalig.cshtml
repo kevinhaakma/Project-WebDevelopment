@@ -134,23 +134,23 @@
 
                                 <div class="input-field col s6">
                                     <select name="chauffeur">
-                                        <option value="" disabled selected>Selecteer een kenteken</option>
+										<option value="" disabled selected>Selecteer een chauffeur</option>
                                         @foreach (var item in Chauffeurs)
             {
                             <option value="@item.Chauffeur">@item.Chauffeur</option>
 }
                                     </select>
-                                    <label>Kenteken</label>
+                                    <label>Chauffeur</label>
                                 </div>
                                 <div class="input-field col s6">
                                     <select name="kenteken">
-                                        <option value="" disabled selected>Selecteer een chauffeur</option>
+                                        <option value="" disabled selected>Selecteer een kenteken</option>
                                         @foreach (var item in Wagens)
             {
                             <option value="@item.Kenteken">@item.Kenteken</option>
 }
                                     </select>
-                                    <label>chauffeur</label>
+                                    <label>Kenteken</label>
                                 </div>
                                 <div class="input-field col s12">
                                     <textarea name="bijzonderheden" class="materialize-textarea"></textarea>
