@@ -70,23 +70,23 @@
 					</div>
 					<table class="centered highlight" id="Table">
 						<thead>
-							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th class="Pointer" onclick="sortTable(3)">Datum</th>
-								<th class="Pointer" onclick="sortTable(4)">Tijd</th>
-								<th class="Pointer" onclick="sortTable(5)">Ophaaladres</th>
-								<th class="Pointer" onclick="sortTable(6)">Bestemmingsadres</th>
-								<th class="Pointer" onclick="sortTable(7)">Klant</th>
-								<th class="Pointer" onclick="sortTable(8)">Personen</th>
-								<th class="Pointer" onclick="sortTable(9)">Soort Wagen</th>
-								<th class="Pointer" onclick="sortTable(10)">Kenteken</th>
-								<th class="Pointer" onclick="sortTable(11)">Chauffeur</th>
-								<th class="Pointer" onclick="sortTable(12)">Betaalwijze</th>
-								<th class="Pointer" onclick="sortTable(13)">Bedrag (+BTW)</th>
-								<th class="Pointer" onclick="sortTable(14)">Bijzonderheden</th>
-							</tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="Pointer" onclick="sortTable(3)">Datum</th>
+                                <th class="Pointer" onclick="sortTable(4)">Tijd</th>
+                                <th class="Pointer" onclick="sortTable(5)">Klant</th>
+                                <th class="Pointer" onclick="sortTable(8)">Personen</th>
+                                <th class="Pointer" onclick="sortTable(6)">Ophaaladres</th>
+                                <th class="Pointer" onclick="sortTable(7)">Bestemmingsadres</th>
+                                <th class="Pointer" onclick="sortTable(9)">Chauffeur</th>
+                                <th class="Pointer" onclick="sortTable(10)">Soort Wagen</th>
+                                <th class="Pointer" onclick="sortTable(11)">Kenteken</th>
+                                <th class="Pointer" onclick="sortTable(12)">Betaalwijze</th>
+                                <th class="Pointer" onclick="sortTable(13)">Bedrag (+BTW)</th>
+                                <th class="Pointer" onclick="sortTable(14)">Bijzonderheden</th>
+                            </tr>
 						</thead>
 						@foreach (var item in gegevens)
 						{
@@ -114,13 +114,13 @@
 									}
 									<td>@item.Datum</td>
 									<td>@item.Tijd</td>
+                                    <td>@item.Klant</td>
+                                    <td>@item.Personen</td>
 									<td>@item.Ophaaladres</td>
 									<td>@item.Bestemmingsadres</td>
-									<td>@item.Klant</td>
-									<td>@item.Personen</td>
+                                    <td>@item.Chauffeur</td>
 									<td>@item.SW</td>
-									<td>@item.Kenteken</td>
-									<td>@item.Chauffeur</td>
+									<td>@item.Kenteken</td>									
 									<td>@item.betaalwijze</td>
 									<td>@item.inclusief</td>
 									@if (item.Bijzonderheden != "" && item.Bijzonderheden != null)

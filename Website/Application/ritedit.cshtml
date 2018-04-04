@@ -1,61 +1,70 @@
-﻿
-@{
+﻿@{
     var db = Database.Open("Klantgegevens");
-    var rows = db.Query("SELECT * FROM klantgegevens");
 
-    var date = DateTime.Now.ToString("d-MM-yyyy");
-
-    var RitID = db.QueryValue("Select Max(RitID) from Rittenkaart")+1;
+    var RitID = Request.QueryString["ID"];
+    var Klanten = "SELECT * FROM Rittenkaart WHERE RitID = @0";
+    var rows = db.Query(Klanten,RitID);
 
     var klant = "";
-    var Adres = "";
-    var Postcode = "";
-    var Woonplaats = "";
-    var Telefoonnummer = "";
-    var Emailadres = "";
-    var Bijzonderheden = "";
-    var Huisnummer = "";
+    var tijd = "";
+    var Ophaaladres = "";
+    var BestemmingsAdres = "";
+    var personen = "";
+    var sw = "";
+    var kenteken = "";
+    var chauffeur = "";
+    var datum = "";
+    var bijzonderheden = "";
+    var geannuleerd = false;
+    var betaalwijze = "";
+    var exclusief = "";
+    var percentage = "";
+    var inclusief = "";
 
-
-    if(IsPost && Request.Form["form"] != "true")
+    foreach (var item in rows)
     {
-        string tmp = Request.Form["Klant"];
-        string[] split = tmp.Split(' ');
-
-        var querytmp = "SELECT * FROM klantgegevens where KlantID = @0";
-        var tmprow = db.Query(querytmp, split[0]);
-
-        foreach(var row in tmprow)
-        {
-            klant = row.KlantID.ToString() + " " + row.Voornaam + " " + row.Achternaam;
-            Adres = row.Adres;
-            Postcode = row.Postcode;
-            Woonplaats = row.Woonplaats;
-            Telefoonnummer = row.Telefoonnummer;
-            Emailadres = row.Emailadres;
-            Bijzonderheden = row.Bijzonderheden;
-            Huisnummer = row.Huisnummer;
-        }
+        klant = item.Klant;
+        tijd = item.Tijd;
+        Ophaaladres = item.Ophaaladres;
+        BestemmingsAdres = item.Bestemmingsadres;
+        personen = item.Personen;
+        sw = item.SW;
+        kenteken = item.Kenteken;
+        chauffeur = item.Chauffeur;
+        datum = item.Datum;
+        bijzonderheden = item.bijzonderheden;
+        geannuleerd = item.geannuleerd;
+        betaalwijze = item.betaalwijze;
+        exclusief = item.exclusief.ToString();
+        percentage = item.percentage.ToString();
+        inclusief = item.inclusief.ToString();
     }
 
-    if (IsPost && Request.Form["form"] == "true")
+
+
+    if (IsPost)
     {
         klant = Request.Form["Klant"];
-        var tijd = Request.Form["tijd"];
-        var Ophaaladres = Request.Form["Ophaaladres"];
-        var BestemmingsAdres = Request.Form["BestemmingsAdres"];
-        var personen = Request.Form["aantal"];
-        var sw = "test";
-        var kenteken = Request.Form["kenteken"];
-        var chauffeur = Request.Form["chauffeur"];
-        var datum = Request.Form["datum"];
-        var bijzonderheden = Request.Form["bijzonderheden"];
-        var geannuleerd = false;
+        tijd = Request.Form["tijd"];
+        Ophaaladres = Request.Form["Ophaaladres"];
+        BestemmingsAdres = Request.Form["BestemmingsAdres"];
+        personen = Request.Form["aantal"];
+        sw = "test";
+        kenteken = Request.Form["kenteken"];
+        chauffeur = Request.Form["chauffeur"];
+        datum = Request.Form["datum"];
+        bijzonderheden = Request.Form["bijzonderheden"];
+        geannuleerd = false;
+        betaalwijze = Request.Form["betaalwijze"];
+        exclusief = Request.Form["exclusief"];
+        percentage = Request.Form["percentage"];
+        inclusief = Request.Form["inclusief"];
 
 
-        var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10)";
 
-        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,geannuleerd);
+        var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15)";
+
+        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,geannuleerd,betaalwijze,exclusief,percentage,inclusief,bijzonderheden);
         Response.Redirect("~/Application/home.cshtml?date=" + datum);
     }
 
@@ -128,92 +137,84 @@
                     <div class="row white-text">
                         <span style="font-size: 16px;" class="card-title">Rit Toevoegen</span>
                         <div class="row col s12">
-                            <form id="form1" method="post">
-                                <div class="input-field col s8">
-                                    <input autocomplete="off" name="klant" type="text" value="@klant" id="Klant" class="autocomplete">
-                                    <label for="Klant">Klant</label>
-                                </div>
-                            </form>
-
                             <form name="form" method="post">
-
+                                <div class="input-field col s8">
+                                    <input name="klant" value="@klant" type="text">
+                                    <label for="klant">klant</label>
+                                </div>
                                 <div class="input-field col s4">
-                                    <input name="aantal" type="text">
+                                    <input name="aantal" value="@personen" type="text">
                                     <label for="aantal">Aantal Personen</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="Ophaaladres" value="@(Woonplaats +", " + Adres+ " " + Huisnummer)" type="text">
+                                    <input name="Ophaaladres" value="@Ophaaladres" type="text">
                                     <label for="Ophaaladres">Ophaaladres</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="BestemmingsAdres" type="text">
+                                    <input name="BestemmingsAdres" value="@BestemmingsAdres" type="text">
                                     <label for="BestemmingsAdres">Bestemmingsadres</label>
                                 </div>
 
                                 <div class="input-field col s6">
-                                    <input name="tijd" type="text" class="timepicker">
+                                    <input name="tijd" type="text" value="@tijd" class="timepicker">
                                     <label class="active" for="tijd">Tijd</label>
                                 </div>
                                 <div class="input-field col s6">
-                                    <input name="datum" type="text" class="datepicker" value="@date">
+                                    <input name="datum" type="text" class="datepicker" value="@datum">
                                     <label class="active" for="Datum">Datum</label>
                                 </div>
 
-                                <div class="input-field col s6">
-                                    <select name="chauffeur">
-                                        <option value="" disabled selected>Selecteer een chauffeur</option>
+                                <div class="chauffeur input-field col s6">
+                                    <select name="chauffeur" >
+                                        <option>Selecteer een chauffeur</option>
                                         @foreach (var item in Chauffeurs)
-                    {
-                        <option value="@item.Chauffeur">@item.Chauffeur</option>
+            {
+                            <option id="@item.Chauffeur" value="@item.Chauffeur">@item.Chauffeur</option>
+}
+                                    </select>
+                                    <label>Chauffeur</label>
+
+                                </div>
+                                <div class="input-field col s6">
+                                    <select name="kenteken" >
+                                        <option>Selecteer een kenteken</option>
+                                        @foreach (var item in Wagens)
+            {
+                            <option id="@item.Kenteken" value="@item.Kenteken">@item.Kenteken</option>
 }
                                     </select>
                                     <label>Kenteken</label>
                                 </div>
-                                <div class="input-field col s6">
-                                    <select name="kenteken">
-                                        <option value="" disabled selected>Selecteer een kenteken</option>
-                                        @foreach (var item in Wagens)
-                    {
-                        <option value="@item.Kenteken">@item.Kenteken</option>
-}
+                                <div class="input-field col s12">
+                                    <textarea name="bijzonderheden" class="materialize-textarea"></textarea>
+                                    <label for="bijzonderheden">Bijzonderheden</label>
+                                </div>
+
+                                <span style="font-size: 16px;" class="card-title">Tarieven</span>
+                                <div class="input-field col s12">
+                                    <select name="betaalwijze">
+                                        <option value="" disabled selected>Selecteer een betaalwijze</option>
+                                        <option value="Pin">Pin</option>
+                                        <option value="Contant">Contant</option>
+                                        <option value="Rekening">Rekening</option>
                                     </select>
-                                    <label>chauffeur</label>
                                 </div>
 
-
-                                <div class="row">
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                            <textarea name="bijzonderheden" class="materialize-textarea">@Bijzonderheden</textarea>
-                                            <label for="bijzonderheden">Bijzonderheden</label>
-                                        </div>
-                                    </div>
-                                    <span style="font-size: 16px;" class="card-title">Tarieven</span>
-                                    <div class="input-field col s12">
-                                        <select name="betaalwijze">
-                                            <option value="" disabled selected>Selecteer een betaalwijze</option>
-                                            <option value="Pin">Pin</option>
-                                            <option value="Contant">Contant</option>
-                                            <option value="Rekening">Rekening</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="input-field col s4">
-                                        <input id="exclusief" name="exclusief" onkeyup="calcBtw();" type="text">
-                                        <label for="exclusief">Exclusief BTW</label>
-                                    </div>
-
-                                    <div class="input-field col s4">
-                                        <input id="percentage" name="percentage" onkeyup="calcBtw();" type="text">
-                                        <label for="percentage">Percentage</label>
-                                    </div>
-
-                                    <div class="input-field col s4">
-                                        <input id="inclusief" name="inclusief" type="text">
-                                        <label id="inclusieflabel" for="inclusief">Inclusief BTW</label>
-                                    </div>
+                                <div class="input-field col s4">
+                                    <input id="exclusief" name="exclusief" onkeyup="calcBtw();" type="text">
+                                    <label for="exclusief">Exclusief BTW</label>
                                 </div>
 
+                                <div class="input-field col s4">
+                                    <input id="percentage" name="percentage" onkeyup="calcBtw();" type="text">
+                                    <label for="percentage">Percentage</label>
+                                </div>
+
+                                <div class="input-field col s4">
+                                    <input id="inclusief" name="inclusief" type="text">
+                                    <label id="inclusieflabel" for="inclusief">Inclusief BTW</label>
+                                </div>
+</div>
 
                         <button class="btn right taximengeryellow" type="submit" name="form" value="true">Bevestig</button>
                         </form>
@@ -229,7 +230,6 @@
 
     <script>
         $(".button-collapse").sideNav();
-        $('select').material_select();
         $(document).ready(function () {
 
         });
@@ -253,20 +253,21 @@
             aftershow: function () { } //Function for after opening timepicker
         });
 
-        $(document).ready(function () {
-            $('input.autocomplete').autocomplete({
-                data: {
-                    @foreach (var item in rows)
-                    {
-                       @Html.Raw("\"" + item.KlantID + " " + item.Voornaam + " " + item.Achternaam + "\" " + ": " + "null" + "," + Environment.NewLine)
+        function calcBtw() {
+            var a = document.getElementById("exclusief").value;
+            var b = document.getElementById("percentage").value;
+            if (a != "" && b != "") {
+                document.getElementById("inclusief").value = (a * (b/100+1));
+                document.getElementById("inclusieflabel").className = "active";
+            }
+        }
 
-                    }
-                },
-                onAutocomplete: function () {
-                    document.getElementById("form1").submit();
-                }
-           });
+        $(document).ready(function () {
+            $('#@chauffeur').prop("selected", true)
+            $('#@kenteken').prop("selected", true)
+            $('select').material_select();
         });
+
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year,
@@ -276,14 +277,6 @@
             close: 'Ok',
             closeOnSelect: false // Close upon selecting a date,
         });
-        function calcBtw() {
-            var a = document.getElementById("exclusief").value;
-            var b = document.getElementById("percentage").value;
-            if (a != "" && b != "") {
-                document.getElementById("inclusief").value = (a * (b / 100 + 1));
-                document.getElementById("inclusieflabel").className = "active";
-            }
-        }
         $(document).ready(function () {
             $('.tooltipped').tooltip();
         });
