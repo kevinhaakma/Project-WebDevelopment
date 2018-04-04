@@ -9,73 +9,74 @@
 <div class="row" method="post" style="margin-bottom: 0px;">
     <div class="col s8 m8 l8">
         <a href="~/Application/customeredit.cshtml" class="waves-effect waves-light btn taximengeryellow left" style="margin: 80px 10px 0px;"><i class="material-icons right">control_point</i>Toevoegen</a>
-        <a href="" class="waves-effect waves-light btn taximengeryellow " style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
+		<a href="" onclick="klikexcel()" class="waves-effect waves-light btn taximengeryellow " style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
     </div>
-    <form>
-        <div class="col s4 input-field right" style="width:300px;margin: 80px 10px 10px;">
-            <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
-            <input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
-        </div>
-    </form>
 </div>
 
     <div class="row">
         <div class="col s12">
             <div class="card white">
                 <div class="card-content black-text">
-                    <span class="card-title col s1 inline">Klanten</span>
+                    <div class="col s12">
+                        <div class="col offset-s10 s2">
+                            <div class="col s4 input-field right" style="width:300px;margin: -10px 10px 10px;">
+                                <label class="label-icon" for="search"><i class="material-icons right" style="z-index:-1;margin-left: 250px; color:black;">search</i></label>
+                                <input id="search" type="search" onkeyup="searchTable()" style="margin-bottom: 0px;" required>
+                            </div>
+                        </div>
+                    </div>
                     <table class="centered highlight" id="Table">
                         <thead>
-							<tr>
-								<th></th>
-								<th></th>
-								<th class="Pointer" onclick="sortTable(2)">Voornaam</th>
-								<th class="Pointer" onclick="sortTable(3)">Achternaam</th>
-								<th class="Pointer" onclick="sortTable(4)">Straatnaam</th>
-								<th class="Pointer" onclick="sortTable(5)">Huisnummer</th>
-								<th class="Pointer" onclick="sortTable(6)">Postcode</th>
-								<th class="Pointer" onclick="sortTable(7)">Woonplaats</th>
-								<th class="Pointer" onclick="sortTable(8)">Telefoonnummer</th>
-								<th class="Pointer" onclick="sortTable(9)">Emailadres</th>
-								<th class="Pointer" onclick="sortTable(10)">Bijzonderheden</th>
-							</tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th class="Pointer" onclick="sortTable(2)">Voornaam</th>
+                                <th class="Pointer" onclick="sortTable(3)">Achternaam</th>
+                                <th class="Pointer" onclick="sortTable(4)">Straatnaam</th>
+                                <th class="Pointer" onclick="sortTable(5)">Huisnummer</th>
+                                <th class="Pointer" onclick="sortTable(6)">Postcode</th>
+                                <th class="Pointer" onclick="sortTable(7)">Woonplaats</th>
+                                <th class="Pointer" onclick="sortTable(8)">Telefoonnummer</th>
+                                <th class="Pointer" onclick="sortTable(9)">Emailadres</th>
+                                <th class="Pointer" onclick="sortTable(10)">Bijzonderheden</th>
+                            </tr>
                         </thead>
                         @foreach (var item in gegevens)
-                         {
+        {
                 <tbody style='table-layout:fixed'>
-					<tr>
-						<td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
-						<td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
-						<td>@item.Voornaam</td>
-						<td>@item.Achternaam</td>
-						<td>@item.Adres</td>
-						<td>@item.Huisnummer</td>
-						<td>@item.Postcode</td>
-						<td>@item.Woonplaats</td>
-						<td>@item.Telefoonnummer</td>
-						<td>@item.Emailadres</td>
+                    <tr>
+                        <td><a href="~/Application/customeredit?id=@item.KlantID" class="material-icons center tooltipped" style="color:black" data-tooltip="Wijzigen">edit</a></td>
+                        <td><a href="~/Application/customerdel.cshtml?id=@item.KlantID" class="material-icons center tooltipped" style="color:black" data-tooltip="Verwijderen">delete</a></td>
+                        <td>@item.Voornaam</td>
+                        <td>@item.Achternaam</td>
+                        <td>@item.Adres</td>
+                        <td>@item.Huisnummer</td>
+                        <td>@item.Postcode</td>
+                        <td>@item.Woonplaats</td>
+                        <td>@item.Telefoonnummer</td>
+                        <td>@item.Emailadres</td>
                         @if (item.Bijzonderheden != "" && item.Bijzonderheden != null)
-                        {
-                            <td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
-                        }
-                        else
-                        {
-                            <td>@item.Bijzonderheden</td>
-                        }
-                        
-					</tr>
-                </tbody>
-                            count++;
-                        }
-                </table>
+        {
+                <td class="tooltipped ellipsis" data-position="bottom" data-delay="50" data-tooltip="@item.Bijzonderheden">@item.Bijzonderheden</td>
+}
+else
+{
+                <td>@item.Bijzonderheden</td>
+}
 
-                <ul class="pagination">
-                    @for (double i = 0; i < (count / per); i++)
-                    {
-                        <li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
-                    }
-                </ul>
-            </div>
+                    </tr>
+                </tbody>
+count++;
+}
+                    </table>
+
+                    <ul class="pagination">
+                        @for (double i = 0; i < (count / per); i++)
+        {
+                <li id="page@(i)" class="waves-effect"><a onclick="pages(@i)">@(i + 1)</a></li>
+}
+                    </ul>
+                </div>
         </div>
     </div>
 </div>
@@ -203,4 +204,38 @@
 
 <script type="text/javascript">
     pages(0);
+</script>
+
+<script>
+	function klikexcel() {
+		var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
+		var textRange; var j = 0;
+		tab = document.getElementById('Table'); // id of table
+
+		for (j = 0; j < tab.rows.length; j++) {
+			tab_text = tab_text + tab.rows[j].innerHTML + "</tr>";
+			//tab_text=tab_text+"</tr>";
+		}
+
+		tab_text = tab_text + "</table>";
+		tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+		tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
+		tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // removes input params
+
+		var ua = window.navigator.userAgent;
+		var msie = ua.indexOf("MSIE ");
+
+		if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+		{
+			txtArea1.document.open("txt/html", "replace");
+			txtArea1.document.write(tab_text);
+			txtArea1.document.close();
+			txtArea1.focus();
+			sa = txtArea1.document.execCommand("SaveAs", true, "Taxi Menger" + Date);
+		}
+		else                 //other browser not tested on IE 11
+			sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+		return (sa);
+	}
 </script>

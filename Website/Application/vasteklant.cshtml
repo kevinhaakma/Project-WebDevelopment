@@ -212,7 +212,7 @@
                                     </div>
 
                                     <div class="input-field col s4">
-                                        <input id="inclusief" name="inclusief" type="text">
+                                        <input disabled id="inclusief" name="inclusief" type="text">
                                         <label id="inclusieflabel" for="inclusief">Inclusief BTW</label>
                                     </div>
                                 </div>
@@ -280,10 +280,10 @@
             closeOnSelect: false // Close upon selecting a date,
         });
         function calcBtw() {
-            var a = document.getElementById("exclusief").value;
+            var a = (document.getElementById("exclusief").value).replace(",", ".");
             var b = document.getElementById("percentage").value;
             if (a != "" && b != "") {
-                document.getElementById("inclusief").value = (a * (b / 100 + 1));
+                document.getElementById("inclusief").value = parseFloat(a * (b / 100 + 1)).toFixed(2);
                 document.getElementById("inclusieflabel").className = "active";
             }
         }
