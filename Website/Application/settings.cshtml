@@ -1,9 +1,9 @@
-﻿@{ 
-	Database db = Database.Open("Klantgegevens");
-	Layout = "~/Shared/_Layout.cshtml";
+﻿@{
+    Database db = Database.Open("Klantgegevens");
+    Layout = "~/Shared/_Layout.cshtml";
 
 
-	<!--Wachtwoord wijzigen-->
+    <!--Wachtwoord wijzigen-->
     var userName = WebSecurity.CurrentUserName;
     var CurrentPassword = "";
     var newPassword = "";
@@ -11,24 +11,25 @@
     var errormessage = "";
     var succesmessage = "";
 
+    var kenteken = "";
+    var SW = "";
+    var zitplaatsen = "";
+    var wagenID = "";
+    var wagens = db.Query("SELECT WagenID,Kenteken FROM wagen");
 
-	<!-- Chauffeur Aanmaken -->
+
+    <!-- Chauffeur Aanmaken -->
     var Chauffeur = "";
     var Telefoonnummer = "";
 
-	<!-- Chauffeur Verwijderen-->
+    <!-- Chauffeur Verwijderen-->
     var chauffeurID = "";
     var Chauffeurs = db.Query("SELECT ChauffeurID,Chauffeur FROM Chauffeur");
 
-    if (IsPost && Request.Form["form1"] == "true")
+    if (IsPost)
     {
-
-    }
-
-	<!--Wachtwoord wijzigen form-->
-    if (IsPost && Request.Form["form2"] == "true")
-    {
-        if (IsPost && Validation.IsValid())
+        <!--Wachtwoord wijzigen form-->
+        if (Request.Form["form1"] == "true" && Validation.IsValid())
         {
             CurrentPassword = Request.Form["CurrentPassword"];
             newPassword = Request.Form["newPassword"];
@@ -52,211 +53,188 @@
                 errormessage = "De wachtwoorden komen niet overeen.";
             }
         }
+
+        else if (Request.Form["form2"] == "true")
+        {
+            Chauffeur = Request.Form["Chauffeur"];
+            Telefoonnummer = Request.Form["Telefoonnummer"];
+
+            var query1 = "INSERT INTO Chauffeur (Chauffeur,Telefoonnummer) VALUES (@0,@1)";
+            db.Execute(query1, Chauffeur, Telefoonnummer);
+
+            Response.Redirect("~/Application/settings.cshtml");
+        }
+
+        else if (Request.Form["form3"] == "true")
+        {
+            {
+                chauffeurID = Request.Form["chauffeurID"];
+
+                var query = "DELETE FROM Chauffeur WHERE ChauffeurID = @0";
+                db.Execute(query, chauffeurID);
+
+                Response.Redirect("~/Application/settings.cshtml");
+            }
+        }
+
+        else if (Request.Form["form4"] == "true")
+        {
+            kenteken = Request.Form["Kenteken"];
+            SW = Request.Form["SW"];
+            zitplaatsen = Request.Form["Zitplaatsen"];
+
+            var query = "INSERT INTO Wagen (Kenteken,SW,Zitplaatsen) VALUES (@0,@1,@2)";
+            db.Execute(query, kenteken, SW, zitplaatsen);
+
+            Response.Redirect("~/Application/settings.cshtml");
+        }
+
+        else if (Request.Form["form5"] == "true")
+        {
+            wagenID = Request.Form["wagenID"];
+
+            var query = "DELETE FROM Wagen WHERE WagenID = @0";
+            db.Execute(query, wagenID);
+
+            Response.Redirect("~/Application/settings.cshtml");
+        }
     }
-
-	<!--Chauffeur aanmaken form-->
-    if (IsPost && Request.Form["form3"] == "true")
-    {
-        Chauffeur = Request.Form["Chauffeur"];
-        Telefoonnummer = Request.Form["Telefoonnummer"];
-
-        var query1 = "INSERT INTO Chauffeur (Chauffeur,Telefoonnummer) VALUES (@0,@1)";
-        db.Execute(query1, Chauffeur, Telefoonnummer);
-
-        Response.Redirect("~/Application/settings.cshtml");
-
-    }
-
-	<!--Chauffeur verwijderen form-->
-	if (IsPost && Request.Form["form4"] == "true")
-	{
-		{
-			chauffeurID = Request.Form["chauffeurID"];
-
-			var query = "DELETE FROM Chauffeur WHERE ChauffeurID = @0";
-			db.Execute(query, chauffeurID);
-
-			Response.Redirect("~/Application/settings.cshtml");
-		}
-	}
-
-		var kenteken = "";
-		var SW = "";
-		var zitplaatsen = "";
-		var wagenID = "";
-		var wagens = db.Query("SELECT WagenID,Kenteken FROM wagen");
-
-		if (IsPost && Request.Form["form5"] == "true")
-		{
-			kenteken = Request.Form["Kenteken"];
-			SW = Request.Form["SW"];
-			zitplaatsen = Request.Form["Zitplaatsen"];
-
-			var query = "INSERT INTO Wagen (Kenteken,SW,Zitplaatsen) VALUES (@0,@1,@2)";
-			db.Execute(query, kenteken, SW, zitplaatsen);
-
-			Response.Redirect("~/Application/settings.cshtml");
-
-
-		}
-
-		if (IsPost && Request.Form["form6"] == "true")
-		{
-			wagenID = Request.Form["wagenID"];
-
-			var query = "DELETE FROM Wagen WHERE WagenID = @0";
-			db.Execute(query, wagenID);
-
-			Response.Redirect("~/Application/settings.cshtml");
-		}
-	}
- }
-
+}
 
 <div class="row">
-	<div class="col s3">
-		<!-- Wachtwoord aanpassen -->
-		<div class="row">
-			<div class="col s12">
-				<div class="card-panel grey darken-4">
-					<div class="card-content ">
-						<div class="row white-text">
-							<form class="col s12" method="post">
-								<span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
-
-
-								<div class="input-field col s12">
-									<input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate" required>
-									<label for="CurrentPassword">Huidig wachtwoord</label>
-								</div>
-
-								<div class="input-field col s12">
-									<input id="newPassword" type="password" name="newPassword" value="@Request.Form["newPassword"]" class="validate" required>
-									<label for="newPassword">Nieuw wachtwoord</label>
-
-								</div>
-								<div class="input-field col s12">
-									<input id="newPassword2" type="password" name="newPassword2" value="@Request.Form["newPassword2"]" class="validate" required>
-									<label for="newPassword2">Bevestig wachtwoord</label>
-									<a name="errormessage" class="errorText">@errormessage</a>
-									<a class="succesText">@succesmessage</a>
-								</div>
-
-								<button class="btn right taximengeryellow" type="submit" name="form2" value="true">Bevestig</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="col s12 m6 l3">
-		<!-- Chauffeur aanmaken -->
-					<div class="row">
-						<div class="col s12">
-							<div class="card-panel grey darken-4">
-
-					<div class="card-content ">
-						<div class="row white-text">
-							<span style="font-size: 16px;" class="card-title">Chauffeur toevoegen/verwijderen</span>
-							<form class="col s12" method="post" name="form3">
-
-								<div class="row">
-									<div class="input-field col s12">
-										<input name="chauffeur" type="text" value="@Chauffeur" required>
-										<label for="chauffeur">Naam chauffeur</label>
-									</div>
-								</div>
-								<div class="row">
-									<div class="input-field col s12">
-										<input name="telefoonnummer" type="text" value="@Telefoonnummer" required>
-										<label for="telefoonnummer">Telefoon nummer</label>
-									</div>
-								</div>
-								<button class="btn right taximengeryellow" type="submit" name="form3" value="true">Bevestig</button>
-							</form>
-
-						@{  var Chauffeur3 = "";
-                            Chauffeur3 = Request.Form["Chauffeur"];
-                        }
-							<!-- Chauffeur Verwijderen -->
-							<form class="col s12" method="post" name="form4">
-								<div class="input-field col s12">
-
-									<select name="chauffeurID">
-										<option type="" disabled selected>Selecteer een chauffeur</option>
-										@foreach (var item in Chauffeurs)
-										{
-											<option type="text" name="chauffeurID" class="black-text" value="@item.chauffeurID">@item.Chauffeur</option>
-										}
-									</select>
-									<label>Chauffeur Verwijderen</label>
-									<button class="btn right taximengeryellow" type="submit" name="form4" value="true">Delete</button>
-                                    
-								</div>
-							</form>
-						</div>
-					   </div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-
-        <div class="col s12 m6 l3">
-            <!-- Wagen aanmaken / verwijderen -->
-
+    <div class="col s3">
+        <div class="row">
             <div class="col s12">
                 <div class="card-panel grey darken-4">
                     <div class="card-content ">
                         <div class="row white-text">
-                            <form class="col s12" method="post" name="form">
-                                <span style="font-size: 16px;" class="card-title">Wagen toevoegen</span>
+                            <!-- Wachtwoord aanpassen -->
+                            <form class="col s12" method="post">
+                                <span style="font-size: 16px;" class="card-title">Wachtwoord aanpassen</span>
+
 
                                 <div class="input-field col s12">
-                                    <input name="Kenteken" type="text" value="@kenteken" class="validate">
-                                    <label for="Kenteken">Kenteken:</label>
-                                </div>
-                                <!--Radiobuttons-->
-                                <div class="input-field col s12">
-                                    <select name="SW" value="@SW">
-                                        <option value="@SW" class="disabled" selected>Soort wagen</option>
-                                        <option type="text" name="SW" class="black-text" value="Personenwagen">Personenwagen</option>
-                                        <option type="text" name="SW" class="black-text" value="Personenbus">Personenbus</option>
-                                        <option type="text" name="SW" class="black-text" value="Rolstoelbus">Rolstoelbus</option>
-                                    </select>
-                                    <label for="SW">Soort wagen</label>
+                                    <input id="CurrentPassword" type="password" name="CurrentPassword" value="@Request.Form["CurrentPassword"]" class="validate" required>
+                                    <label for="CurrentPassword">Huidig wachtwoord</label>
                                 </div>
 
                                 <div class="input-field col s12">
-                                    <input name="Zitplaatsen" type="text" value="@zitplaatsen" class="validate">
-                                    <label for="zitplaatsen">Aantal zitplaatsen:</label>
+                                    <input id="newPassword" type="password" name="newPassword" value="@Request.Form["newPassword"]" class="validate" required>
+                                    <label for="newPassword">Nieuw wachtwoord</label>
+
                                 </div>
-
-
-                                <button class="btn right taximengeryellow" type="submit" name="form5" value="true">Bevestig</button>
-
                                 <div class="input-field col s12">
-                                    <select name="wagenID">
-                                        <option value="" disabled selected>Selecteer kenteken</option>
-                                        @foreach (var wagen in wagens)
-                                         {
-                                        <option type="text" name="wagenID" class="black-text" value ="@wagen.WagenID">@wagen.Kenteken</option>
-                                         }
-                                    </select>
-                                    <label>Wagen verwijderen</label>
+                                    <input id="newPassword2" type="password" name="newPassword2" value="@Request.Form["newPassword2"]" class="validate" required>
+                                    <label for="newPassword2">Bevestig wachtwoord</label>
+                                    <a name="errormessage" class="errorText">@errormessage</a>
+                                    <a class="succesText">@succesmessage</a>
                                 </div>
 
-                                <button class="btn right taximengeryellow" type="submit" name="form6" value="true">Bevestig</button>
-
+                                <button class="btn right taximengeryellow" type="submit" name="form1" value="true">Wijzigen</button>
                             </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-   
-</div>
+        </div>
+    </div>
+
+    <div class="col s12 m6 l3">
+        <div class="row">
+            <div class="col s12">
+                <div class="card-panel grey darken-4">
+                    <div class="card-content ">
+                        <div class="row white-text">
+                            <span style="font-size: 16px;" class="card-title">Chauffeur toevoegen/verwijderen</span>
+                            <!-- Chauffeur aanmaken -->
+                            <form class="col s12" method="post" name="form3">
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input name="chauffeur" type="text" value="@Chauffeur" required>
+                                        <label for="chauffeur">Naam chauffeur</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input name="telefoonnummer" type="text" value="@Telefoonnummer" required>
+                                        <label for="telefoonnummer">Telefoon nummer</label>
+                                    </div>
+                                </div>
+                                <button class="btn right taximengeryellow" type="submit" name="form2" value="true">Aanmaken</button>
+                            </form>
+
+                            <!-- Chauffeur Verwijderen -->
+                            <form class="col s12" method="post" name="form4">
+                                <div class="input-field col s12">
+
+                                    <select name="chauffeurID">
+                                        <option type="" disabled selected>Selecteer een chauffeur</option>
+                                        @foreach (var item in Chauffeurs)
+                                        {
+                                            <option type="text" name="chauffeurID" class="black-text" value="@item.chauffeurID">@item.Chauffeur</option>
+                                        }
+                                    </select>
+                                    <label>Chauffeur Verwijderen</label>
+                                    <button class="btn right taximengeryellow" type="submit" name="form3" value="true">Verwijderen</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m6 l3">
+        <div class="col s12">
+            <div class="card-panel grey darken-4">
+                <div class="card-content ">
+                    <div class="row white-text">
+                        <!-- Wagen aanmaken-->
+                        <form class="col s12" method="post" name="form5">
+                            <span style="font-size: 16px;" class="card-title">Wagen toevoegen</span>
+
+                            <div class="input-field col s12">
+                                <input name="Kenteken" type="text" value="@kenteken" class="validate" required>
+                                <label for="Kenteken">Kenteken</label>
+                            </div>
+                            <!--Radiobuttons-->
+                            <div class="input-field col s12">
+                                <select name="SW" value="@SW">
+                                    <option value="@SW" class="disabled" selected>Soort wagen</option>
+                                    <option type="text" name="SW" class="black-text" value="Personenwagen">Personenwagen</option>
+                                    <option type="text" name="SW" class="black-text" value="Personenbus">Personenbus</option>
+                                    <option type="text" name="SW" class="black-text" value="Rolstoelbus">Rolstoelbus</option>
+                                </select>
+                                <label for="SW">Soort wagen</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <input name="Zitplaatsen" type="text" value="@zitplaatsen" class="validate" required>
+                                <label for="zitplaatsen">Aantal zitplaatsen</label>
+                            </div>
+                            <button class="btn right taximengeryellow" type="submit" name="form4" value="true">Aanmaken</button>
+                        </form>
+
+                        <!-- Wagen verwijderen -->
+                        <form class="col s12" method="post" name="form6">
+                            <div class="input-field col s12">
+                                <select name="wagenID">
+                                    <option value="" disabled selected>Selecteer kenteken</option>
+                                    @foreach (var wagen in wagens)
+                                    {
+                                        <option type="text" name="wagenID" class="black-text" value="@wagen.WagenID">@wagen.Kenteken</option>
+                                    }
+                                </select>
+                                <label>Wagen verwijderen</label>
+                            </div>
+                            <button class="btn right taximengeryellow" type="submit" name="form5" value="true">Verwijderen</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
