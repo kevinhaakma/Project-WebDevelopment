@@ -159,10 +159,12 @@
                                     <div class="input-field col s12">
                                         <input name="telefoonnummer" type="text" value="@Telefoonnummer" required>
                                         <label for="telefoonnummer">Telefoon nummer</label>
+                                        <button class="btn right taximengeryellow" type="submit" name="form2" value="true">Aanmaken</button>
                                     </div>
+
                                 </div>
-                                <button class="btn right taximengeryellow" type="submit" name="form2" value="true">Aanmaken</button>
                             </form>
+
 
                             <!-- Chauffeur Verwijderen -->
                             <form class="col s12" method="post" name="form4">
@@ -175,7 +177,6 @@
                                             <option type="text" name="chauffeurID" class="black-text" value="@item.chauffeurID">@item.Chauffeur</option>
                                         }
                                     </select>
-                                    <label>Chauffeur Verwijderen</label>
                                     <button class="btn right taximengeryellow" type="submit" name="form3" value="true">Verwijderen</button>
 
                                 </div>
@@ -194,7 +195,7 @@
                     <div class="row white-text">
                         <!-- Wagen aanmaken-->
                         <form class="col s12" method="post" name="form5">
-                            <span style="font-size: 16px;" class="card-title">Wagen toevoegen</span>
+                            <span style="font-size: 16px;" class="card-title">Wagen toevoegen/verwijderen</span>
 
                             <div class="input-field col s12">
                                 <input name="Kenteken" type="text" value="@kenteken" class="validate" required>
@@ -208,7 +209,6 @@
                                     <option type="text" name="SW" class="black-text" value="Personenbus">Personenbus</option>
                                     <option type="text" name="SW" class="black-text" value="Rolstoelbus">Rolstoelbus</option>
                                 </select>
-                                <label for="SW">Soort wagen</label>
                             </div>
 
                             <div class="input-field col s12">
@@ -228,7 +228,6 @@
                                         <option type="text" name="wagenID" class="black-text" value="@wagen.WagenID">@wagen.Kenteken</option>
                                     }
                                 </select>
-                                <label>Wagen verwijderen</label>
                             </div>
                             <button class="btn right taximengeryellow" type="submit" name="form5" value="true">Verwijderen</button>
                         </form>
