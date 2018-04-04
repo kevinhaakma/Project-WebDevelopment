@@ -8,14 +8,14 @@
 
 	var date = "";
 
-    if (Request.QueryString["date"] != null)
-    {
-        date = Request.QueryString["date"];
-    }
-    else if (date.IsEmpty())
-    {
-        date = DateTime.Now.ToString("d-MM-yyyy");
-    }
+	if (Request.QueryString["date"] != null)
+	{
+		date = Request.QueryString["date"];
+	}
+	else if (date.IsEmpty())
+	{
+		date = DateTime.Now.ToString("d-MM-yyyy");
+	}
 
 	if (IsPost)
 	{
@@ -40,12 +40,8 @@
 			<li><a href="~/Application/vasteklant.cshtml">Vaste klant</a></li>
 		</ul>
 		<!--Verwijzing naar Export-->
-		<a href="" onclick="fnExcelReport()" class="waves-effect waves-light btn taximengeryellow " style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Exporteren</a>
+		<a href="" onclick="fnExcelReport()" class="waves-effect waves-light btn taximengeryellow " style="margin: 80px 0px 0px;"><i class="material-icons right">file_download</i>Dag export</a>
 
-		<form id="Datepicker" class="btn taximengeryellow input-field col s2 l1 right" style="margin-top: 80px; right: 5px;" method="post">
-			<i class="right material-icons">date_range</i>
-			<input style="border: hidden; position:absolute; left:0; top:-3px; font-size: 14px; font-weight: 400;" name="date" class="center Pointer datepicker" data-value="@date">
-		</form>
 	</div>
 </div>
 
@@ -70,23 +66,23 @@
 					</div>
 					<table class="centered highlight" id="Table">
 						<thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th class="Pointer" onclick="sortTable(3)">Datum</th>
-                                <th class="Pointer" onclick="sortTable(4)">Tijd</th>
-                                <th class="Pointer" onclick="sortTable(5)">Klant</th>
-                                <th class="Pointer" onclick="sortTable(8)">Personen</th>
-                                <th class="Pointer" onclick="sortTable(6)">Ophaaladres</th>
-                                <th class="Pointer" onclick="sortTable(7)">Bestemmingsadres</th>
-                                <th class="Pointer" onclick="sortTable(9)">Chauffeur</th>
-                                <th class="Pointer" onclick="sortTable(10)">Soort Wagen</th>
-                                <th class="Pointer" onclick="sortTable(11)">Kenteken</th>
-                                <th class="Pointer" onclick="sortTable(12)">Betaalwijze</th>
-                                <th class="Pointer" onclick="sortTable(13)">Bedrag (+BTW)</th>
-                                <th class="Pointer" onclick="sortTable(14)">Bijzonderheden</th>
-                            </tr>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th class="Pointer" onclick="sortTable(3)">Datum</th>
+								<th class="Pointer" onclick="sortTable(4)">Tijd</th>
+								<th class="Pointer" onclick="sortTable(5)">Klant</th>
+								<th class="Pointer" onclick="sortTable(8)">Personen</th>
+								<th class="Pointer" onclick="sortTable(6)">Ophaaladres</th>
+								<th class="Pointer" onclick="sortTable(7)">Bestemmingsadres</th>
+								<th class="Pointer" onclick="sortTable(9)">Chauffeur</th>
+								<th class="Pointer" onclick="sortTable(10)">Soort Wagen</th>
+								<th class="Pointer" onclick="sortTable(11)">Kenteken</th>
+								<th class="Pointer" onclick="sortTable(12)">Betaalwijze</th>
+								<th class="Pointer" onclick="sortTable(13)">Bedrag (+BTW)</th>
+								<th class="Pointer" onclick="sortTable(14)">Bijzonderheden</th>
+							</tr>
 						</thead>
 						@foreach (var item in gegevens)
 						{
@@ -114,13 +110,13 @@
 									}
 									<td>@item.Datum</td>
 									<td>@item.Tijd</td>
-                                    <td>@item.Klant</td>
-                                    <td>@item.Personen</td>
+									<td>@item.Klant</td>
+									<td>@item.Personen</td>
 									<td>@item.Ophaaladres</td>
 									<td>@item.Bestemmingsadres</td>
-                                    <td>@item.Chauffeur</td>
+									<td>@item.Chauffeur</td>
 									<td>@item.SW</td>
-									<td>@item.Kenteken</td>									
+									<td>@item.Kenteken</td>
 									<td>@item.betaalwijze</td>
 									<td>@item.inclusief</td>
 									@if (item.Bijzonderheden != "" && item.Bijzonderheden != null)
@@ -276,6 +272,7 @@
 	pages(0);
 </script>
 
+<!--Dag Export-->
 <script>
 	function fnExcelReport() {
 		var tab_text = "<table border='2px'><tr bgcolor='#87AFC6'>";
@@ -309,3 +306,5 @@
 		return (sa);
 	}
 </script>
+
+
