@@ -54,7 +54,7 @@
                 <div class="row">
                     <div class="col s12">
                         <div class="col s2" style="">
-                            <input type="checkbox" id="checkboxid"><label for="checkboxid">Geannuleerden</label>
+                            <input type="checkbox" id="cancelcheck"><label for="cancelcheck">Geannuleerden</label>
                         </div>
                         <div class="col offset-s8 s2">
                             <form>
@@ -221,11 +221,13 @@ count++;
 
 <script>
     function pages(page) {
-        var table, tr, i, j, per = 5;
+        var table, tr, td, i, j, per = 5;
         table = document.getElementById("Table");
         tr = table.getElementsByTagName("tr");
+        //cancel = document.getElementById('cancelcheck').checked;
 
         for (i = 1; i < tr.length; i++) {
+            //td = tr[i].getElementsByTagName("td");
 
             if (i >= (page * per + 1) && i <= (page * per + 5)) {
                 tr[i].style.display = "";
