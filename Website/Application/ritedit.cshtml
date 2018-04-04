@@ -17,9 +17,9 @@
     var bijzonderheden = "";
     var geannuleerd = false;
     var betaalwijze = "";
-    var exclusief = "";
-    var percentage = "";
-    var inclusief = "";
+    double exclusief = 0;
+    double percentage = 0;
+    double inclusief = 0;
 
     foreach (var item in rows)
     {
@@ -35,9 +35,9 @@
         bijzonderheden = item.bijzonderheden;
         geannuleerd = item.geannuleerd;
         betaalwijze = item.betaalwijze;
-        exclusief = item.exclusief.ToString();
-        percentage = item.percentage.ToString();
-        inclusief = item.inclusief.ToString();
+        exclusief = item.exclusief;
+        percentage = item.percentage;
+        inclusief = item.inclusief;
     }
 
 
@@ -54,17 +54,15 @@
         chauffeur = Request.Form["chauffeur"];
         datum = Request.Form["datum"];
         bijzonderheden = Request.Form["bijzonderheden"];
-        geannuleerd = false;
         betaalwijze = Request.Form["betaalwijze"];
-        exclusief = Request.Form["exclusief"];
-        percentage = Request.Form["percentage"];
-        inclusief = Request.Form["inclusief"];
+        exclusief = Convert.ToDouble(Request.Form["exclusief"]);
+        percentage = Convert.ToDouble(Request.Form["percentage"]);
+        inclusief = Convert.ToDouble(Request.Form["inclusief"]);
 
 
+        var query = "UPDATE Rittenkaart SET Tijd = @0, Ophaaladres = @1, Bestemmingsadres = @2, Klant = @3, Personen = @4, SW = @5, Kenteken = @6, Chauffeur = @7, Datum = @8, betaalwijze = @9, exclusief = @10, percentage = @11, inclusief = @12, bijzonderheden = @13 WHERE RitID = @14";
 
-        var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15)";
-
-        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,geannuleerd,betaalwijze,exclusief,percentage,inclusief,bijzonderheden);
+        db.Execute(query,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,betaalwijze,exclusief,percentage,inclusief,bijzonderheden,RitID);
         Response.Redirect("~/Application/home.cshtml?date=" + datum);
     }
 
@@ -186,32 +184,32 @@
                                     <label>Kenteken</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <textarea name="bijzonderheden" class="materialize-textarea"></textarea>
+                                    <textarea name="bijzonderheden" class="materialize-textarea">@bijzonderheden</textarea>
                                     <label for="bijzonderheden">Bijzonderheden</label>
                                 </div>
 
                                 <span style="font-size: 16px;" class="card-title">Tarieven</span>
                                 <div class="input-field col s12">
                                     <select name="betaalwijze">
-                                        <option value="" disabled selected>Selecteer een betaalwijze</option>
-                                        <option value="Pin">Pin</option>
-                                        <option value="Contant">Contant</option>
-                                        <option value="Rekening">Rekening</option>
+                                        <option id="" value="" disabled selected>Selecteer een betaalwijze</option>
+                                        <option id="Pin" value="Pin">Pin</option>
+                                        <option id="Contant" value="Contant">Contant</option>
+                                        <option id="Rekening" value="Rekening">Rekening</option>
                                     </select>
                                 </div>
 
                                 <div class="input-field col s4">
-                                    <input id="exclusief" name="exclusief" onkeyup="calcBtw();" type="text">
+                                    <input id="exclusief" name="exclusief" value="@exclusief" onkeyup="calcBtw();" type="text">
                                     <label for="exclusief">Exclusief BTW</label>
                                 </div>
 
                                 <div class="input-field col s4">
-                                    <input id="percentage" name="percentage" onkeyup="calcBtw();" type="text">
+                                    <input id="percentage" name="percentage" value="@percentage" onkeyup="calcBtw();" type="text">
                                     <label for="percentage">Percentage</label>
                                 </div>
 
                                 <div class="input-field col s4">
-                                    <input id="inclusief" name="inclusief" type="text">
+                                    <input id="inclusief" name="inclusief" value="@inclusief" type="text">
                                     <label id="inclusieflabel" for="inclusief">Inclusief BTW</label>
                                 </div>
 </div>
@@ -265,6 +263,7 @@
         $(document).ready(function () {
             $('#@chauffeur').prop("selected", true)
             $('#@kenteken').prop("selected", true)
+            $('#@betaalwijze').prop("selected", true)
             $('select').material_select();
         });
 
