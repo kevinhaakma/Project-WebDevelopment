@@ -219,3 +219,16 @@ textarea.materialize-textarea:focus {
     color: black !important;
     font-weight: bold;
 }
+
+/* TIME PICKER*/
+.clockpicker-canvas line {
+    stroke: #FED12E;
+}
+
+.clockpicker-canvas-bearing, .clockpicker-canvas-bg {
+    fill: #FED12E;
+}
+
+.clockpicker-tick:hover {
+    background-color: rgba(254, 209, 47, 0.5) !important;
+}

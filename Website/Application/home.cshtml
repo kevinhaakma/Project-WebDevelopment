@@ -42,7 +42,16 @@
 
     string ReformatDate(string tmp)
     {
-        string[] words = tmp.Split('-');
+        string[] words = new string[3];
+        if (tmp.Contains('/'))
+        {
+            words = tmp.Split('/');
+        }
+
+        else if (tmp.Contains('-'))
+        {
+            words = tmp.Split('-');
+        }
 
         return words[1] + "-" + words[0] + "-" + words[2];
     }

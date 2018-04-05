@@ -62,9 +62,9 @@
         datum = Request.Form["datum"];
         bijzonderheden = Request.Form["bijzonderheden"];
         betaalwijze = Request.Form["betaalwijze"];
-        exclusief = Request.Form["exclusief"].Replace(",", ".");
-        percentage = Request.Form["percentage"].Replace(",", ".");
-        inclusief = Request.Form["inclusief"].Replace(",", ".");
+        exclusief = GetExclusief().ToString();
+        percentage = Request.Form["percentage"];
+        inclusief = GetInclusief().ToString();
 
 
         var query = "UPDATE Rittenkaart SET Tijd = @0, Ophaaladres = @1, Bestemmingsadres = @2, Klant = @3, Personen = @4, SW = @5, Kenteken = @6, Chauffeur = @7, Datum = @8, betaalwijze = @9, exclusief = @10, percentage = @11, inclusief = @12, bijzonderheden = @13 WHERE RitID = @14";
@@ -79,9 +79,32 @@
 
     string ReformatDate(string tmp)
     {
-        string[] words = tmp.Split('-');
+        string[] words = new string[3];
+        if (tmp.Contains('/'))
+        {
+            words = tmp.Split('/');
+        }
+
+        else if (tmp.Contains('-'))
+        {
+            words = tmp.Split('-');
+        }
 
         return words[1] + "-" + words[0] + "-" + words[2];
+    }
+
+    double GetInclusief()
+    {
+        if (Request.Form["inclusief"] == "" || Request.Form["inclusief"] == null) { return 0; }
+
+        else { return Convert.ToDouble(Request.Form["inclusief"].Replace(",", ".")); }
+    }
+
+    double GetExclusief()
+    {
+        if (Request.Form["Exclusief"] == "" || Request.Form["Exclusief"] == null) { return 0; }
+
+        else { return Convert.ToDouble(Request.Form["Exclusief"].Replace(",", ".")); }
     }
 }
 

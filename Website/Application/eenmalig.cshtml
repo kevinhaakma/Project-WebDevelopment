@@ -54,14 +54,14 @@
 
     double GetInclusief()
     {
-        if (Request.Form["inclusief"] == "") { return 0; }
+        if (Request.Form["inclusief"] == "" || Request.Form["inclusief"] == null) { return 0; }
 
         else { return Convert.ToDouble(Request.Form["inclusief"].Replace(",", ".")); }
     }
 
     double GetExclusief()
     {
-        if (Request.Form["Exclusief"] == "") { return 0; }
+        if (Request.Form["Exclusief"] == "" || Request.Form["Exclusief"] == null) { return 0; }
 
         else { return Convert.ToDouble(Request.Form["Exclusief"].Replace(",", ".")); }
     }
