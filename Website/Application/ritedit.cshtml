@@ -31,7 +31,7 @@
         sw = item.SW;
         kenteken = item.Kenteken;
         chauffeur = item.Chauffeur;
-        datum = item.Datum;
+        datum = Convert.ToString(item.Datum).Replace(" 00:00:00","");
         bijzonderheden = item.bijzonderheden;
         geannuleerd = item.geannuleerd;
         betaalwijze = item.betaalwijze;
@@ -86,9 +86,6 @@
 
     <title>Menger | Agenda</title>
     <link rel="shortcut icon" href="~/img/Menger-Favicon.png" title="Favicon">
-
-    <!--Script for Table sorting headings-->
-    <script type="text/javascript" src="~/js/SortTable.js"></script>
 </head>
 
 <body class="grey lighten-2">
