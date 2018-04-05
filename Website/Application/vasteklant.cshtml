@@ -5,7 +5,7 @@
 
     var date = DateTime.Now.ToString("d-MM-yyyy");
 
-    var RitID = db.QueryValue("Select Max(RitID) from Rittenkaart")+1;
+    var RitID = GetRitID();
 
     var ophaaladres = "";
 
@@ -44,7 +44,7 @@
 
     if (IsPost && Request.Form["form"] == "true")
     {
-        klant = Request.Form["Klant"];
+        var Klant = Request.Form["klant2"];
         var tijd = Request.Form["tijd"];
         var Ophaaladres = Request.Form["Ophaaladres"];
         var BestemmingsAdres = Request.Form["BestemmingsAdres"];
@@ -55,10 +55,14 @@
         var datum = Request.Form["datum"];
         var bijzonderheden = Request.Form["bijzonderheden"];
         var geannuleerd = false;
+        var betaalwijze = Request.Form["betaalwijze"];
+        var percentage = Request.Form["percentage"];
+        double inclusief = GetInclusief();
+        double exclusief = GetExclusief();
 
-        var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10)";
+        var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15)";
 
-        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,geannuleerd);
+        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,Klant, personen,sw,kenteken,chauffeur, ReformatDate(datum), geannuleerd,betaalwijze,exclusief,percentage,inclusief,bijzonderheden);
         Response.Redirect("~/Application/home.cshtml?date=" + datum);
     }
 
@@ -66,6 +70,33 @@
 
     var Wagens = db.Query("SELECT Kenteken FROM wagen");
 
+    string ReformatDate(string tmp)
+    {
+        string[] words = tmp.Split('-');
+
+        return words[1] + "-" + words[0] + "-" + words[2];
+    }
+
+    int GetRitID()
+    {
+        if ((object)db.QueryValue("Select Max(RitID) from Rittenkaart") == DBNull.Value) { return 0; }
+        else { return db.QueryValue("Select Max(RitID) from Rittenkaart") + 1; }
+    }
+
+
+    double GetInclusief()
+    {
+        if (Request.Form["inclusief"] == "" || Request.Form["inclusief"] == null) { return 0; }
+
+        else { return Convert.ToDouble(Request.Form["inclusief"].Replace(",", ".")); }
+    }
+
+    double GetExclusief()
+    {
+        if (Request.Form["Exclusief"] == "" || Request.Form["Exclusief"] == null) { return 0; }
+
+        else { return Convert.ToDouble(Request.Form["Exclusief"].Replace(",", ".")); }
+    }
 }
 
 <!DOCTYPE html>
@@ -131,56 +162,58 @@
                     <div class="row white-text">
                         <span style="font-size: 16px;" class="card-title">Rit Toevoegen</span>
                         <div class="row col s12">
-                            <form id="form1" method="post">
+                            <form id="form1" name="form" method="post">
                                 <div class="input-field col s8">
-                                    <input name="klant" type="text" value="@klant" id="Klant" class="autocomplete">
+                                    <input autocomplete="off" name="klant" type="text" value="@klant" id="Klant" class="autocomplete">
                                     <label for="Klant">Klant</label>
                                 </div>
                             </form>
 
                             <form name="form" method="post">
-
+                                <div hidden class="input-field col s8">
+                                    <input name="klant2" type="text" value="@klant">
+                                </div>
                                 <div class="input-field col s4">
-                                    <input name="aantal" type="text">
+                                    <input required name="aantal" type="text">
                                     <label for="aantal">Aantal Personen</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="Ophaaladres" value="@ophaaladres" type="text">
+                                    <input required name="Ophaaladres" value="@ophaaladres" type="text">
                                     <label for="Ophaaladres">Ophaaladres</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="BestemmingsAdres" type="text">
+                                    <input required name="BestemmingsAdres" type="text">
                                     <label for="BestemmingsAdres">Bestemmingsadres</label>
                                 </div>
 
                                 <div class="input-field col s6">
-                                    <input name="tijd" type="text" class="timepicker">
+                                    <input required name="tijd" type="text" class="timepicker">
                                     <label class="active" for="tijd">Tijd</label>
                                 </div>
                                 <div class="input-field col s6">
-                                    <input name="datum" type="text" class="datepicker" value="@date">
+                                    <input required name="datum" type="text" class="datepicker" value="@date">
                                     <label class="active" for="Datum">Datum</label>
                                 </div>
 
                                 <div class="input-field col s6">
-                                    <select name="chauffeur">
+                                    <select required name="chauffeur">
                                         <option value="" disabled selected>Selecteer een chauffeur</option>
                                         @foreach (var item in Chauffeurs)
-                    {
-                        <option value="@item.Chauffeur">@item.Chauffeur</option>
-}
-                                    </select>
-                                    <label>Kenteken</label>
-                                </div>
-                                <div class="input-field col s6">
-                                    <select name="kenteken">
-                                        <option value="" disabled selected>Selecteer een kenteken</option>
-                                        @foreach (var item in Wagens)
-                    {
-                        <option value="@item.Kenteken">@item.Kenteken</option>
+            {
+                            <option value="@item.Chauffeur">@item.Chauffeur</option>
 }
                                     </select>
                                     <label>chauffeur</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <select required name="kenteken">
+                                        <option value="" disabled selected>Selecteer een kenteken</option>
+                                        @foreach (var item in Wagens)
+            {
+                            <option value="@item.Kenteken">@item.Kenteken</option>
+}
+                                    </select>
+                                    <label>Kenteken</label>
                                 </div>
 
 
@@ -218,8 +251,8 @@
                                 </div>
 
 
-                        <button class="btn right taximengeryellow" type="submit" name="form" value="true">Bevestig</button>
-                        </form>
+                                <button class="btn right taximengeryellow" type="submit" name="form" value="true">Bevestig</button>
+                            </form>
                     </div>
                 </div>
             </div>
@@ -295,5 +328,11 @@
             xhttp.open("POST", "home.cshtml", true);
         });
     </script>
+        <script>
+            $(document).ready(function () {
+                $("#klant").val() = @klant;
+            });
+
+        </script>
 </body>
 </html>

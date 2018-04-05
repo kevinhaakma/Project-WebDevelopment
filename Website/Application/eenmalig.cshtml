@@ -30,13 +30,20 @@
 
         var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15)";
 
-        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,geannuleerd,betaalwijze,exclusief,percentage,inclusief,bijzonderheden);
+        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur, ReformatDate(datum), geannuleerd,betaalwijze,exclusief,percentage,inclusief,bijzonderheden);
         Response.Redirect("~/Application/home.cshtml?date=" + datum);
     }
 
     var Chauffeurs = db.Query("SELECT Chauffeur From Chauffeur");
 
     var Wagens = db.Query("SELECT Kenteken FROM wagen");
+
+    string ReformatDate(string tmp)
+    {
+        string[] words = tmp.Split('-');
+
+        return words[1] + "-" + words[0] + "-" + words[2];
+    }
 
     int GetRitID()
     {
@@ -124,33 +131,33 @@
                         <span style="font-size: 16px;" class="card-title">Rit Toevoegen</span>
                         <div class="row col s12">
                             <form name="form" method="post">
-                                <div class="input-field col s8">
+                                <div  required class="input-field col s8">
                                     <input name="klant" type="text">
                                     <label for="klant">klant</label>
                                 </div>
-                                <div class="input-field col s4">
+                                <div required class="input-field col s4">
                                     <input name="aantal" type="text">
                                     <label for="aantal">Aantal Personen</label>
                                 </div>
-                                <div class="input-field col s12">
+                                <div required class="input-field col s12">
                                     <input name="Ophaaladres" type="text">
                                     <label for="Ophaaladres">Ophaaladres</label>
                                 </div>
-                                <div class="input-field col s12">
+                                <div required class="input-field col s12">
                                     <input name="BestemmingsAdres" type="text">
                                     <label for="BestemmingsAdres">Bestemmingsadres</label>
                                 </div>
 
-                                <div class="input-field col s6">
+                                <div required class="input-field col s6">
                                     <input name="tijd" type="text" class="timepicker">
                                     <label class="active" for="tijd">Tijd</label>
                                 </div>
-                                <div class="input-field col s6">
+                                <div required class="input-field col s6">
                                     <input name="datum" type="text" class="datepicker" value="@date">
                                     <label class="active" for="Datum">Datum</label>
                                 </div>
 
-                                <div class="input-field col s6">
+                                <div required class="input-field col s6">
                                     <select name="chauffeur">
 										<option value="" disabled selected>Selecteer een chauffeur</option>
                                         @foreach (var item in Chauffeurs)
@@ -161,7 +168,7 @@
                                     <label>Chauffeur</label>
                                 </div>
                                 <div class="input-field col s6">
-                                    <select name="kenteken">
+                                    <select  required name="kenteken">
                                         <option value="" disabled selected>Selecteer een kenteken</option>
                                         @foreach (var item in Wagens)
             {
