@@ -1,31 +1,36 @@
 ﻿@{
-	Layout = "~/Shared/_Layout.cshtml";
-	var db = Database.Open("klantgegevens");
-	double count = 0;
-	int per = 5;
-	string color = "";
+    Layout = "~/Shared/_Layout.cshtml";
+    var db = Database.Open("klantgegevens");
+    double count = 0;
+    int per = 5;
+    string color = "";
 
 
-	var date = "";
+    var date = "";
 
     if (Request.QueryString["date"] != null)
     {
-        date = Request.QueryString["date"];
+        date = Request.QueryString["date"].ToString();
     }
     else if (date.IsEmpty())
     {
-        date = DateTime.Now.ToString("d-MM-yyyy");
+        date = DateTime.Now.ToString("dd-MM-yyyy");
     }
 
-	if (IsPost)
-	{
-		date = Request.Form["date"];
-	}
+    if (IsPost)
+    {
+        date = Request.Form["date"];
+    }
 
-	var query = "SELECT * from Rittenkaart WHERE Datum = @0";
-	var gegevens = db.Query(query, date);
+    var query = "SELECT * from Rittenkaart WHERE Datum = @0";
+    var gegevens = db.Query(query, ReformatDate(date));
 
+    string ReformatDate(string tmp)
+    {
+        string[] words = tmp.Split('-');
 
+        return words[1] + "-" + words[0] + "-" + words[2];
+    }
 }
 
 <div class="row" style="margin-bottom: 0px;">
@@ -110,7 +115,7 @@
 									{
 										<td><a href="~/Application/ritanul.cshtml?id=@item.RitID&anul=true&date=@date" class="material-icons center tooltipped" style="color:black" data-tooltip="Deannuleren">check</a></td>
 									}
-									<td>@item.Datum</td>
+									<td>@item.Datum.ToString("dd/MM/yyyy").Replace("00:00:00","")</td>
 									<td>@item.Tijd</td>
                                     <td>@item.Klant</td>
                                     <td>@item.Personen</td>
