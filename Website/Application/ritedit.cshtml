@@ -34,7 +34,14 @@
         datum = Convert.ToString(item.Datum).Replace(" 00:00:00","");
         bijzonderheden = item.bijzonderheden;
         geannuleerd = item.geannuleerd;
-        betaalwijze = item.betaalwijze;
+        if (item.betaalwijze == null)
+        {
+            betaalwijze = "bappie";
+        }
+        else
+        {
+            betaalwijze = item.betaalwijze;
+        }
         exclusief = item.exclusief.ToString();
         percentage = item.percentage.ToString();
         inclusief = item.inclusief.ToString();
@@ -62,7 +69,7 @@
 
         var query = "UPDATE Rittenkaart SET Tijd = @0, Ophaaladres = @1, Bestemmingsadres = @2, Klant = @3, Personen = @4, SW = @5, Kenteken = @6, Chauffeur = @7, Datum = @8, betaalwijze = @9, exclusief = @10, percentage = @11, inclusief = @12, bijzonderheden = @13 WHERE RitID = @14";
 
-        db.Execute(query,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,betaalwijze,exclusief,percentage,inclusief,bijzonderheden,RitID);
+        db.Execute(query,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur, ReformatDate(datum), betaalwijze,exclusief,percentage,inclusief,bijzonderheden,RitID);
         Response.Redirect("~/Application/home.cshtml?date=" + datum);
     }
 
@@ -70,6 +77,12 @@
 
     var Wagens = db.Query("SELECT Kenteken FROM wagen");
 
+    string ReformatDate(string tmp)
+    {
+        string[] words = tmp.Split('-');
+
+        return words[1] + "-" + words[0] + "-" + words[2];
+    }
 }
 
 <!DOCTYPE html>
@@ -188,7 +201,7 @@
                                 <span style="font-size: 16px;" class="card-title">Tarieven</span>
                                 <div class="input-field col s12">
                                     <select name="betaalwijze">
-                                        <option id="" value="" disabled selected>Selecteer een betaalwijze</option>
+                                        <option id="bappie" value="" disabled selected>Selecteer een betaalwijze</option>
                                         <option id="Pin" value="Pin">Pin</option>
                                         <option id="Contant" value="Contant">Contant</option>
                                         <option id="Rekening" value="Rekening">Rekening</option>
@@ -258,9 +271,9 @@
         }
 
         $(document).ready(function () {
-            $('#@chauffeur').prop("selected", true)
-            $('#@kenteken').prop("selected", true)
-            $('#@betaalwijze').prop("selected", true)
+            $('#@chauffeur').prop("selected", true);
+            $('#@kenteken').prop("selected", true);
+            $('#@betaalwijze').prop("selected", true);
             $('select').material_select();
         });
 
