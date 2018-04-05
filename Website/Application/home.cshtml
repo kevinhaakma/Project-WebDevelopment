@@ -57,7 +57,7 @@
 				<div class="row">
 					<div class="col s12">
 						<div class="col s2" style="">
-							<input type="checkbox" id="cancelcheck"><label for="cancelcheck">Geannuleerden</label>
+							<input onclick="pages(0)" type="checkbox" id="cancelcheck"><label for="cancelcheck">Geannuleerden</label>
 						</div>
 						<div class="col offset-s8 s2">
                             <div class="col s4 input-field right" style="width:300px;margin: -10px 10px 10px;">
@@ -235,23 +235,43 @@
 
 <script>
 	function pages(page) {
-		var table, tr, td, i, j, per = 5;
+		var table, tr, td, i, j, per = 5, checked, test, track = 0, canceled = 0;
 		table = document.getElementById("Table");
 		tr = table.getElementsByTagName("tr");
-		//cancel = document.getElementById('cancelcheck').checked;
+		checked = document.getElementById('cancelcheck').checked;
 
-		for (i = 1; i < tr.length; i++) {
-			//td = tr[i].getElementsByTagName("td");
+        for (i = 1; i < tr.length; i++) {
+            track++;
+            td = tr[i].getElementsByTagName("td");
+            anul = td[2].innerHTML;
 
-			if (i >= (page * per + 1) && i <= (page * per + 5)) {
-				tr[i].style.display = "";
+            if (track >= (page * per + 1) && track <= (page * per + 5)) {
+                if (anul.includes("block")) {
+                    tr[i].style.display = "";
+                }
+                else if (anul.includes("check")) {
+                    if (checked) {
+                        tr[i].style.display = "";
+                    }
+                    else {
+                        tr[i].style.display = "none";
+                        track--;
+                    }
+                    canceled++;
+                }			
 			} else {
 				tr[i].style.display = "none";
-			}
+            }
 		}
 
 		for (j = 0; j < (tr.length / 5); j++) {
-			document.getElementById('page' + j).setAttribute("class", "waves-effect");
+            document.getElementById('page' + j).setAttribute("class", "waves-effect");
+            if (!checked && j > (tr.length - canceled) / 5) {
+                document.getElementById('page' + j).style.display = "none";
+            }
+            else {
+                document.getElementById('page' + j).style.display = "";
+            }
 		}
 
 		document.getElementById('page' + page).setAttribute("class", "active");
@@ -289,6 +309,7 @@
         tab_text = tab_text.replace(/<td[^>]*><a[^>]*>edit<\/a><\/td>/g, "");//remove if u want edit in your table
         tab_text = tab_text.replace(/<td[^>]*><a[^>]*>delete<\/a><\/td>/g, "");//remove if u want delete in your table
         tab_text = tab_text.replace(/<td[^>]*><a[^>]*>block<\/a><\/td>/g, "");//remove if u want block in your table
+        tab_text = tab_text.replace(/<td[^>]*><a[^>]*>check<\/a><\/td>/g, "");//remove if u want check in your table
         tab_text = tab_text.replace(/<th[^>]*><\/th>/g, "");//remove if u want links in your table
 		tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // remove if u want images in your table
 		tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // removes input params
