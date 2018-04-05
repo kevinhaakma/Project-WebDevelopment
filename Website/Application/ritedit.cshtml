@@ -31,10 +31,17 @@
         sw = item.SW;
         kenteken = item.Kenteken;
         chauffeur = item.Chauffeur;
-        datum = item.Datum;
+        datum = Convert.ToString(item.Datum).Replace(" 00:00:00","");
         bijzonderheden = item.bijzonderheden;
         geannuleerd = item.geannuleerd;
-        betaalwijze = item.betaalwijze;
+        if (item.betaalwijze == null)
+        {
+            betaalwijze = "bappie";
+        }
+        else
+        {
+            betaalwijze = item.betaalwijze;
+        }
         exclusief = item.exclusief.ToString();
         percentage = item.percentage.ToString();
         inclusief = item.inclusief.ToString();
@@ -54,17 +61,15 @@
         chauffeur = Request.Form["chauffeur"];
         datum = Request.Form["datum"];
         bijzonderheden = Request.Form["bijzonderheden"];
-        geannuleerd = false;
-        betaalwijze = Request.Form["betaalwijze"];
-        exclusief = Request.Form["exclusief"];
-        percentage = Request.Form["percentage"];
-        inclusief = Request.Form["inclusief"];
+        betaalwijze = Request.Form["betaalwijze"].Replace(",", ".");
+        exclusief = Request.Form["exclusief"].Replace(",", ".");
+        percentage = Request.Form["percentage"].Replace(",", ".");
+        inclusief = Request.Form["inclusief"].Replace(",", ".");
 
 
+        var query = "UPDATE Rittenkaart SET Tijd = @0, Ophaaladres = @1, Bestemmingsadres = @2, Klant = @3, Personen = @4, SW = @5, Kenteken = @6, Chauffeur = @7, Datum = @8, betaalwijze = @9, exclusief = @10, percentage = @11, inclusief = @12, bijzonderheden = @13 WHERE RitID = @14";
 
-        var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15)";
-
-        db.Execute(query,RitID,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur,datum,geannuleerd,betaalwijze,exclusief,percentage,inclusief,bijzonderheden);
+        db.Execute(query,tijd,Ophaaladres,BestemmingsAdres,klant,personen,sw,kenteken,chauffeur, ReformatDate(datum), betaalwijze,exclusief,percentage,inclusief,bijzonderheden,RitID);
         Response.Redirect("~/Application/home.cshtml?date=" + datum);
     }
 
@@ -72,6 +77,12 @@
 
     var Wagens = db.Query("SELECT Kenteken FROM wagen");
 
+    string ReformatDate(string tmp)
+    {
+        string[] words = tmp.Split('-');
+
+        return words[1] + "-" + words[0] + "-" + words[2];
+    }
 }
 
 <!DOCTYPE html>
@@ -88,9 +99,6 @@
 
     <title>Menger | Agenda</title>
     <link rel="shortcut icon" href="~/img/Menger-Favicon.png" title="Favicon">
-
-    <!--Script for Table sorting headings-->
-    <script type="text/javascript" src="~/js/SortTable.js"></script>
 </head>
 
 <body class="grey lighten-2">
@@ -186,32 +194,32 @@
                                     <label>Kenteken</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <textarea name="bijzonderheden" class="materialize-textarea"></textarea>
+                                    <textarea name="bijzonderheden" class="materialize-textarea">@bijzonderheden</textarea>
                                     <label for="bijzonderheden">Bijzonderheden</label>
                                 </div>
 
                                 <span style="font-size: 16px;" class="card-title">Tarieven</span>
                                 <div class="input-field col s12">
                                     <select name="betaalwijze">
-                                        <option value="" disabled selected>Selecteer een betaalwijze</option>
-                                        <option value="Pin">Pin</option>
-                                        <option value="Contant">Contant</option>
-                                        <option value="Rekening">Rekening</option>
+                                        <option id="bappie" value="" disabled selected>Selecteer een betaalwijze</option>
+                                        <option id="Pin" value="Pin">Pin</option>
+                                        <option id="Contant" value="Contant">Contant</option>
+                                        <option id="Rekening" value="Rekening">Rekening</option>
                                     </select>
                                 </div>
 
                                 <div class="input-field col s4">
-                                    <input id="exclusief" name="exclusief" onkeyup="calcBtw();" type="text">
+                                    <input id="exclusief" name="exclusief" value="@exclusief" onkeyup="calcBtw();" type="text">
                                     <label for="exclusief">Exclusief BTW</label>
                                 </div>
 
                                 <div class="input-field col s4">
-                                    <input id="percentage" name="percentage" onkeyup="calcBtw();" type="text">
+                                    <input id="percentage" name="percentage" value="@percentage" onkeyup="calcBtw();" type="text">
                                     <label for="percentage">Percentage</label>
                                 </div>
 
                                 <div class="input-field col s4">
-                                    <input id="inclusief" name="inclusief" type="text">
+                                    <input id="inclusief" name="inclusief" value="@inclusief" type="text">
                                     <label id="inclusieflabel" for="inclusief">Inclusief BTW</label>
                                 </div>
 </div>
@@ -263,15 +271,16 @@
         }
 
         $(document).ready(function () {
-            $('#@chauffeur').prop("selected", true)
-            $('#@kenteken').prop("selected", true)
+            $('#@chauffeur').prop("selected", true);
+            $('#@kenteken').prop("selected", true);
+            $('#@betaalwijze').prop("selected", true);
             $('select').material_select();
         });
 
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year,
-            format: 'd-mm-yyyy',
+            format: 'dd-mm-yyyy',
             today: '',
             clear: '',
             close: 'Ok',

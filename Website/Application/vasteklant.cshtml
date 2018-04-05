@@ -7,6 +7,8 @@
 
     var RitID = db.QueryValue("Select Max(RitID) from Rittenkaart")+1;
 
+    var ophaaladres = "";
+
     var klant = "";
     var Adres = "";
     var Postcode = "";
@@ -35,6 +37,8 @@
             Emailadres = row.Emailadres;
             Bijzonderheden = row.Bijzonderheden;
             Huisnummer = row.Huisnummer;
+
+            ophaaladres = Woonplaats + ", " + Adres + " " + Huisnummer;
         }
     }
 
@@ -51,7 +55,6 @@
         var datum = Request.Form["datum"];
         var bijzonderheden = Request.Form["bijzonderheden"];
         var geannuleerd = false;
-
 
         var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10)";
 
@@ -130,7 +133,7 @@
                         <div class="row col s12">
                             <form id="form1" method="post">
                                 <div class="input-field col s8">
-                                    <input autocomplete="off" name="klant" type="text" value="@klant" id="Klant" class="autocomplete">
+                                    <input name="klant" type="text" value="@klant" id="Klant" class="autocomplete">
                                     <label for="Klant">Klant</label>
                                 </div>
                             </form>
@@ -142,7 +145,7 @@
                                     <label for="aantal">Aantal Personen</label>
                                 </div>
                                 <div class="input-field col s12">
-                                    <input name="Ophaaladres" value="@(Woonplaats +", " + Adres+ " " + Huisnummer)" type="text">
+                                    <input name="Ophaaladres" value="@ophaaladres" type="text">
                                     <label for="Ophaaladres">Ophaaladres</label>
                                 </div>
                                 <div class="input-field col s12">
@@ -209,7 +212,7 @@
                                     </div>
 
                                     <div class="input-field col s4">
-                                        <input id="inclusief" name="inclusief" type="text">
+                                        <input disabled id="inclusief" name="inclusief" type="text">
                                         <label id="inclusieflabel" for="inclusief">Inclusief BTW</label>
                                     </div>
                                 </div>
@@ -277,10 +280,10 @@
             closeOnSelect: false // Close upon selecting a date,
         });
         function calcBtw() {
-            var a = document.getElementById("exclusief").value;
+            var a = (document.getElementById("exclusief").value).replace(",", ".");
             var b = document.getElementById("percentage").value;
             if (a != "" && b != "") {
-                document.getElementById("inclusief").value = (a * (b / 100 + 1));
+                document.getElementById("inclusief").value = parseFloat(a * (b / 100 + 1)).toFixed(2);
                 document.getElementById("inclusieflabel").className = "active";
             }
         }

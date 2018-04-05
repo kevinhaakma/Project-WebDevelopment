@@ -5,7 +5,7 @@
 
     var date = DateTime.Now.ToString("d-MM-yyyy");
 
-    var RitID = db.QueryValue("Select Max(RitID) from Rittenkaart")+1;
+    var RitID = GetRitID();
 
     var Klanten = db.Query("SELECT Voornaam,Achternaam FROM klantgegevens");
 
@@ -24,11 +24,9 @@
         var bijzonderheden = Request.Form["bijzonderheden"];
         var geannuleerd = false;
         var betaalwijze = Request.Form["betaalwijze"];
-        var exclusief = Request.Form["exclusief"];
         var percentage = Request.Form["percentage"];
-        var inclusief = Request.Form["inclusief"];
-
-
+        double inclusief = GetInclusief();
+        double exclusief = GetExclusief();
 
         var query = "INSERT INTO Rittenkaart VALUES (@0,@1,@2,@3,@4,@5,@6,@7,@8,@9,@10,@11,@12,@13,@14,@15)";
 
@@ -40,6 +38,26 @@
 
     var Wagens = db.Query("SELECT Kenteken FROM wagen");
 
+    int GetRitID()
+    {
+        if((object)db.QueryValue("Select Max(RitID) from Rittenkaart") == DBNull.Value) { return 0; }
+        else { return db.QueryValue("Select Max(RitID) from Rittenkaart") + 1; }
+    }
+
+
+    double GetInclusief()
+    {
+        if (Request.Form["inclusief"] == "") { return 0; }
+
+        else { return Convert.ToDouble(Request.Form["inclusief"].Replace(",", ".")); }
+    }
+
+    double GetExclusief()
+    {
+        if (Request.Form["Exclusief"] == "") { return 0; }
+
+        else { return Convert.ToDouble(Request.Form["Exclusief"].Replace(",", ".")); }
+    }
 }
 
 <!DOCTYPE html>
